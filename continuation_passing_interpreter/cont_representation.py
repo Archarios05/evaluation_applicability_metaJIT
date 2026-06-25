@@ -2,6 +2,7 @@
 "figure 5.2"
 
 
+from multiprocessing.sharedctypes import Value
 import sys
 import os
 from __future__ import annotations
@@ -9,10 +10,8 @@ from abc import ABC
 from dataclasses import dataclass
 from types import *
 
-from types import Continuation, NumVal
+from interpreter import valueofk
 
-from continuation_interpreter.interpreter import valueofk
-from continuation_interpreter.types import Env, Exp
 
 
 def endofcont()-> Continuation:
@@ -25,4 +24,4 @@ def zero1cont(cont : Continuation) -> Continuation:
 
 def let_exp_cont(var : Var, body : Exp, env : Env, cont : Continuation) -> Continuation:
     val : value 
-    return valueofk(body, extend_env(var val  , env), cont)
+    return valueofk(body, extend_env(var, val  , env), cont)
