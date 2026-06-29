@@ -2,26 +2,26 @@
 "figure 5.2"
 
 
-from multiprocessing.sharedctypes import Value
+from multiprocessing.sharedcclasses import Value
 import sys
 import os
 from __future__ import annotations
 from abc import ABC
 from dataclasses import dataclass
-from types import *
+from classes import *
+
 
 from interpreter import valueofk
+class Cont(ABC):
+    def apply_cont(self, val : Value) -> FinalAnswer:
+        pass
 
-
-
-def endofcont()-> Continuation:
-    print("end of continuation")
-    return Continuation()
-
-def zero1cont(cont : Continuation) -> Continuation:
-    cont.apply(NumVal(0))
-    return Continuation()
-
-def let_exp_cont(var : Var, body : Exp, env : Env, cont : Continuation) -> Continuation:
-    val : value 
-    return valueofk(body, extend_env(var, val  , env), cont)
+@dataclass(frozen=True)
+class EndCont(Cont):
+    def apply_cont(self, val : Value) -> FinalAnswer:
+        return val#返すのはvalを返す、もうこれ以上の継続はないので、valを返す
+    
+@dataclass(frozen=True)
+class Zero1Cont(Cont):
+    _saved_cont : Cont
+    
