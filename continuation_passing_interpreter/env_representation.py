@@ -1,8 +1,11 @@
-import sys
-import os
-from __future__ import annotations
-from classes import *
+"EPL p38"
+"フレームで環境を管理する"
 
+from __future__ import annotations
+from abc import ABC #Abstract Base Class: 抽象基底クラス
+from dataclasses import dataclass
+
+from env_representation import define_variable
 
 @dataclass(frozen=True)#SICPの3.2、4.1.3を参考に実装
 class Env:
