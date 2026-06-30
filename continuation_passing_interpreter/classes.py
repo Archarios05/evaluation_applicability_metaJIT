@@ -14,9 +14,7 @@ class Value:
     pass
 
 
-@dataclass(frozen=True)
-class Continuation:
-    pass
+
 
 
 @dataclass(frozen=True)
