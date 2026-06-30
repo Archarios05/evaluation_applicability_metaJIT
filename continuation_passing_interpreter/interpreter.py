@@ -16,3 +16,4 @@ def valueofk(exp : Exp , env : Env, cont : Cont) -> FinalAnswer:
             cont.apply_cont(val)
         case ProcExp(var : Var, body : Exp):
             cont.apply_cont(ProcVal(var, body, env))
+            

@@ -5,13 +5,12 @@ from __future__ import annotations
 from abc import ABC #Abstract Base Class: 抽象基底クラス
 from dataclasses import dataclass
 
-from env_representation import define_variable
-
 @dataclass(frozen=True)#SICPの3.2、4.1.3を参考に実装
 class Env:
     def __init__(self:Env, enclosing_env : Env = None):
         self.frame = {}
         self.enclosing_env = enclosing_env
+    
     def lookup_variable_value(self, var : Var) -> Value:
         #環境でvarに束縛されている値を返す、束縛されていない場合はエラー
         if  var in self.frame:
