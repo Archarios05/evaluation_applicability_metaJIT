@@ -23,9 +23,9 @@ class EndCont(Cont):
 class Zero1Cont(Cont):
     _saved_cont : Cont
     def apply_cont(self, val : Value) -> FinalAnswer:
-        # 1. val を数値として取り出し、ゼロ判定を行う (ExpVal -> bool)
-        # 2. 判定結果を新しい Value (BoolVal) としてラップする
-        # 3. self._saved_cont.apply_cont() にその値を渡す
+        # val を数値として取り出し、ゼロ判定を行う (ExpVal -> bool)
+        # 判定結果を新しい Value (BoolVal) としてラップする
+        # self._saved_cont.apply_cont() にその値を渡す
         if isinstance(val, NumVal):
             is_zero = val.value == 0
             bool_val = BoolVal(is_zero)
