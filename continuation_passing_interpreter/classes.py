@@ -1,9 +1,11 @@
-from __future__ import annotations
-
+# -*- coding: utf-8 -*-
 # EOPL p148 図5.3のデータ構造表現に登場する値(ExpVal/DenVal)の定義。
 # Exp/Cont以外の「値」に関する型はすべてここにまとめる。
-# RPython向けに @dataclass や abc.ABC は使わず、素の __init__ を持つクラスのみで構成する
-# (dataclassは__init__をランタイムに合成するためRPythonのアノテータが解析できない)。
+# RPython(Python2のサブセット)向けに @dataclass や abc.ABC、Python3の
+# 引数注釈構文(from __future__ import annotationsを含む)は使わず、
+# 素の __init__ を持つクラスのみで構成する
+# (dataclassは__init__をランタイムに合成するためRPythonのアノテータが解析できない。
+#  引数注釈はPython2の文法に存在しないため、postponed evaluationでも回避できない)。
 # 依存関係の起点となるファイルなので、他の自作モジュールはimportしない。
 
 

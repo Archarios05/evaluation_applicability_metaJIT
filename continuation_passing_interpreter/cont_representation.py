@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # EOPL p148 図5.3 継続(Continuation)のデータ構造表現。
 # 本文では apply-continuation が cont の種類ごとに case で振り分けるが、
 # ここでは各 Cont サブクラスの apply_cont メソッドとして実装する
@@ -11,7 +12,6 @@
 # 各 apply_cont は exp.eval_cps(...) / cont.apply_cont(...) を末尾で
 # 呼ぶだけなので、Exp側のモジュールをimportする必要はない(ダックタイピング)。
 # これにより interpreter.py <-> cont_representation.py の循環importも解消される。
-from __future__ import annotations
 import os
 from classes import NumVal, BoolVal, ProcVal, expval_to_num, expval_to_bool
 

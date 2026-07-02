@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # EOPL 3章/5章 抽象構文木(Expression)の定義。
 # 各 Exp サブクラスが eval_cps(env, cont) を持ち、EOPL p154-155 図5.4/5.5の
 # value-of/k の各ケースに対応する(オブジェクト指向の仮想メソッドディスパッチ)。
@@ -5,7 +6,6 @@
 # LETRECの最小構成として、EOPL 5.1節で扱う9種の式
 # (const-exp, var-exp, proc-exp, zero?-exp, if-exp, let-exp, diff-exp,
 #  call-exp, letrec-exp) をすべて実装する。
-from __future__ import annotations
 from classes import NumVal, ProcVal
 from cont_representation import (
     Zero1Cont,

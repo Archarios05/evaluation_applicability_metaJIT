@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
 # EOPL p143 value-of-program / value-of/k のエントリポイント。
 #
 # 実際のディスパッチは各Exp/Contのメソッド(eval_cps/apply_cont)が担うので、
 # ここでの valueofk は本文のcontractとの対応を残すための薄いラッパーにすぎない。
-from __future__ import annotations
 from env_representation import init_env
 from cont_representation import EndCont
 
