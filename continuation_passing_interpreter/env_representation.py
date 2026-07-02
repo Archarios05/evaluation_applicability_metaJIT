@@ -1,11 +1,11 @@
-"EPL p38"
-"フレームで環境を管理する"
+"""EPL p38 フレームで環境を管理する"""
 
 from __future__ import annotations
 from abc import ABC #Abstract Base Class: 抽象基底クラス
 from dataclasses import dataclass
+from classes import ProcVal, NumVal
 
-@dataclass(frozen=True)#SICPの3.2、4.1.3を参考に実装
+#SICPの3.2、4.1.3を参考に実装
 class Env:
     def __init__(self:Env, enclosing_env : Env = None):
         self.frame = {}
@@ -40,3 +40,22 @@ class Env:
             self.frame[var] = val
         elif self.enclosing_env is not None:
             self.enclosing_env.set_variable_value(var, val)
+
+    def extend_env_rec(self, p_name : Var, b_var : Var, p_body : Exp) -> Env:
+        # EOPL p154 letrec-exp: extend-env-rec p-name b-var p-body env
+        # p_name が (proc (b_var) p_body) を指す手続きに束縛された新しい環境を返す。
+        # その手続きの「保存環境」として new_env 自身を使うことで、
+        # p_body の中から p_name を再帰的に呼び出せるようにする。
+        new_env = Env(self)
+        proc_val = ProcVal(b_var, p_body, new_env)
+        new_env.define_variable(p_name, proc_val)
+        return new_env
+
+
+def init_env() -> Env:
+    # EOPL p69 init-env : () -> Env  usage: (init-env) = [i=1,v=5,x=10]
+    env = Env()
+    env = env.extend_env(["i"], [NumVal(1)])
+    env = env.extend_env(["v"], [NumVal(5)])
+    env = env.extend_env(["x"], [NumVal(10)])
+    return env

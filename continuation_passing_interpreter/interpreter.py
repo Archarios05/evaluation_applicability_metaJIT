@@ -1,19 +1,22 @@
-import sys
-import os
+# EOPL p143 value-of-program / value-of/k のエントリポイント。
+#
+# 実際のディスパッチは各Exp/Contのメソッド(eval_cps/apply_cont)が担うので、
+# ここでの valueofk は本文のcontractとの対応を残すための薄いラッパーにすぎない。
 from __future__ import annotations
-from abc import ABC
-from dataclasses import dataclass
-from classes import *
-from continuation_passing_interpreter.cont_representation import Cont
-from continuation_passing_interpreter.env_representation import Env
+from env_representation import init_env
+from cont_representation import EndCont
 
-def valueofk(exp : Exp , env : Env, cont : Cont) -> FinalAnswer:
-    match exp:
-        case ConstExp(num : int):
-            cont.apply_cont(NumVal(num))
-        case VarExp(var : Var):
-            val = env.lookup_variable_value(var)
-            cont.apply_cont(val)
-        case ProcExp(var : Var, body : Exp):
-            cont.apply_cont(ProcVal(var, body, env))
-            
+
+def valueofk(exp, env, cont):
+    # EOPL p143 value-of/k : Exp x Env x Cont -> FinalAnswer
+    return exp.eval_cps(env, cont)
+
+
+def value_of_program(exp):
+    # EOPL p143 value-of-program : Program -> FinalAnswer
+    # (a-programによるラップは省略し、Exp自体をプログラムとして扱う)
+    return valueofk(exp, init_env(), EndCont())
+
+
+def run(exp):
+    return value_of_program(exp)
