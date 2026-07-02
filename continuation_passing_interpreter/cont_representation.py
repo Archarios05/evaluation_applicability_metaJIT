@@ -12,6 +12,7 @@
 # 呼ぶだけなので、Exp側のモジュールをimportする必要はない(ダックタイピング)。
 # これにより interpreter.py <-> cont_representation.py の循環importも解消される。
 from __future__ import annotations
+import os
 from classes import NumVal, BoolVal, ProcVal, expval_to_num, expval_to_bool
 
 
@@ -23,8 +24,13 @@ class Cont(object):
 class EndCont(Cont):
     # EOPL p143
     # (apply-cont (end-cont) val) = (begin (eopl:printf "End of computation.~%") val)
+    #
+    # print()はCPythonの完全なI/Oスタックに依存し、RPython翻訳対象コードでは
+    # 避けるのが定石(pypy-tutorial-jp/example5.pyのmainloopもos.writeを使用)。
+    # os.write(fd, bytes)はRPythonでもCPython(このファイルを直接動かす場合)でも
+    # 同じように動くため、これに統一する。
     def apply_cont(self, val):
-        print("End of computation.")
+        os.write(1, b"End of computation.\n")
         return val
 
 

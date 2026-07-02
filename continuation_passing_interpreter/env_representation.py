@@ -26,8 +26,8 @@ class Env:
             else:
                 raise ValueError("The number of variables is greater than the number of values.")
         new_env = Env(self)
-        for v, v_val in zip(var, val):
-            new_env.define_variable(v, v_val)
+        for i in range(len(var)):
+            new_env.define_variable(var[i], val[i])
         return new_env
 
     def define_variable(self, var : Var, val : Value) -> None:

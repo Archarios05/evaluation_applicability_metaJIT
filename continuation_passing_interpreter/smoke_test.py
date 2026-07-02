@@ -1,7 +1,3 @@
-# 動作確認用の最小スモークテスト。
-# パーサがまだ無いため、EOPLの具体例をPythonでASTとして直接組み立てて評価する。
-# const/var/diff/if/let/proc/call/letrec/zero? の基本ループが仕様通りに
-# 動くかどうかを確認する。
 from __future__ import annotations
 from exp_representation import (
     ConstExp,
