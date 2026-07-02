@@ -22,6 +22,7 @@ from exp_representation import (
 )
 from interpreter import value_of_program
 from classes import expval_to_num
+#build_xxxはASTを組み立ててる
 
 
 def build_diff_var():
