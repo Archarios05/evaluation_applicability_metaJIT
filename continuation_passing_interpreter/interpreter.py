@@ -16,6 +16,7 @@ def value_of_program(exp):
     # EOPL p143 value-of-program : Program -> FinalAnswer
     # (a-programによるラップは省略し、Exp自体をプログラムとして扱う)
     return valueofk(exp, init_env(), EndCont())
+    #endcontを渡すことで、最終的に計算結果を返すようにする
 
 
 def run(exp):
