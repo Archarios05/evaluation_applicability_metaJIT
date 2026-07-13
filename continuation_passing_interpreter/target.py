@@ -19,6 +19,7 @@ from exp_representation import (
     ProcExp,
     CallExp,
     LetRecExp,
+    PrintExp,
 )
 from interpreter import value_of_program
 from classes import expval_to_num
@@ -66,6 +67,49 @@ def build_letrec():
     return LetRecExp("double", "x", body, CallExp(VarExp("double"), ConstExp(5)))
 
 
+def build_add(exp1, exp2):
+    # このEOPLサブセットには加算(add-exp)が無いため、-(exp1, -(0, exp2)) で代用する。
+    return DiffExp(exp1, DiffExp(ConstExp(0), exp2))
+
+
+def build_fib_sequence(n):
+    # letrec fib(k) = if zero?(k) then 0
+    #                 else if zero?(-(k,1)) then 1
+    #                 else fib(-(k,1)) + fib(-(k,2))
+    # in letrec loop(i) = if zero?(-(n,i)) then print(fib(i))
+    #                      else let _ = print(fib(i)) in (loop -(i,-1))
+    #    in (loop 0)
+    # fib(0), fib(1), ..., fib(n) を昇順にPrintExpで出力する式木。
+    fib_body = IfExp(
+        ZeroExp(VarExp("k")),
+        ConstExp(0),
+        IfExp(
+            ZeroExp(DiffExp(VarExp("k"), ConstExp(1))),
+            ConstExp(1),
+            build_add(
+                CallExp(VarExp("fib"), DiffExp(VarExp("k"), ConstExp(1))),
+                CallExp(VarExp("fib"), DiffExp(VarExp("k"), ConstExp(2))),
+            ),
+        ),
+    )
+
+    print_fib_i = PrintExp(CallExp(VarExp("fib"), VarExp("i")))
+    # -(i, -1) = i - (-1) = i + 1 で昇順にインクリメントする。
+    next_i = DiffExp(VarExp("i"), ConstExp(-1))
+    loop_body = IfExp(
+        ZeroExp(DiffExp(ConstExp(n), VarExp("i"))),
+        print_fib_i,
+        LetExp("_", print_fib_i, CallExp(VarExp("loop"), next_i)),
+    )
+
+    return LetRecExp(
+        "fib",
+        "k",
+        fib_body,
+        LetRecExp("loop", "i", loop_body, CallExp(VarExp("loop"), ConstExp(0))),
+    )
+
+
 def run_one(name, exp):
     result = value_of_program(exp)
     num = expval_to_num(result)
@@ -81,11 +125,21 @@ def entry_point(argv):
     run_one("if_zero", build_if_zero())
     run_one("proc_call", build_proc_call())
     run_one("letrec", build_letrec())
+    # 注記: このCPS評価器はトランポリン化していないため、EndContに到達するまで
+    # ホストのコールスタックが縮まない。fib_sequence(n)の合計呼び出し回数は
+    # O(fib(n))で増えるため、nを大きくしすぎるとRPython翻訳後もCスタックを
+    # 使い果たしてクラッシュする(手元ではn=20でスタックオーバーフローを確認)。
+    run_one("fib_sequence", build_fib_sequence(12))
     return 0
 
 
 def target(*args):
     return entry_point, None
+
+
+def jitpolicy(driver):
+    from rpython.jit.codewriter.policy import JitPolicy
+    return JitPolicy()
 
 
 if __name__ == "__main__":

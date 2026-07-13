@@ -2,7 +2,8 @@
 # EOPL p143 value-of-program / value-of/k のエントリポイント。
 #
 # 実際のディスパッチは各Exp/Contのメソッド(eval_cps/apply_cont)が担うので、
-# ここでの valueofk は本文のcontractとの対応を残すための薄いラッパーにすぎない。
+# ここでの valueofk は本文のcontractとの対応を残すために残してるのであまり意味はないと思う
+# JIT化するためにはexample5.pyのようにjitdriverを置く必要があるが、ここではやっていない。
 from env_representation import init_env
 from cont_representation import EndCont
 

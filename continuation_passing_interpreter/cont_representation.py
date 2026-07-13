@@ -107,6 +107,18 @@ class Diff2Cont(Cont):
         return self.saved_cont.apply_cont(NumVal(num1 - num2))
 
 
+class Print1Cont(Cont):
+    # (apply-cont (print1-cont cont) val)
+    #   = (begin (os.write ... (expval->num val)) (apply-cont cont val))
+    # PrintExpの評価結果を副作用として出力しつつ、値自体は変えずに継続へ渡す。
+    def __init__(self, saved_cont):
+        self.saved_cont = saved_cont
+
+    def apply_cont(self, val):
+        os.write(1, "%d\n" % (expval_to_num(val),))
+        return self.saved_cont.apply_cont(val)
+
+
 class RatorCont(Cont):
     # EOPL p151
     # (apply-cont (rator-cont rand env cont) val1)

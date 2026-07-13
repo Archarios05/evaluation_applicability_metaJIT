@@ -7,6 +7,33 @@
 # (dataclassは__init__をランタイムに合成するためRPythonのアノテータが解析できない。
 #  引数注釈はPython2の文法に存在しないため、postponed evaluationでも回避できない)。
 # 依存関係の起点となるファイルなので、他の自作モジュールはimportしない。
+#
+# JitDriver: トランポリン化はせず、再帰呼び出し(apply_procedure_k)そのものを
+# ループの目印にする。CPythonから直接実行する場合はrpython.rlib.jitが
+# 存在しないため、pypy-tutorial-jp/example5.pyと同様にダミークラスへ
+# フォールバックする。
+try:
+    from rpython.rlib.jit import JitDriver
+except ImportError:
+    class JitDriver(object):
+        def __init__(self, **kw):
+            pass
+
+        def jit_merge_point(self, **kw):
+            pass
+
+        def can_enter_jit(self, **kw):
+            pass
+
+
+def get_location(proc):
+    return "call proc(%s)" % (proc.var,)
+
+
+# greens=proc: 同じ手続き(同じvar/body/env)を指す間はホットループ候補とみなす。
+# reds=val, cont: 呼び出しごとに変わる実引数値と継続。
+jitdriver = JitDriver(greens=['proc'], reds=['val', 'cont'],
+                       get_printable_location=get_location)
 
 
 class Value(object):
@@ -33,7 +60,11 @@ class ProcVal(Value):
 
     def apply_procedure_k(self, val, cont):
         # EOPL p152 apply-procedure/k : Proc x ExpVal x Cont -> FinalAnswer
+        # トランポリンは使わず、この関数自身への再入(再帰呼び出し)を
+        # ホットループの目印としてjit_merge_pointに渡す。
+        jitdriver.jit_merge_point(proc=self, val=val, cont=cont)
         new_env = self.env.extend_env([self.var], [val])
+        jitdriver.can_enter_jit(proc=self, val=val, cont=cont)
         return self.body.eval_cps(new_env, cont)
 
 

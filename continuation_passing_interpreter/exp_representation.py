@@ -13,6 +13,7 @@ from cont_representation import (
     LetExpCont,
     Diff1Cont,
     RatorCont,
+    Print1Cont,
 )
 
 
@@ -103,6 +104,16 @@ class CallExp(Exp):
 
     def eval_cps(self, env, cont):
         return self.rator.eval_cps(env, RatorCont(self.rand, env, cont))
+
+
+class PrintExp(Exp):
+    # 独自拡張: (print-exp exp1) -> (value-of/k exp1 env (print1-cont cont))
+    # exp1 の評価結果を副作用として出力し、その値をそのまま継続へ渡す。
+    def __init__(self, exp1):
+        self.exp1 = exp1
+
+    def eval_cps(self, env, cont):
+        return self.exp1.eval_cps(env, Print1Cont(cont))
 
 
 class LetRecExp(Exp):
