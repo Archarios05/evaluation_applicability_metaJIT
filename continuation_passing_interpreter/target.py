@@ -125,10 +125,10 @@ def entry_point(argv):
     run_one("if_zero", build_if_zero())
     run_one("proc_call", build_proc_call())
     run_one("letrec", build_letrec())
-    # 注記: このCPS評価器はトランポリン化していないため、EndContに到達するまで
-    # ホストのコールスタックが縮まない。fib_sequence(n)の合計呼び出し回数は
-    # O(fib(n))で増えるため、nを大きくしすぎるとRPython翻訳後もCスタックを
-    # 使い果たしてクラッシュする(手元ではn=20でスタックオーバーフローを確認)。
+    # EOPL p159 図5.7に基づきトランポリン化済み(interpreter.trampoline)。
+    # apply_procedure_k は評価を直接行わずApplyProcBounceを返すだけなので、
+    # 手続き呼び出しの回数がいくら増えてもホストの呼び出しスタックは
+    # 一定のまま(trampolineのwhileループの中で回る)。
     run_one("fib_sequence", build_fib_sequence(12))
     return 0
 

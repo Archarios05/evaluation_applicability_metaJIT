@@ -8,36 +8,22 @@
 #  引数注釈はPython2の文法に存在しないため、postponed evaluationでも回避できない)。
 # 依存関係の起点となるファイルなので、他の自作モジュールはimportしない。
 #
-# JitDriver: トランポリン化はせず、再帰呼び出し(apply_procedure_k)そのものを
-# ループの目印にする。CPythonから直接実行する場合はrpython.rlib.jitが
-# 存在しないため、pypy-tutorial-jp/example5.pyと同様にダミークラスへ
-# フォールバックする。
-try:
-    from rpython.rlib.jit import JitDriver
-except ImportError:
-    class JitDriver(object):
-        def __init__(self, **kw):
-            pass
-
-        def jit_merge_point(self, **kw):
-            pass
-
-        def can_enter_jit(self, **kw):
-            pass
+# JitDriver/トランポリン本体はinterpreter.pyのtrampoline()に置く
+# (EOPL p159 図5.7)。ここではapply_procedure_kがBounce(ApplyProcBounce)を
+# 返すだけにして、実際の評価(eval_cps呼び出し)は行わない。
 
 
-def get_location(proc):
-    return "call proc(%s)" % (proc.var,)
+class Bounce(object):
+    # EOPL p159 Bounce = ExpVal ∪ (() -> Bounce)
+    # Schemeのクロージャ(lambda () ...)の代わりに、
+    # 「まだ実行していない apply_procedure_k 呼び出し」をデータとして
+    # 保持するデータ構造表現を採用する(EOPL演習5.18)。
+    pass
 
 
-# greens=proc: 同じ手続き(同じvar/body/env)を指す間はホットループ候補とみなす。
-# reds=val, cont: 呼び出しごとに変わる実引数値と継続。
-jitdriver = JitDriver(greens=['proc'], reds=['val', 'cont'],
-                       get_printable_location=get_location)
-
-
-class Value(object):
+class Value(Bounce):
     # ExpVal/DenVal の基底クラス (EOPL p61 ExpVal = Int+Bool+Proc)
+    # BounceのうちExpVal側(=もう計算が終わった最終値)に相当する。
     pass
 
 
@@ -51,6 +37,16 @@ class BoolVal(Value):
         self.value = value
 
 
+class ApplyProcBounce(Bounce):
+    # EOPL p159 図5.7: apply-procedure/k の本体を包む (lambda () ...) に相当。
+    # 「proc に val を渡して cont のもとで呼び出す」という、まだ実行していない
+    # 計算をデータとして保持するだけで、ここでは一切評価しない。
+    def __init__(self, proc, val, cont):
+        self.proc = proc
+        self.val = val
+        self.cont = cont
+
+
 class ProcVal(Value):
     # クロージャを表す型 (EOPL p147 procedure : Var x Exp x Env -> Proc)
     def __init__(self, var, body, env):
@@ -59,13 +55,12 @@ class ProcVal(Value):
         self.env = env
 
     def apply_procedure_k(self, val, cont):
-        # EOPL p152 apply-procedure/k : Proc x ExpVal x Cont -> FinalAnswer
-        # トランポリンは使わず、この関数自身への再入(再帰呼び出し)を
-        # ホットループの目印としてjit_merge_pointに渡す。
-        jitdriver.jit_merge_point(proc=self, val=val, cont=cont)
-        new_env = self.env.extend_env([self.var], [val])
-        jitdriver.can_enter_jit(proc=self, val=val, cont=cont)
-        return self.body.eval_cps(new_env, cont)
+        # EOPL p152 apply-procedure/k : Proc x ExpVal x Cont -> Bounce (p159以降)
+        # トランポリン化: ここでは評価(eval_cps呼び出し)を一切行わず、
+        # 「次にやるべき計算」をApplyProcBounceとして返すだけにする。
+        # これにより、この呼び出し自体はPythonの呼び出しスタックを消費しない。
+        # 実際の評価はinterpreter.pyのtrampoline()が行う。
+        return ApplyProcBounce(self, val, cont)
 
 
 def expval_to_num(val):
