@@ -129,7 +129,7 @@ def entry_point(argv):
     # apply_procedure_k は評価を直接行わずApplyProcBounceを返すだけなので、
     # 手続き呼び出しの回数がいくら増えてもホストの呼び出しスタックは
     # 一定のまま(trampolineのwhileループの中で回る)。
-    run_one("fib_sequence", build_fib_sequence(12))
+    run_one("fib_sequence", build_fib_sequence(1000))
     return 0
 
 
