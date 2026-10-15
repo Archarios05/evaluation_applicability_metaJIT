@@ -7,7 +7,7 @@
 # (const-exp, var-exp, proc-exp, zero?-exp, if-exp, let-exp, diff-exp,
 #  call-exp, letrec-exp) をすべて実装する。
 from classes import NumVal, ProcVal
-from cont_representation import (
+from cont import (
     Zero1Cont,
     IfTestCont,
     LetExpCont,

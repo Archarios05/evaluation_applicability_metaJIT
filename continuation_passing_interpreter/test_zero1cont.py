@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Zero1Cont (cont_representation.py) の働きを確認するためのスクリプト。
+# Zero1Cont (cont.py) の働きを確認するためのスクリプト。
 # RPython翻訳は対象外なので、ここでは素のprint()を使う。
 #
 # EOPL p145: (apply-cont (zero1-cont cont) val)
@@ -9,8 +9,8 @@
 # 変換して残りの継続へ渡す」ために Zero1Cont(saved_cont) を作って
 # exp1 の評価に渡す。つまり Zero1Cont は「NumVal -> BoolVal への変換だけを
 # 行い、あとはsaved_contにそのまま委譲する」継続そのものである。
-from exp_representation import ZeroExp, DiffExp, ConstExp, VarExp
-from cont_representation import Cont, Zero1Cont
+from exp import ZeroExp, DiffExp, ConstExp, VarExp
+from cont import Cont, Zero1Cont
 from interpreter import value_of_program
 from classes import expval_to_bool
 

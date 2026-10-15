@@ -11,7 +11,7 @@
 #
 # 各 apply_cont は exp.eval_cps(...) / cont.apply_cont(...) を末尾で
 # 呼ぶだけなので、Exp側のモジュールをimportする必要はない(ダックタイピング)。
-# これにより interpreter.py <-> cont_representation.py の循環importも解消される。
+# これにより interpreter.py <-> cont.py の循環importも解消される。
 import os
 from classes import NumVal, BoolVal, ProcVal, expval_to_num, expval_to_bool
 
@@ -150,7 +150,7 @@ class RandCont(Cont):
         return proc1.apply_procedure_k(val2, self.saved_cont)
 
 
-# 注記: 現状のvalue-of/k(exp_representation.pyのeval_cps)は末尾呼び出しの連鎖として
+# 注記: 現状のvalue-of/k(exp.pyのeval_cps)は末尾呼び出しの連鎖として
 # 書かれているが、CPython自体は末尾呼び出し最適化を行わないため、再帰が深いプログラムでは
 # 通常のPython呼び出しスタックを消費する。EOPL 5.2節のトランポリン化・5.3節のレジスタ化は
 # この制約を回避するための後続ステップであり、今回のスコープには含めない。

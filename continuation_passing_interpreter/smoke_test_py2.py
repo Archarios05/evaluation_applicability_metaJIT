@@ -2,7 +2,7 @@
 # smoke_test.py のPython2版。RPython翻訳の前段階として、
 # CPython2でもインタプリタの挙動が変わらないことを確認するための開発用スクリプト。
 # (Python3専用構文は使わない: from __future__ import annotations 等は書かない)
-from exp_representation import (
+from exp import (
     ConstExp,
     VarExp,
     DiffExp,

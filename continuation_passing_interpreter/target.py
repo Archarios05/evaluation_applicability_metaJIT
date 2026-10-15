@@ -9,7 +9,7 @@
 #   python2 pypy/rpython/bin/rpython continuation_passing_interpreter/target.py
 # で単体の実行ファイルが生成される(JITなし、まずは翻訳が通ることの確認)。
 import os
-from exp_representation import (
+from exp import (
     ConstExp,
     VarExp,
     DiffExp,

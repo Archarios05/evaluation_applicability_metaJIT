@@ -13,8 +13,8 @@
 # (以前の実装ではapply_procedure_kの再帰呼び出しに置いていたため、
 #  コンパイル後も call_assembler という本物のCALLになってしまい、
 #  Cスタックを消費し続けてStackOverflowを起こしていた)。
-from env_representation import init_env
-from cont_representation import EndCont
+from env import init_env
+from cont import EndCont
 from classes import Value, ApplyProcBounce
 
 try:

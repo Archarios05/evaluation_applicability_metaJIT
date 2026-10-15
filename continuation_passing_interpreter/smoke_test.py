@@ -2,7 +2,7 @@ from __future__ import annotations
 import sys
 import os
 
-# cont_representation.py の os.write は RPython(Python2, str==bytes)を前提に
+# cont.py の os.write は RPython(Python2, str==bytes)を前提に
 # strをそのまま渡す。CPython3でこのsmoke_testを動かすためだけの互換シム
 # (RPython翻訳対象のファイルは一切変更しない)。
 _orig_os_write = os.write
@@ -16,7 +16,7 @@ def _os_write_compat(fd, data):
 
 os.write = _os_write_compat
 
-from exp_representation import (
+from exp import (
     ConstExp,
     VarExp,
     DiffExp,

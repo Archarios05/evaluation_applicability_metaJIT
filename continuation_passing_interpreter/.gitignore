@@ -5,3 +5,5 @@ memo.md
 jit.log
 target-c
 jit-fib.log
+target-c
+target-c.nojit.bak

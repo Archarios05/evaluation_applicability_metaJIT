@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # EOPL p161 図5.8の even/odd (相互末尾再帰) をモデルにしたストレステスト。
 #
-# 本実装のLETREC(exp_representation.LetRecExp)は「1つの名前だけを自分自身に
+# 本実装のLETREC(exp.LetRecExp)は「1つの名前だけを自分自身に
 # 再帰束縛する」教科書どおりの最小構成であり、letrec*のような複数手続きの
 # 同時相互束縛はサポートしていない。そのため even/odd のように2つの手続きが
 # お互いの名前を直接参照し合う形はそのままでは書けない。
@@ -35,7 +35,7 @@
 import sys
 import os
 
-# cont_representation.py の os.write は RPython(Python2, str==bytes)を前提に
+# cont.py の os.write は RPython(Python2, str==bytes)を前提に
 # strをそのまま渡す。CPython3でこのテストを動かすためだけの互換シム
 # (RPython翻訳対象のファイルは一切変更しない)。
 _orig_os_write = os.write
@@ -49,7 +49,7 @@ def _os_write_compat(fd, data):
 
 os.write = _os_write_compat
 
-from exp_representation import (
+from exp import (
     ConstExp,
     VarExp,
     DiffExp,
