@@ -13,7 +13,8 @@
 # 継続は「構築時に確定している情報」だけをフィールドに保存し、
 # apply_kont は評価結果の val ひとつだけを受け取る(EOPL p148 の設計原則)。
 import os
-from classes import NumVal, BoolVal, ProcVal, expval_to_num, expval_to_bool
+from value import NumVal, BoolVal, expval_to_num, expval_to_bool
+from proc import ProcVal
 from state import EvalState, ContState, HaltState
 
 

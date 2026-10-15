@@ -8,7 +8,7 @@
 # すべての遷移が run_machine のwhileループなのでその必要がない。
 import os
 
-# cont_representation.py の os.write は RPython(Python2, str==bytes)を前提に
+# cont.py の os.write は RPython(Python2, str==bytes)を前提に
 # strをそのまま渡す。CPython3でこのテストを動かすためだけの互換シム
 # (RPython翻訳対象のファイルは一切変更しない)。
 _orig_os_write = os.write
@@ -22,7 +22,7 @@ def _os_write_compat(fd, data):
 
 os.write = _os_write_compat
 
-from exp_representation import (
+from exp import (
     ConstExp,
     VarExp,
     DiffExp,
@@ -34,7 +34,7 @@ from exp_representation import (
     LetRecExp,
 )
 from machine import value_of_program, run_states, initial_state
-from classes import NumVal
+from value import NumVal
 from target import build_fib_sequence, build_countdown, build_sum_to
 
 

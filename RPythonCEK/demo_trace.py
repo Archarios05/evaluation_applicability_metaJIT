@@ -18,7 +18,7 @@ def _os_write_compat(fd, data):
 
 os.write = _os_write_compat
 
-from exp_representation import (
+from exp import (
     ConstExp, VarExp, DiffExp, ZeroExp, IfExp, LetExp, ProcExp, CallExp, LetRecExp,
 )
 from machine import initial_state

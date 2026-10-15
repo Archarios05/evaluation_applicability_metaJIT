@@ -33,14 +33,14 @@ RPython翻訳は WSL 上で python2 + rpython ツールチェインを使う（R
 
 - `@dataclass` / `abc.ABC` / 引数注釈 / f-string / `from __future__ import annotations`
 - `Value or None` のような union になる戻り値（アノテータが通らない。
-  `env_representation.lookup_variable_value` が未束縛時に `None` ではなく例外を
+  `env.lookup_variable_value` が未束縛時に `None` ではなく例外を
   投げるのはこの理由）
 
 型分岐は `isinstance` で行い、クラスは素の `__init__` だけを持つ形に揃える。
 
 ### print ではなく os.write
 
-`cont_representation.py` / `target.py` は `os.write(1, "...")` に `str` を直接渡す
+`cont.py` / `target.py` は `os.write(1, "...")` に `str` を直接渡す
 （RPython では `str == bytes`）。CPython3 ではこれは動かないので、
 `smoke_test.py` が冒頭で `os.write` を包むシムを噛ませている。
 **翻訳対象ファイルの `os.write` を「Python3 で動くように」直してはいけない** —
@@ -49,7 +49,7 @@ RPython翻訳は WSL 上で python2 + rpython ツールチェインを使う（R
 ## 依存の向きとダックタイピング
 
 ```
-classes / state  →  cont_representation  →  exp_representation  →  machine  →  target
+value / proc / state  →  cont  →  exp  →  machine  →  target
 ```
 
 一方向であることが設計上の前提。特に **`state.py` は exp / cont のどちらも import
@@ -58,8 +58,8 @@ classes / state  →  cont_representation  →  exp_representation  →  machine
 
 ## 言語に構文を1つ足すときに触る場所
 
-1. `exp_representation.py` に `Exp` サブクラス（`eval_step` = Eval遷移1本）
-2. `cont_representation.py` に対応する `Kont` サブクラス（`apply_kont` = Cont遷移1本）
+1. `exp.py` に `Exp` サブクラス（`eval_step` = Eval遷移1本）
+2. `cont.py` に対応する `Kont` サブクラス（`apply_kont` = Cont遷移1本）
 3. `target.py` に `build_*` の例題ビルダ（パーサは存在せず、プログラムは手組みAST）
 4. `smoke_test.py` にテスト + `__main__` への追記
 5. `README.md` の「遷移規則」表を更新

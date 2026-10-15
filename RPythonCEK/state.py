@@ -24,7 +24,7 @@
 # CPS版が apply_procedure_k のときだけトランポリンで解決していた問題が、
 # CEKでは全ステップについて構造的に解決されている。
 #
-# このファイルは exp_representation / cont_representation のどちらもimportしない
+# このファイルは exp / cont のどちらもimportしない
 # (ダックタイピングで exp.eval_step / kont.apply_kont を呼ぶだけ)。
 # これにより import の循環が起きない。
 

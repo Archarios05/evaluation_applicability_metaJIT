@@ -11,7 +11,7 @@
 #   python2 pypy/rpython/bin/rpython CEK/target.py            # JITなし
 #   python2 pypy/rpython/bin/rpython --opt=jit CEK/target.py  # JITあり
 import os
-from exp_representation import (
+from exp import (
     ConstExp,
     VarExp,
     DiffExp,
@@ -24,7 +24,7 @@ from exp_representation import (
     PrintExp,
 )
 from machine import value_of_program
-from classes import expval_to_num
+from value import expval_to_num
 
 
 def build_diff_var():

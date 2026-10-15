@@ -5,7 +5,8 @@ continuation_passing_interpreter/env_representation.py とほぼ同じ。
 違いは lookup_variable_value が未束縛変数で None を返さずエラーにする点だけ
 
 """
-from classes import ProcVal, NumVal
+from value import NumVal
+from proc import ProcVal
 
 
 class Env(object):

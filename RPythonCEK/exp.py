@@ -12,9 +12,10 @@
 # CPS版 (eval_cps) との違いは戻り値だけ:
 #   CPS版 : return cont.apply_cont(NumVal(self.num))      # 呼び出して結果を返す
 #   CEK版 : return ContState(NumVal(self.num), kont)      # 次の状態を返すだけ
-from classes import NumVal, ProcVal
+from value import NumVal
+from proc import ProcVal
 from state import EvalState, ContState
-from cont_representation import (
+from cont import (
     Zero1Kont,
     IfTestKont,
     LetKont,

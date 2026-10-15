@@ -10,9 +10,9 @@
 
 | レジスタ | 意味 | このコードでの実体 |
 | --- | --- | --- |
-| **C** (Control) | いま注目している式 | `exp_representation.Exp` |
-| **E** (Environment) | 変数の束縛 | `env_representation.Env` |
-| **K** (Kontinuation) | 残りの計算 | `cont_representation.Kont` |
+| **C** (Control) | いま注目している式 | `exp.Exp` |
+| **E** (Environment) | 変数の束縛 | `env.Env` |
+| **K** (Kontinuation) | 残りの計算 | `cont.Kont` |
 
 CPSインタプリタとの関係は Danvy らの *functional correspondence* そのもの:
 
@@ -42,15 +42,16 @@ CPSインタプリタとの関係は Danvy らの *functional correspondence* �
 
 ## ファイル構成
 
-依存は一方向 (`classes`/`state` → `cont_representation` → `exp_representation` → `machine`)。
+依存は一方向 (`value` → `proc`/`state` → `cont` → `exp` → `machine`)。
 
 | ファイル | 中身 |
 | --- | --- |
-| `classes.py` | 値 `NumVal` / `BoolVal` / `ProcVal` と `expval_to_*`。CPS版と違い `Bounce` は無い |
+| `value.py` | 値 `NumVal` / `BoolVal` と `expval_to_*`。CPS版と違い `Bounce` は無い |
+| `proc.py` | 手続き値 `ProcVal` (クロージャ)。適用規則は `RandKont.apply_kont` 側 |
 | `state.py` | 状態 `EvalState` / `ContState` / `HaltState`。CEKの `<C,E,K>` そのもの |
-| `env_representation.py` | フレーム方式の環境 (EOPL p38 / SICP 3.2) |
-| `cont_representation.py` | 継続フレーム9種。各 `apply_kont` が Cont遷移1本 |
-| `exp_representation.py` | AST 10種。各 `eval_step` が Eval遷移1本 |
+| `env.py` | フレーム方式の環境 (EOPL p38 / SICP 3.2) |
+| `cont.py` | 継続フレーム9種。各 `apply_kont` が Cont遷移1本 |
+| `exp.py` | AST 10種。各 `eval_step` が Eval遷移1本 |
 | `machine.py` | 機械の駆動ループ + `JitDriver` + `value_of_program` |
 | `target.py` | RPython翻訳用の `entry_point` / `target` / `jitpolicy` |
 | `smoke_test.py` | CPython3で動くテスト一式 |

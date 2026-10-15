@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 # CEK機械の駆動部(遷移関数を回すだけのループ)とエントリポイント。
 #
-# 遷移規則そのものは exp_representation.eval_step / cont_representation.apply_kont
+# 遷移規則そのものは exp.eval_step / cont.apply_kont
 # に書いてあるので、ここがやるのは「停止状態になるまで遷移を繰り返す」ことだけ。
 #
 # CPS版 interpreter.py の trampoline() との対応:
 #   trampoline は「手続き呼び出し(ApplyProcBounce)のときだけ」ループに戻ってきた。
 #   CEKの run_machine は「すべての簡約ステップ」がループに戻ってくる。
 #   よってホストの呼び出しスタックは深さ一定のまま(CPS版はcont側の連鎖で伸びた)。
-from env_representation import init_env
-from cont_representation import EndKont
+from env import init_env
+from cont import EndKont
 from state import EvalState, ContState, HaltState
 
 try:
