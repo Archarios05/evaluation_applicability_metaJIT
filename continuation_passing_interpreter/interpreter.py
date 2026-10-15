@@ -58,7 +58,7 @@ def trampoline(bounce):
 
 def valueofk(exp, env, cont):
     # EOPL p143 value-of/k : Exp x Env x Cont -> Bounce (p159以降)
-    #評価はexp.eval_cps(env, cont)に委譲する。
+    #評価はexp.eval_cps(env, cont)
     return exp.eval_cps(env, cont)#bounceが帰ってくる
 
 

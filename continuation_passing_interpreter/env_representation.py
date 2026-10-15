@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 """EPL p38 フレームで環境を管理する"""
 
-# RPython(Python2のサブセット)で翻訳するため、Python3専用構文
-# (from __future__ import annotations, 引数注釈)は使わない。
-# Python2には引数注釈(: Type / -> Type)の構文自体が存在しないため、
-# postponed evaluationでは回避できない(パース時点でSyntaxErrorになる)。
+
 from classes import ProcVal, NumVal
 
 #SICPの3.2、4.1.3を参考に実装
@@ -49,6 +46,7 @@ class Env(object):
         # その手続きの「保存環境」として new_env 自身を使うことで、
         # p_body の中から p_name を再帰的に呼び出せるようにする。
         new_env = Env(self)
+        
         proc_val = ProcVal(b_var, p_body, new_env)
         new_env.define_variable(p_name, proc_val)
         return new_env

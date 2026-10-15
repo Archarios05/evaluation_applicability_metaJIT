@@ -72,6 +72,29 @@ def build_add(exp1, exp2):
     return DiffExp(exp1, DiffExp(ConstExp(0), exp2))
 
 
+
+def build_countdown(n):
+    # letrec loop(i) = if zero?(i) then 0 else (loop -(i,1)) in (loop n)
+    # 末尾呼び出しなので継続は伸びない。
+    loop_body = IfExp(
+        ZeroExp(VarExp("i")),
+        ConstExp(0),
+        CallExp(VarExp("loop"), DiffExp(VarExp("i"), ConstExp(1))),
+    )
+    return LetRecExp("loop", "i", loop_body, CallExp(VarExp("loop"), ConstExp(n)))
+
+
+def build_sum_to(n):
+    # letrec sum(i) = if zero?(i) then 0 else -(i, -(0, (sum -(i,1)))) in (sum n)
+    # 非末尾再帰なので継続がn段積まれる。
+    sum_body = IfExp(
+        ZeroExp(VarExp("i")),
+        ConstExp(0),
+        build_add(VarExp("i"), CallExp(VarExp("sum"), DiffExp(VarExp("i"), ConstExp(1)))),
+    )
+    return LetRecExp("sum", "i", sum_body, CallExp(VarExp("sum"), ConstExp(n)))
+
+
 def build_fib_sequence(n):
     # letrec fib(k) = if zero?(k) then 0
     #                 else if zero?(-(k,1)) then 1
@@ -119,7 +142,48 @@ def run_one(name, exp):
     os.write(1, "\n")
 
 
+
+def parse_int(s):
+    # RPythonでも確実に動く整数パーサ。
+    i = 0
+    neg = False
+    if len(s) > 0 and s[0] == "-":
+        neg = True
+        i = 1
+    if i >= len(s):
+        raise ValueError("not a number: %s" % (s,))
+    result = 0
+    while i < len(s):
+        c = s[i]
+        if c < "0" or c > "9":
+            raise ValueError("not a number: %s" % (s,))
+        result = result * 10 + (ord(c) - ord("0"))
+        i += 1
+    if neg:
+        return -result
+    return result
+
+
+def bench(name, n):
+    # 1つのプログラムだけをn指定で走らせる(CEK/target.py と同一の口)。
+    if name == "countdown":
+        run_one("countdown", build_countdown(n))
+        return 0
+    if name == "sum":
+        run_one("sum_to", build_sum_to(n))
+        return 0
+    if name == "fib":
+        run_one("fib_sequence", build_fib_sequence(n))
+        return 0
+    os.write(2, "unknown benchmark: %s (countdown|sum|fib)\n" % (name,))
+    return 1
+
+
 def entry_point(argv):
+    # 引数ありならベンチマークモード: ./target-c countdown 1000000
+    if len(argv) >= 3:
+        return bench(argv[1], parse_int(argv[2]))
+
     run_one("diff_var", build_diff_var())
     run_one("let", build_let())
     run_one("if_zero", build_if_zero())
@@ -129,7 +193,7 @@ def entry_point(argv):
     # apply_procedure_k は評価を直接行わずApplyProcBounceを返すだけなので、
     # 手続き呼び出しの回数がいくら増えてもホストの呼び出しスタックは
     # 一定のまま(trampolineのwhileループの中で回る)。
-    run_one("fib_sequence", build_fib_sequence(1000))
+    run_one("fib_sequence", build_fib_sequence(10))
     return 0
 
 
