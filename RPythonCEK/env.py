@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """EOPL p38 / SICP 3.2, 4.1.3 のフレーム方式で環境(CEKの E レジスタ)を管理する。
 
-continuation_passing_interpreter/env_representation.py とほぼ同じ。
+continuation_passing_interpreter/env.py とほぼ同じ。
 違いは lookup_variable_value が未束縛変数で None を返さずエラーにする点だけ
 
 """
