@@ -1,28 +1,21 @@
 # -*- coding: utf-8 -*-
-# 抽象構文木(CEK機械の C レジスタ)の定義。
-# 対象言語は EOPL 5.1節の LETREC 言語 (const, var, proc, zero?, if, let,
-# diff, call, letrec) + 独自拡張の print。
+# 抽象構文木 (CEK機械の C レジスタ)。
+# s-reader の構文木を convert.py でこの形に変換してから実行する。
+# 変数参照は字句アドレスか GlobalCell に、標準手続きの名前は定数に解決済み。
 #
 # 各 Exp サブクラスの eval_step(env, kont) が
 #   <exp, ρ, κ>_eval -> 次の状態
-# という遷移規則1本に対応する(EOPL p154-155 図5.4/5.5 の value-of/k の各ケース)。
-# RPythonはmatch文をサポートしないので、遷移規則の場合分けは
-# 「Expサブクラスの仮想メソッドディスパッチ」で表現する。
+# という遷移規則1本に対応する (仕様書 8.4節 ℰ の各場合)。
 #
 # CPS版 (eval_cps) との違いは戻り値だけ:
-#   CPS版 : return cont.apply_cont(NumVal(self.num))      # 呼び出して結果を返す
-#   CEK版 : return ContState(NumVal(self.num), kont)      # 次の状態を返すだけ
-from value import NumVal
-from proc import ProcVal
+#   CPS版 : return cont.apply_cont(self.val)      # 呼び出して結果を返す
+#   CEK版 : return ContState(self.val, kont)      # 次の状態を返すだけ
+from rpy import unroll_safe
+from value import SchemeError, UNDEFINED
+from env import Frame, lookup
+from proc import ClosureVal, PrimVal
 from state import EvalState, ContState
-from cont import (
-    Zero1Kont,
-    IfTestKont,
-    LetKont,
-    Diff1Kont,
-    RatorKont,
-    Print1Kont,
-)
+from cont import IfKont, AppKont, SetLocalKont, SetGlobalKont, DefineKont
 
 
 class Exp(object):
@@ -34,132 +27,166 @@ class Exp(object):
 
 
 class ConstExp(Exp):
-    # <(const-exp n), ρ, κ> -> <(num-val n), κ>_cont
-    def __init__(self, num):
-        self.num = num
+    # <K, ρ, κ> -> <𝒦[K], κ>。標準手続きの名前の参照もこれになる
+    _immutable_fields_ = ["val"]
+
+    def __init__(self, val):
+        self.val = val
 
     def eval_step(self, env, kont):
-        return ContState(NumVal(self.num), kont)
+        return ContState(self.val, kont)
 
     def to_string(self):
-        return "const(%d)" % (self.num,)
+        val = self.val
+        if isinstance(val, PrimVal):
+            return "prim(%s)" % (val.name,)
+        return "const(%s)" % (val.to_string(),)
 
 
-class VarExp(Exp):
-    # <(var-exp x), ρ, κ> -> <ρ(x), κ>_cont
-    def __init__(self, var):
-        self.var = var
+class LocalVarExp(Exp):
+    # <x, ρ, κ> -> <ρ(x), κ>。lambda / letrec の変数は参照時に必ず値を持つ
+    _immutable_fields_ = ["name", "depth", "index"]
+
+    def __init__(self, name, depth, index):
+        self.name = name
+        self.depth = depth
+        self.index = index
 
     def eval_step(self, env, kont):
-        return ContState(env.lookup_variable_value(self.var), kont)
+        return ContState(lookup(env, self.depth, self.index), kont)
 
     def to_string(self):
-        return "var(%s)" % (self.var,)
+        return "var(%s)" % (self.name,)
 
 
-class ProcExp(Exp):
-    # <(proc-exp x body), ρ, κ> -> <(closure x body ρ), κ>_cont
-    def __init__(self, var, body):
-        self.var = var
+class GlobalVarExp(Exp):
+    # define の変数。値が格納される前ならエラー (仕様書 5.2節)
+    _immutable_fields_ = ["cell"]
+
+    def __init__(self, cell):
+        self.cell = cell
+
+    def eval_step(self, env, kont):
+        val = self.cell.value
+        if val is UNDEFINED:
+            raise SchemeError()
+        return ContState(val, kont)
+
+    def to_string(self):
+        return "global(%s)" % (self.cell.name,)
+
+
+class LambdaExp(Exp):
+    # <(lambda (x*) body), ρ, κ> -> <(closure lambda ρ), κ>
+    _immutable_fields_ = ["nparams", "body"]
+
+    def __init__(self, nparams, body):
+        self.nparams = nparams
         self.body = body
 
     def eval_step(self, env, kont):
-        return ContState(ProcVal(self.var, self.body, env), kont)
+        return ContState(ClosureVal(self, env), kont)
 
     def to_string(self):
-        return "proc(%s)" % (self.var,)
-
-
-class ZeroExp(Exp):
-    # <(zero?-exp e1), ρ, κ> -> <e1, ρ, (zero1-kont κ)>_eval
-    def __init__(self, exp1):
-        self.exp1 = exp1
-
-    def eval_step(self, env, kont):
-        return EvalState(self.exp1, env, Zero1Kont(kont))
-
-    def to_string(self):
-        return "zero?"
+        return "lambda/%d" % (self.nparams,)
 
 
 class IfExp(Exp):
-    # <(if-exp e1 e2 e3), ρ, κ> -> <e1, ρ, (if-test-kont e2 e3 ρ κ)>_eval
-    def __init__(self, exp1, exp2, exp3):
-        self.exp1 = exp1
-        self.exp2 = exp2
-        self.exp3 = exp3
+    # <(if e0 e1 e2), ρ, κ> -> <e0, ρ, (if e1 e2 ρ κ)>
+    _immutable_fields_ = ["test", "conseq", "alt"]
+
+    def __init__(self, test, conseq, alt):
+        self.test = test
+        self.conseq = conseq
+        self.alt = alt
 
     def eval_step(self, env, kont):
-        return EvalState(self.exp1, env, IfTestKont(self.exp2, self.exp3, env, kont))
+        return EvalState(self.test, env, IfKont(self.conseq, self.alt, env, kont))
 
     def to_string(self):
         return "if"
 
 
-class LetExp(Exp):
-    # <(let-exp x e1 body), ρ, κ> -> <e1, ρ, (let-kont x body ρ κ)>_eval
-    def __init__(self, var, exp1, body):
-        self.var = var
-        self.exp1 = exp1
+class AppExp(Exp):
+    # <(e0 e*), ρ, κ> -> <e0, ρ, (app e* ⟨⟩ ρ κ)>
+    _immutable_fields_ = ["rator", "rands[*]"]
+
+    def __init__(self, rator, rands):
+        self.rator = rator
+        self.rands = rands
+
+    def eval_step(self, env, kont):
+        return EvalState(self.rator, env, AppKont(self, [], env, kont))
+
+    def to_string(self):
+        return "app/%d" % (len(self.rands),)
+
+
+class SetLocalExp(Exp):
+    # <(set! x e), ρ, κ> -> <e, ρ, (set! x ρ κ)>
+    _immutable_fields_ = ["name", "depth", "index", "exp"]
+
+    def __init__(self, name, depth, index, exp):
+        self.name = name
+        self.depth = depth
+        self.index = index
+        self.exp = exp
+
+    def eval_step(self, env, kont):
+        return EvalState(self.exp, env, SetLocalKont(self.depth, self.index, env, kont))
+
+    def to_string(self):
+        return "set!(%s)" % (self.name,)
+
+
+class SetGlobalExp(Exp):
+    _immutable_fields_ = ["cell", "exp"]
+
+    def __init__(self, cell, exp):
+        self.cell = cell
+        self.exp = exp
+
+    def eval_step(self, env, kont):
+        return EvalState(self.exp, env, SetGlobalKont(self.cell, kont))
+
+    def to_string(self):
+        return "set!(%s)" % (self.cell.name,)
+
+
+class LetrecExp(Exp):
+    # <(letrec ((x L)*) body), ρ, κ> -> <body, ρ', κ>
+    #   ρ' = ρ[x*=(closure L* ρ')]
+    # 初期値は lambda 式なので評価に継続が要らず、継続を積まない Eval -> Eval 遷移になる
+    _immutable_fields_ = ["lambdas[*]", "body"]
+
+    def __init__(self, lambdas, body):
+        self.lambdas = lambdas
         self.body = body
 
+    @unroll_safe
     def eval_step(self, env, kont):
-        return EvalState(self.exp1, env, LetKont(self.var, self.body, env, kont))
+        n = len(self.lambdas)
+        frame = Frame([UNDEFINED] * n, env)
+        for i in range(n):
+            frame.vals[i] = ClosureVal(self.lambdas[i], frame)
+        return EvalState(self.body, frame, kont)
 
     def to_string(self):
-        return "let(%s)" % (self.var,)
+        return "letrec/%d" % (len(self.lambdas),)
 
 
-class DiffExp(Exp):
-    # <(diff-exp e1 e2), ρ, κ> -> <e1, ρ, (diff1-kont e2 ρ κ)>_eval
-    def __init__(self, exp1, exp2):
-        self.exp1 = exp1
-        self.exp2 = exp2
+class DefineExp(Exp):
+    # (define x e) の後に rest (残りの定義と主式) が続く。仕様書 8.4節 𝒟
+    #   <(define x e) rest, ρ, κ> -> <e, ρ, (define x rest κ)>
+    _immutable_fields_ = ["cell", "exp", "rest"]
 
-    def eval_step(self, env, kont):
-        return EvalState(self.exp1, env, Diff1Kont(self.exp2, env, kont))
-
-    def to_string(self):
-        return "diff"
-
-
-class CallExp(Exp):
-    # <(call-exp rator rand), ρ, κ> -> <rator, ρ, (rator-kont rand ρ κ)>_eval
-    def __init__(self, rator, rand):
-        self.rator = rator
-        self.rand = rand
+    def __init__(self, cell, exp, rest):
+        self.cell = cell
+        self.exp = exp
+        self.rest = rest
 
     def eval_step(self, env, kont):
-        return EvalState(self.rator, env, RatorKont(self.rand, env, kont))
+        return EvalState(self.exp, env, DefineKont(self.cell, self.rest, kont))
 
     def to_string(self):
-        return "call"
-
-
-class PrintExp(Exp):
-    # 独自拡張: <(print-exp e1), ρ, κ> -> <e1, ρ, (print1-kont κ)>_eval
-    def __init__(self, exp1):
-        self.exp1 = exp1
-
-    def eval_step(self, env, kont):
-        return EvalState(self.exp1, env, Print1Kont(kont))
-
-    def to_string(self):
-        return "print"
-
-
-class LetRecExp(Exp):
-    # <(letrec-exp p b p-body body), ρ, κ> -> <body, (extend-env-rec ...), κ>_eval
-    # 継続を積まずに環境だけを伸ばす、唯一の Eval -> Eval 遷移。
-    def __init__(self, p_name, b_var, p_body, letrec_body):
-        self.p_name = p_name
-        self.b_var = b_var
-        self.p_body = p_body
-        self.letrec_body = letrec_body
-
-    def eval_step(self, env, kont):
-        new_env = env.extend_env_rec(self.p_name, self.b_var, self.p_body)
-        return EvalState(self.letrec_body, new_env, kont)
-
-    def to_string(self):
-        return "letrec(%s)" % (self.p_name,)
+        return "define(%s)" % (self.cell.name,)

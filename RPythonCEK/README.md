@@ -1,8 +1,10 @@
-# CEK machine (EOPL LETREC 言語)
+# CEK machine (仕様書の Scheme サブセット)
 
-`continuation_passing_interpreter/` のCPSインタプリタを、**CEK抽象機械**として
-書き直したもの。言語仕様(EOPL 5.1節のLETREC言語 + `print`)も、継続フレームの
-種類も、例題プログラムも向こうと同じなので、そのまま挙動・性能を比較できる。
+`../sotsuron_scheme/specification.md` (第 3 版) の言語を **CEK抽象機械** として実装したもの。
+パーサは `../s-reader` を使う。CPS版 `../continuation_passing_interpreter/` と
+値・環境・継続フレームの種類・例題をそろえてあるので、そのまま挙動・性能を比較できる。
+
+EOPL 5章の LETREC 言語で書いていた旧版はタグ `eopl-letrec` にある。
 
 ## CEK機械とは
 
@@ -11,7 +13,7 @@
 | レジスタ | 意味 | このコードでの実体 |
 | --- | --- | --- |
 | **C** (Control) | いま注目している式 | `exp.Exp` |
-| **E** (Environment) | 変数の束縛 | `env.Env` |
+| **E** (Environment) | 変数の束縛 | `env.Frame` (トップ・レベルは `None`) |
 | **K** (Kontinuation) | 残りの計算 | `cont.Kont` |
 
 CPSインタプリタとの関係は Danvy らの *functional correspondence* そのもの:
@@ -23,39 +25,47 @@ CPSインタプリタとの関係は Danvy らの *functional correspondence* �
                    --レジスタ化(EOPL 5.3)---------> CEK機械  ← ここ
 ```
 
-## CPS版との違い(ここが本題)
+## CPS版との違い
 
 | | `continuation_passing_interpreter` | `CEK` |
 | --- | --- | --- |
 | 1ステップの表現 | `eval_cps` / `apply_cont` が**次の関数を呼ぶ** | `eval_step` / `apply_kont` が**次の状態を返すだけ** |
-| ホストのスタック | 継続の連鎖ぶんだけ伸びる (CPythonでは `sys.setrecursionlimit` が必要だった) | 常に一定。`run_machine` の `while` ループだけ |
-| 手続き適用 | `ProcVal.apply_procedure_k` が `ApplyProcBounce` を返し、`trampoline` が開封 | `RandKont.apply_kont` の1状態遷移。`Bounce` 型自体が不要 |
-| トランポリンに戻る頻度 | 手続き呼び出しのときだけ | すべての簡約ステップ |
-| JITの合流点 | `trampoline` の `while` (greens=`proc`) | `run_machine` の `while` (greens=`exp`) |
-
-実際、CPS版のスモークテストは深い再帰のために再帰上限を100万に引き上げていたが、
-こちらは上限に一切触れずに `countdown(100000)` / `sum_to(20000)` が通る
-(`smoke_test.py`)。
-
-この差は翻訳後にさらに極端になる(CPS版は `sum` が n=12,000 でStackOverflowする)。
-実測は「CPS版との性能比較」節を参照。
+| ホストのスタック | 値を返す側の継続の連鎖ぶんだけ伸びる | 常に一定。`run_machine` の `while` ループだけ |
+| 手続き適用 | クロージャ・継続手続きは Bounce を返し、`trampoline` が開封 | `apply_procedure` の1状態遷移。`Bounce` 型自体が不要 |
+| トランポリンに戻る頻度 | クロージャ・継続手続きの適用のときだけ | すべての簡約ステップ |
+| JITの合流点 | `trampoline` の `while` (greens=`exp` = クロージャ本体) | `run_machine` の `while` (greens=`exp`) |
 
 ## ファイル構成
 
-依存は一方向 (`value` → `proc`/`state` → `cont` → `exp` → `machine`)。
+依存は一方向 (`value`/`env`/`state` → `primitives` → `proc` → `cont` → `exp` → `convert` → `machine` → `target`)。
 
 | ファイル | 中身 |
 | --- | --- |
-| `value.py` | 値 `NumVal` / `BoolVal` と `expval_to_*`。CPS版と違い `Bounce` は無い |
-| `proc.py` | 手続き値 `ProcVal` (クロージャ)。適用規則は `RandKont.apply_kont` 側 |
+| `value.py` | 手続き以外の値 (`IntVal` `BoolVal` `NIL` `PairVal` `UNSPECIFIED` `UNDEFINED`)、`SchemeError`、`display` の表示 `show` |
+| `env.py` | 環境のフレーム `Frame` (字句アドレスで引く) と define の変数の場所 `GlobalCell` |
 | `state.py` | 状態 `EvalState` / `ContState` / `HaltState`。CEKの `<C,E,K>` そのもの |
-| `env.py` | フレーム方式の環境 (EOPL p38 / SICP 3.2) |
-| `cont.py` | 継続フレーム9種。各 `apply_kont` が Cont遷移1本 |
-| `exp.py` | AST 10種。各 `eval_step` が Eval遷移1本 |
-| `machine.py` | 機械の駆動ループ + `JitDriver` + `value_of_program` |
-| `target.py` | RPython翻訳用の `entry_point` / `target` / `jitpolicy` |
-| `smoke_test.py` | CPython3で動くテスト一式 |
-| `demo_trace.py` | 状態遷移を1ステップずつ表示するデモ(CPython専用) |
+| `primitives.py` | 標準手続き 22 個 (仕様書 6章)。`write_out` は出力先 (テストで差し替える) |
+| `proc.py` | 手続き値 `ClosureVal` / `PrimVal` / `ContVal`。`apply_procedure` が適用の遷移規則 |
+| `cont.py` | 継続フレーム 6 種。各 `apply_kont` が Cont遷移1本 |
+| `exp.py` | 構文木 10 種。各 `eval_step` が Eval遷移1本 |
+| `convert.py` | s-reader の構文木 → `exp.py` の構文木。変数を字句アドレスに解決する |
+| `machine.py` | 機械の駆動ループ `run_machine` (JIT用) / `run_states` (教科書どおり) と `JitDriver` |
+| `target.py` | RPython翻訳用のエントリポイント |
+| `rpy.py` | RPython の import と CPython 用ダミー |
+| `smoke_test.py` | CPython3で動くテスト一式 (例は RPython3imp と同じ) |
+| `demo_trace.py` | 状態遷移を1ステップずつ表示するデモ (CPython専用) |
+| `examples/` | ベンチマーク用の例題 (RPython3imp と同じ) |
+
+## 変換 (convert.py)
+
+- lambda の仮引数・letrec の変数は字句アドレス `(depth, index)` にする。
+  実行時はフレームを depth 枚たどって `vals[index]` を読み書きする。
+  フレームの要素が仕様書 3.5節の「場所」で、`set!` はここを書き換える。
+- define の変数は `GlobalCell` 1 個に解決する。初期値は `UNDEFINED` で、
+  参照・`set!` のときに検査する (仕様書 4.7, 5.2節)。
+- 標準手続きの名前 (define し直していないもの) は `PrimVal` の定数にする。
+  `set!` できないので値は変わらない (仕様書 7.1節の制約 5)。
+- プログラム `D* E0` は `DefineExp` の連鎖 1 本にする (仕様書 8.4節 𝒟)。
 
 ## 遷移規則
 
@@ -64,31 +74,37 @@ CPSインタプリタとの関係は Danvy らの *functional correspondence* �
 ### Eval遷移 (`Exp.eval_step`)
 
 ```
-<(const n), ρ, κ>          -> <(num-val n), κ>
-<(var x), ρ, κ>            -> <ρ(x), κ>
-<(proc x body), ρ, κ>      -> <(closure x body ρ), κ>
-<(zero? e1), ρ, κ>         -> <e1, ρ, (zero1 κ)>
-<(if e1 e2 e3), ρ, κ>      -> <e1, ρ, (if-test e2 e3 ρ κ)>
-<(let x e1 body), ρ, κ>    -> <e1, ρ, (let x body ρ κ)>
-<(diff e1 e2), ρ, κ>       -> <e1, ρ, (diff1 e2 ρ κ)>
-<(call rator rand), ρ, κ>  -> <rator, ρ, (rator rand ρ κ)>
-<(print e1), ρ, κ>         -> <e1, ρ, (print1 κ)>
-<(letrec p b pb body), ρ, κ> -> <body, ρ[p=(closure b pb ρ')], κ>
+<K, ρ, κ>                    -> <𝒦[K], κ>                (標準手続きの名前も定数)
+<x, ρ, κ>                    -> <ρ(x), κ>                (define の変数は UNDEFINED ならエラー)
+<(lambda (x*) e), ρ, κ>      -> <(closure lambda ρ), κ>
+<(if e0 e1 e2), ρ, κ>        -> <e0, ρ, (if e1 e2 ρ κ)>
+<(e0 e*), ρ, κ>              -> <e0, ρ, (app e* ⟨⟩ ρ κ)>
+<(set! x e), ρ, κ>           -> <e, ρ, (set! x ρ κ)>
+<(letrec ((x L)*) e), ρ, κ>  -> <e, ρ', κ>   ρ' = ρ[x*=(closure L* ρ')]
+<(define x e) rest, ρ, κ>    -> <e, ρ, (define x rest κ)>
 ```
 
 ### Cont遷移 (`Kont.apply_kont`)
 
 ```
-<v,  (end)>                -> halt v            (+ "End of computation." を出力)
-<v,  (zero1 κ)>            -> <(bool-val v=0), κ>
-<v,  (if-test e2 e3 ρ κ)>  -> <e2, ρ, κ>  /  <e3, ρ, κ>
-<v,  (let x body ρ κ)>     -> <body, ρ[x=v], κ>
-<v1, (diff1 e2 ρ κ)>       -> <e2, ρ, (diff2 v1 κ)>
-<v2, (diff2 v1 κ)>         -> <(num-val v1-v2), κ>
-<v,  (print1 κ)>           -> <v, κ>             (+ v を出力)
-<v1, (rator rand ρ κ)>     -> <rand, ρ, (rand v1 κ)>
-<v2, (rand (closure x body ρ') κ)> -> <body, ρ'[x=v2], κ>    ← β規則
+<v, (end)>                   -> halt v
+<v, (if e1 e2 ρ κ)>          -> <e1, ρ, κ>  (v ≠ #f)  /  <e2, ρ, κ>  (v = #f)
+<v, (app e* vs ρ κ)>         -> <e_i, ρ, (app e* vs§⟨v⟩ ρ κ)>    (残りのオペランドがある)
+                             -> vs§⟨v⟩ を適用                    (ない)
+<v, (set! x ρ κ)>            -> <unspecified, κ>  (x の場所に v を格納)
+<v, (define x rest κ)>       -> <rest, (トップ・レベル), κ>  (x の場所に v を格納)
 ```
+
+### 適用 (`ProcVal.apply_procedure`)
+
+```
+(closure (lambda (x*) e) ρ') v*, κ  -> <e, ρ'[x*=v*], κ>       ← β規則
+(prim p) v*, κ                      -> <p(v*), κ>
+(prim call/cc) f, κ                 -> f (cont κ), κ            (f の呼出しは末尾呼出し)
+(cont κ') v, κ                      -> <v, κ'>                  (κ は捨てる)
+```
+
+引数の個数違い・手続きでない値の適用は `SchemeError`。
 
 ## 使い方
 
@@ -99,14 +115,17 @@ python smoke_test.py
 # 状態遷移を目で追う
 python demo_trace.py
 
+# CPython3 で直接実行
+python target.py examples/fib.scm
+
 # RPython翻訳 (WSL上、python2 + rpythonツールチェイン)
-python2 ../continuation_passing_interpreter/pypy-tutorial-jp/pypy/rpython/bin/rpython target.py
-python2 ../continuation_passing_interpreter/pypy-tutorial-jp/pypy/rpython/bin/rpython --opt=jit target.py
+RPY=~/research/effect-jit-artifact/rpyeffect-jit/pypy/rpython/bin/rpython
+python2 $RPY --opt=2   --output=target-c-nojit target.py
+python2 $RPY --opt=jit --output=target-c       target.py
+./target-c examples/countdown.scm
 ```
 
-`target.py` は RPython(Python2サブセット)前提なので、CPython3で直接は実行しない
-(`os.write` に `str` を渡す)。CPython3から動かしたいときは `smoke_test.py` のように
-`os.write` を包むシムを噛ませる。
+エラーはどれも `error` の 1 行だけを出力する (仕様書 9.1節)。
 
 ## JITについて
 
@@ -117,15 +136,36 @@ jitdriver = JitDriver(greens=['exp'], reds=['env', 'kont'],
 
 - `jit_merge_point` を `run_machine` の `while` の先頭に置いているので、
   ループのバックエッジがそのまま本物のジャンプになる。
-  CPS版で `apply_procedure_k` の再帰に置いて `call_assembler` になってしまった
-  問題は、機械化した時点で構造的に起きない。
 - green を制御レジスタ `exp` にしているのは、ASTノードが翻訳時に固定された
   ポインタで「同じ式に戻ってきた = ループ先頭」の判定に使えるため
   (Pycket などRPython製CEK機械と同じ流儀)。
-- Cont遷移(値を継続に渡すだけの決定的な連鎖)は内側の `while` でまとめて進める。
+- Cont遷移 (値を継続に渡すだけの決定的な連鎖) は内側の `while` でまとめて進める。
   合流点を持たないのでJITはトレースに展開する。
+- 旧版で効き目を抑えていた dict ベースの環境は、字句アドレス + 配列のフレームに置き換えた。
+  depth と index は green の `exp` から読む定数なので、フレームをたどるループは展開される (`unroll_safe`)。
 
-## ベンチマーク(2026-09-08 実測, WSL2 Ubuntu / gcc -j8)
+## 実測 (2026-10-20, WSL2 Ubuntu, 各 3 回の最小値, 秒)
+
+`examples/` の同じプログラムを CEK版・CPS版・RPython3imp の翻訳済みバイナリで走らせた。
+
+| 例題 | CEK-nojit | CEK-jit | CPS-nojit | CPS-jit | 3imp-nojit | 3imp-jit |
+| --- | --- | --- | --- | --- | --- | --- |
+| `countdown.scm` (末尾再帰 10^7 回) | 1.79 | 0.046 | 1.38 | 0.042 | 0.71 | 0.17 |
+| `let-loop.scm` (letrec + 関数位置の lambda, 10^7 回) | 3.20 | 0.069 | 2.56 | 0.068 | 1.25 | 0.29 |
+| `fib.scm` (fib 30) | 0.67 | 0.098 | 0.57 | 0.110 | 0.29 | 0.11 |
+| `sum.scm` (非末尾再帰 10^6 段) | 0.62 | 0.45 | error | error | 0.58 | 0.52 |
+| `callcc.scm` | 0.009 | 0.026 | 0.010 | 0.028 | 0.009 | 0.024 |
+
+- CPS版の `sum` は、値を返す側の継続の連鎖でCスタックが尽き、`error` を出力して終了する
+  (`StackOverflow` を捕まえて実装制限の違反として報告している)。
+- 末尾再帰のループでは JIT で 30〜45 倍速くなる。旧版 (dict の環境) では 1.8 倍程度だった。
+- 翻訳時間は `--opt=2` が約 35 秒、`--opt=jit` が約 345 秒 (CEK・CPS とも)。
+
+## 旧版 (EOPL LETREC 言語, タグ `eopl-letrec`) での測定
+
+以下は言語を書き換える前の実装での結果。例題・環境の表現が今と違うので、今の版と直接は比べられない。
+
+### ベンチマーク(2026-09-08 実測, WSL2 Ubuntu / gcc -j8)
 
 `target.py` は引数を取ると1つのプログラムだけを走らせる(JITのウォームアップ代を
 切り分けたいので他の例題を混ぜない):
@@ -171,7 +211,7 @@ jitdriver = JitDriver(greens=['exp'], reds=['env', 'kont'],
 再現するには「使い方」のコマンドで両方を翻訳して
 `/usr/bin/time -f %e ./target-c countdown 10000000` のように測る。
 
-## CPS版との性能比較(2026-09-15 実測, WSL2 Ubuntu 24.04 / gcc 13.3.0)
+### CPS版との性能比較(2026-09-15 実測, WSL2 Ubuntu 24.04 / gcc 13.3.0)
 
 CPS版 `../continuation_passing_interpreter/` の `target.py` にも、このリポジトリと同一の
 `build_countdown` / `build_sum_to` / `bench()` / `parse_int()` を移植したうえで、

@@ -1,26 +1,23 @@
 # -*- coding: utf-8 -*-
-# CEK機械の K レジスタ = 継続(Kontinuation)フレームの定義。
-# EOPL p148 図5.3 のデータ構造表現をそのまま流用しているので、
-# フレームの種類も保存フィールドも continuation_passing_interpreter と同一。
+# CEK機械の K レジスタ = 継続フレームの定義。
+# フレームの種類は CPS版 (continuation_passing_interpreter/cont.py) と同じ。
 #
-# CPS版との唯一にして決定的な違い:
-#   CPS版 apply_cont は「次の計算を*自分で呼び出して*その結果を返す」
-#       return self.exp2.eval_cps(self.saved_env, self.saved_cont)   # ← 再帰呼び出し
-#   CEK版 apply_kont は「次の*状態*を作って返すだけ」
-#       return EvalState(self.exp2, self.saved_env, self.saved_kont) # ← 呼び出さない
-# これによりホストの呼び出しスタックが伸びず、機械のループ(machine.py)だけが回る。
+# CPS版との違い:
+#   CPS版 apply_cont は次の計算を自分で呼び出す
+#       return self.conseq.eval_cps(self.env, self.cont)
+#   CEK版 apply_kont は次の状態を返すだけ
+#       return EvalState(self.conseq, self.env, self.kont)
+# これによりホストの呼び出しスタックが伸びず、machine.py のループだけが回る。
 #
-# 継続は「構築時に確定している情報」だけをフィールドに保存し、
-# apply_kont は評価結果の val ひとつだけを受け取る(EOPL p148 の設計原則)。
-import os
-from value import NumVal, BoolVal, expval_to_num, expval_to_bool
-from proc import ProcVal
+# 継続は構築時に確定している情報だけを持ち、apply_kont は値 val だけを受け取る。
+from value import SchemeError, FALSE, UNSPECIFIED, UNDEFINED
+from env import assign
 from state import EvalState, ContState, HaltState
 
 
 class Kont(object):
     def apply_kont(self, val):
-        # <val, self>_cont から次の状態への遷移規則。State を返すだけ。
+        # <val, self>_cont から次の状態への遷移規則
         raise NotImplementedError
 
     def to_string(self):
@@ -28,153 +25,108 @@ class Kont(object):
 
 
 class EndKont(Kont):
-    # EOPL p143 (end-cont)
-    # (apply-cont (end-cont) val) = (begin (printf "End of computation.") val)
-    # CEKでは「機械を停止させる」フレームであり、HaltState を返す。
-    #
-    # print() はCPythonの完全なI/Oスタックに依存し、RPython翻訳対象コードでは
-    # 避けるのが定石なので os.write に統一する(CPS版と同じ)。
+    # 初期継続 κ0。主式の値は出力しない (仕様書 5.3節)
     def apply_kont(self, val):
-        os.write(1, "End of computation.\n")
         return HaltState(val)
 
     def to_string(self):
         return "end"
 
 
-class Zero1Kont(Kont):
-    # EOPL p145
-    # <v, (zero1-kont κ)>_cont -> <(bool-val (zero? v)), κ>_cont
-    def __init__(self, saved_kont):
-        self.saved_kont = saved_kont
+class IfKont(Kont):
+    # <v, (if conseq alt ρ κ)>_cont -> <conseq, ρ, κ> (v が #f 以外) / <alt, ρ, κ>
+    _immutable_fields_ = ["conseq", "alt", "env", "kont"]
+
+    def __init__(self, conseq, alt, env, kont):
+        self.conseq = conseq
+        self.alt = alt
+        self.env = env
+        self.kont = kont
 
     def apply_kont(self, val):
-        return ContState(BoolVal(expval_to_num(val) == 0), self.saved_kont)
+        if val is not FALSE:
+            return EvalState(self.conseq, self.env, self.kont)
+        return EvalState(self.alt, self.env, self.kont)
 
     def to_string(self):
-        return "zero1"
+        return "if"
 
 
-class IfTestKont(Kont):
-    # EOPL p146
-    # <v, (if-test-kont e2 e3 ρ κ)>_cont
-    #   -> <e2, ρ, κ>_eval  (v が真)
-    #   -> <e3, ρ, κ>_eval  (v が偽)
-    def __init__(self, exp2, exp3, saved_env, saved_kont):
-        self.exp2 = exp2
-        self.exp3 = exp3
-        self.saved_env = saved_env
-        self.saved_kont = saved_kont
+class AppKont(Kont):
+    # 手続き呼出しの演算子・オペランドを左から右へ評価する途中 (仕様書 4.3節)。
+    # vals はここまでに求めた値 (vals[0] が演算子)
+    #   <v, (app e* vals ρ κ)>_cont -> <e_i, ρ, (app e* vals§⟨v⟩ ρ κ)>  (残りがある)
+    #                                -> vals§⟨v⟩ を適用                (残りがない)
+    _immutable_fields_ = ["app", "vals[*]", "env", "kont"]
+
+    def __init__(self, app, vals, env, kont):
+        self.app = app
+        self.vals = vals
+        self.env = env
+        self.kont = kont
 
     def apply_kont(self, val):
-        if expval_to_bool(val):
-            return EvalState(self.exp2, self.saved_env, self.saved_kont)
-        else:
-            return EvalState(self.exp3, self.saved_env, self.saved_kont)
+        # 継続は何度でも呼ばれうるので vals は書き換えずに作り直す
+        vals = self.vals + [val]
+        rands = self.app.rands
+        i = len(vals) - 1
+        if i < len(rands):
+            return EvalState(rands[i], self.env, AppKont(self.app, vals, self.env, self.kont))
+        return vals[0].apply_procedure(vals[1:], self.kont)
 
     def to_string(self):
-        return "if-test"
+        return "app"
 
 
-class LetKont(Kont):
-    # EOPL p146
-    # <v, (let-kont x body ρ κ)>_cont -> <body, ρ[x=v], κ>_eval
-    def __init__(self, var, body, saved_env, saved_kont):
-        self.var = var
-        self.body = body
-        self.saved_env = saved_env
-        self.saved_kont = saved_kont
+class SetLocalKont(Kont):
+    # <v, (set! (depth index) ρ κ)>_cont -> <unspecified, κ>  (場所に v を格納)
+    _immutable_fields_ = ["depth", "index", "env", "kont"]
+
+    def __init__(self, depth, index, env, kont):
+        self.depth = depth
+        self.index = index
+        self.env = env
+        self.kont = kont
 
     def apply_kont(self, val):
-        new_env = self.saved_env.extend_env([self.var], [val])
-        return EvalState(self.body, new_env, self.saved_kont)
+        assign(self.env, self.depth, self.index, val)
+        return ContState(UNSPECIFIED, self.kont)
 
     def to_string(self):
-        return "let"
+        return "set!"
 
 
-class Diff1Kont(Kont):
-    # EOPL p149
-    # <v1, (diff1-kont e2 ρ κ)>_cont -> <e2, ρ, (diff2-kont v1 κ)>_eval
-    def __init__(self, exp2, saved_env, saved_kont):
-        self.exp2 = exp2
-        self.saved_env = saved_env
-        self.saved_kont = saved_kont
+class SetGlobalKont(Kont):
+    # define の変数への set!。値が格納される前ならエラー (仕様書 4.7節)
+    _immutable_fields_ = ["cell", "kont"]
 
-    def apply_kont(self, val1):
-        return EvalState(self.exp2, self.saved_env, Diff2Kont(val1, self.saved_kont))
-
-    def to_string(self):
-        return "diff1"
-
-
-class Diff2Kont(Kont):
-    # EOPL p149
-    # <v2, (diff2-kont v1 κ)>_cont -> <(num-val (- v1 v2)), κ>_cont
-    def __init__(self, val1, saved_kont):
-        self.val1 = val1
-        self.saved_kont = saved_kont
-
-    def apply_kont(self, val2):
-        num1 = expval_to_num(self.val1)
-        num2 = expval_to_num(val2)
-        return ContState(NumVal(num1 - num2), self.saved_kont)
-
-    def to_string(self):
-        return "diff2"
-
-
-class Print1Kont(Kont):
-    # 独自拡張: <v, (print1-kont κ)>_cont -> (副作用で v を出力) -> <v, κ>_cont
-    # 値そのものは変えずに継続へ渡す。
-    def __init__(self, saved_kont):
-        self.saved_kont = saved_kont
+    def __init__(self, cell, kont):
+        self.cell = cell
+        self.kont = kont
 
     def apply_kont(self, val):
-        os.write(1, "%d\n" % (expval_to_num(val),))
-        return ContState(val, self.saved_kont)
+        if self.cell.value is UNDEFINED:
+            raise SchemeError()
+        self.cell.value = val
+        return ContState(UNSPECIFIED, self.kont)
 
     def to_string(self):
-        return "print1"
+        return "set!"
 
 
-class RatorKont(Kont):
-    # EOPL p151
-    # <v1, (rator-kont rand ρ κ)>_cont -> <rand, ρ, (rand-kont v1 κ)>_eval
-    def __init__(self, rand, saved_env, saved_kont):
-        self.rand = rand
-        self.saved_env = saved_env
-        self.saved_kont = saved_kont
+class DefineKont(Kont):
+    # 仕様書 8.4節 𝒟: 値を格納してから残りの定義と主式 rest に進む
+    #   <v, (define cell rest κ)>_cont -> <rest, ρ, κ>
+    _immutable_fields_ = ["cell", "rest", "kont"]
 
-    def apply_kont(self, val1):
-        return EvalState(self.rand, self.saved_env, RandKont(val1, self.saved_kont))
+    def __init__(self, cell, rest, kont):
+        self.cell = cell
+        self.rest = rest
+        self.kont = kont
 
-    def to_string(self):
-        return "rator"
-
-
-class RandKont(Kont):
-    # EOPL p152 / CEK機械の β 規則(手続き適用)そのもの。
-    # <v2, (rand-kont (closure x body ρ') κ)>_cont -> <body, ρ'[x=v2], κ>_eval
-    #
-    # ここがCPS版との一番大きな差:
-    #   CPS版は proc.apply_procedure_k(val2, cont) を呼び、その中で
-    #   ApplyProcBounce を作ってトランポリンに戻す、という2段構えだった。
-    #   CEK版では「クロージャの本体へ制御を移す」ことが単なる1状態遷移なので、
-    #   Bounce のような専用の中間表現がそもそも要らない。
-    def __init__(self, val1, saved_kont):
-        self.val1 = val1
-        self.saved_kont = saved_kont
-
-    def apply_kont(self, val2):
-        proc1 = self.val1
-        if not isinstance(proc1, ProcVal):
-            raise TypeError(
-                "RandKont.apply_kont: 呼び出そうとした値がProcValではありません: %s"
-                % (proc1.to_string(),)
-            )
-        new_env = proc1.env.extend_env([proc1.var], [val2])
-        return EvalState(proc1.body, new_env, self.saved_kont)
+    def apply_kont(self, val):
+        self.cell.value = val
+        return EvalState(self.rest, None, self.kont)
 
     def to_string(self):
-        return "rand"
+        return "define"
