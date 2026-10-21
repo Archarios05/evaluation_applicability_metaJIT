@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
-# EOPL p148 図5.3 継続(Continuation)のデータ構造表現。
-# 本文では apply-continuation が cont の種類ごとに case で振り分けるが、
-# ここでは各 Cont サブクラスの apply_cont メソッドとして実装する
-# (オブジェクト指向の仮想メソッドディスパッチ)。RPythonはmatch文を
-# サポートしないため、この方式に一本化する。
+# EOPL p148 図5.3 継続 (Continuation) のデータ構造表現。
+# apply-cont の case 分けを各 Cont サブクラスの apply_cont メソッドで表す。
+# フレームの種類は CEK版 (RPythonCEK/cont.py) と同じ。
 #
-# 設計原則: 継続は「構築時に確定している情報」だけをフィールドに保存し、
-# apply_cont は評価結果の val ひとつだけを受け取って続きを実行する
-# (val はcont構築時にはまだ計算されていないため、コンストラクタでは受け取らない)。
-#
-# 各 apply_cont は exp.eval_cps(...) / cont.apply_cont(...) を末尾で
-# 呼ぶだけなので、Exp側のモジュールをimportする必要はない(ダックタイピング)。
-# これにより interpreter.py <-> cont.py の循環importも解消される。
-import os
-from classes import NumVal, BoolVal, ProcVal, expval_to_num, expval_to_bool
+# 継続は構築時に確定している情報だけを持ち、apply_cont は値 val だけを受け取る。
+# 各 apply_cont は exp.eval_cps(...) / cont.apply_cont(...) を末尾で直接呼ぶ。
+# Exp 側のモジュールは import しない (ダックタイピング)。
+from classes import SchemeError, FALSE, UNSPECIFIED, UNDEFINED
+from env import assign
 
 
 class Cont(object):
@@ -22,135 +16,92 @@ class Cont(object):
 
 
 class EndCont(Cont):
-    # EOPL p143
-    # (apply-cont (end-cont) val) = (begin (eopl:printf "End of computation.~%") val)
-    #
-    # print()はCPythonの完全なI/Oスタックに依存し、RPython翻訳対象コードでは
-    # 避けるのが定石(pypy-tutorial-jp/example5.pyのmainloopもos.writeを使用)。
-    # os.write(fd, bytes)はRPythonでもCPython(このファイルを直接動かす場合)でも
-    # 同じように動くため、これに統一する。
+    # 初期継続 κ0。最終値をそのまま返して trampoline を止める。
+    # 主式の値は出力しない (仕様書 5.3節)
     def apply_cont(self, val):
-        os.write(1, b"End of computation.\n")
         return val
 
 
-class Zero1Cont(Cont):
-    # EOPL p145
-    # (apply-cont (zero1-cont cont) val)
-    #   = (apply-cont cont (bool-val (zero? (expval->num val))))
-    def __init__(self, saved_cont):
-        self.saved_cont = saved_cont
+class IfCont(Cont):
+    # (apply-cont (if-cont conseq alt env cont) val)
+    #   = (if val (value-of/k conseq env cont) (value-of/k alt env cont))
+    _immutable_fields_ = ["conseq", "alt", "env", "cont"]
+
+    def __init__(self, conseq, alt, env, cont):
+        self.conseq = conseq
+        self.alt = alt
+        self.env = env
+        self.cont = cont
 
     def apply_cont(self, val):
-        return self.saved_cont.apply_cont(BoolVal(expval_to_num(val) == 0))
+        if val is not FALSE:
+            return self.conseq.eval_cps(self.env, self.cont)
+        return self.alt.eval_cps(self.env, self.cont)
 
 
-class IfTestCont(Cont):
-    # EOPL p146
-    # (apply-cont (if-test-cont exp2 exp3 env cont) val)
-    #   = (if (expval->bool val)
-    #         (value-of/k exp2 env cont)
-    #         (value-of/k exp3 env cont))
-    def __init__(self, exp2, exp3, saved_env, saved_cont):
-        self.exp2 = exp2
-        self.exp3 = exp3
-        self.saved_env = saved_env
-        self.saved_cont = saved_cont
+class AppCont(Cont):
+    # 手続き呼出しの演算子・オペランドを左から右へ評価する途中 (仕様書 4.3節)。
+    # vals はここまでに求めた値 (vals[0] が演算子)
+    #   残りがある: (value-of/k e_i env (app-cont e* vals§⟨val⟩ env cont))
+    #   残りがない: (apply-procedure/k vals[0] vals[1:] cont)
+    _immutable_fields_ = ["app", "vals[*]", "env", "cont"]
 
-    def apply_cont(self, val):
-        if expval_to_bool(val):
-            return self.exp2.eval_cps(self.saved_env, self.saved_cont)
-        else:
-            return self.exp3.eval_cps(self.saved_env, self.saved_cont)
-
-
-class LetExpCont(Cont):
-    # EOPL p146
-    # (apply-cont (let-exp-cont var body env cont) val)
-    #   = (value-of/k body (extend-env var val env) cont)
-    def __init__(self, var, body, saved_env, saved_cont):
-        self.var = var
-        self.body = body
-        self.saved_env = saved_env
-        self.saved_cont = saved_cont
+    def __init__(self, app, vals, env, cont):
+        self.app = app
+        self.vals = vals
+        self.env = env
+        self.cont = cont
 
     def apply_cont(self, val):
-        new_env = self.saved_env.extend_env([self.var], [val])
-        return self.body.eval_cps(new_env, self.saved_cont)
+        # 継続は何度でも呼ばれうるので vals は書き換えずに作り直す
+        vals = self.vals + [val]
+        rands = self.app.rands
+        i = len(vals) - 1
+        if i < len(rands):
+            return rands[i].eval_cps(self.env, AppCont(self.app, vals, self.env, self.cont))
+        return vals[0].apply_procedure_k(vals[1:], self.cont)
 
 
-class Diff1Cont(Cont):
-    # EOPL p149
-    # (apply-cont (diff1-cont exp2 env cont) val1)
-    #   = (value-of/k exp2 env (diff2-cont val1 cont))
-    def __init__(self, exp2, saved_env, saved_cont):
-        self.exp2 = exp2
-        self.saved_env = saved_env
-        self.saved_cont = saved_cont
+class SetLocalCont(Cont):
+    # (apply-cont (set-cont (depth index) env cont) val)
+    #   = (begin (setref! ...) (apply-cont cont unspecified))
+    _immutable_fields_ = ["depth", "index", "env", "cont"]
 
-    def apply_cont(self, val1):
-        return self.exp2.eval_cps(self.saved_env, Diff2Cont(val1, self.saved_cont))
-
-
-class Diff2Cont(Cont):
-    # EOPL p149
-    # (apply-cont (diff2-cont val1 cont) val2)
-    #   = (let ((num1 (expval->num val1)) (num2 (expval->num val2)))
-    #       (apply-cont cont (num-val (- num1 num2))))
-    def __init__(self, val1, saved_cont):
-        self.val1 = val1
-        self.saved_cont = saved_cont
-
-    def apply_cont(self, val2):
-        num1 = expval_to_num(self.val1)
-        num2 = expval_to_num(val2)
-        return self.saved_cont.apply_cont(NumVal(num1 - num2))
-
-
-class Print1Cont(Cont):
-    # (apply-cont (print1-cont cont) val)
-    #   = (begin (os.write ... (expval->num val)) (apply-cont cont val))
-    # PrintExpの評価結果を副作用として出力しつつ、値自体は変えずに継続へ渡す。
-    def __init__(self, saved_cont):
-        self.saved_cont = saved_cont
+    def __init__(self, depth, index, env, cont):
+        self.depth = depth
+        self.index = index
+        self.env = env
+        self.cont = cont
 
     def apply_cont(self, val):
-        os.write(1, "%d\n" % (expval_to_num(val),))
-        return self.saved_cont.apply_cont(val)
+        assign(self.env, self.depth, self.index, val)
+        return self.cont.apply_cont(UNSPECIFIED)
 
 
-class RatorCont(Cont):
-    # EOPL p151
-    # (apply-cont (rator-cont rand env cont) val1)
-    #   = (value-of/k rand env (rand-cont val1 cont))
-    def __init__(self, rand, saved_env, saved_cont):
-        self.rand = rand
-        self.saved_env = saved_env
-        self.saved_cont = saved_cont
+class SetGlobalCont(Cont):
+    # define の変数への set!。値が格納される前ならエラー (仕様書 4.7節)
+    _immutable_fields_ = ["cell", "cont"]
 
-    def apply_cont(self, val1):
-        return self.rand.eval_cps(self.saved_env, RandCont(val1, self.saved_cont))
+    def __init__(self, cell, cont):
+        self.cell = cell
+        self.cont = cont
 
-
-class RandCont(Cont):
-    # EOPL p152
-    # (apply-cont (rand-cont val1 cont) val2)
-    #   = (let ((proc1 (expval->proc val1)))
-    #       (apply-procedure/k proc1 val2 cont))
-    def __init__(self, val1, saved_cont):
-        self.val1 = val1
-        self.saved_cont = saved_cont
-
-    def apply_cont(self, val2):
-        proc1 = self.val1
-        if not isinstance(proc1, ProcVal):
-            raise TypeError(
-                "RandCont.apply_cont: 呼び出そうとした値がProcVal ではありません: %r" % (proc1,)
-            )
-        return proc1.apply_procedure_k(val2, self.saved_cont)
+    def apply_cont(self, val):
+        if self.cell.value is UNDEFINED:
+            raise SchemeError()
+        self.cell.value = val
+        return self.cont.apply_cont(UNSPECIFIED)
 
 
-# 注記: 現状のvalue-of/k(exp.pyのeval_cps)は末尾呼び出しの連鎖として
-# 書かれているが、CPython自体は末尾呼び出し最適化を行わないため、再帰が深いプログラムでは
-# 通常のPython呼び出しスタックを消費する。EOPL 5.2節のトランポリン化・5.3節のレジスタ化は
-# この制約を回避するための後続ステップであり、今回のスコープには含めない。
+class DefineCont(Cont):
+    # 仕様書 8.4節 𝒟: 値を格納してから残りの定義と主式 rest に進む
+    _immutable_fields_ = ["cell", "rest", "cont"]
+
+    def __init__(self, cell, rest, cont):
+        self.cell = cell
+        self.rest = rest
+        self.cont = cont
+
+    def apply_cont(self, val):
+        self.cell.value = val
+        return self.rest.eval_cps(None, self.cont)

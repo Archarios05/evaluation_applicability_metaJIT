@@ -1,130 +1,182 @@
 # -*- coding: utf-8 -*-
-# EOPL 3章/5章 抽象構文木(Expression)の定義。
-# 各 Exp サブクラスが eval_cps(env, cont) を持ち、EOPL p154-155 図5.4/5.5の
-# value-of/k の各ケースに対応する(オブジェクト指向の仮想メソッドディスパッチ)。
+# 抽象構文木。s-reader の構文木を convert.py でこの形に変換してから実行する。
+# 変数参照は字句アドレスか GlobalCell に、標準手続きの名前は定数に解決済み。
 #
-# LETRECの最小構成として、EOPL 5.1節で扱う9種の式
-# (const-exp, var-exp, proc-exp, zero?-exp, if-exp, let-exp, diff-exp,
-#  call-exp, letrec-exp) をすべて実装する。
-from classes import NumVal, ProcVal
-from cont import (
-    Zero1Cont,
-    IfTestCont,
-    LetExpCont,
-    Diff1Cont,
-    RatorCont,
-    Print1Cont,
-)
+# 各 Exp サブクラスの eval_cps(env, cont) が value-of/k の 1 つの場合に当たる
+# (仕様書 8.4節 ℰ の各場合)。RPython は match 文を使えないので、
+# 場合分けは仮想メソッドディスパッチで表す。
+from rpy import unroll_safe
+from classes import SchemeError, UNDEFINED
+from env import Frame, lookup
+from proc import ClosureVal, PrimVal
+from cont import IfCont, AppCont, SetLocalCont, SetGlobalCont, DefineCont
 
 
 class Exp(object):
     def eval_cps(self, env, cont):
         raise NotImplementedError
 
+    def to_string(self):
+        return "exp"
+
 
 class ConstExp(Exp):
-    # EOPL p154: (const-exp num) -> (apply-cont cont (num-val num))
-    def __init__(self, num):
-        self.num = num
+    # (value-of/k K env cont) = (apply-cont cont 𝒦[K])。標準手続きの名前の参照もこれになる
+    _immutable_fields_ = ["val"]
+
+    def __init__(self, val):
+        self.val = val
 
     def eval_cps(self, env, cont):
-        return cont.apply_cont(NumVal(self.num))
+        return cont.apply_cont(self.val)
+
+    def to_string(self):
+        val = self.val
+        if isinstance(val, PrimVal):
+            return "prim(%s)" % (val.name,)
+        return "const(%s)" % (val.to_string(),)
 
 
-class VarExp(Exp):
-    # EOPL p154: (var-exp var) -> (apply-cont cont (apply-env env var))
-    def __init__(self, var):
-        self.var = var
+class LocalVarExp(Exp):
+    # lambda / letrec の変数は参照時に必ず値を持つ
+    _immutable_fields_ = ["name", "depth", "index"]
+
+    def __init__(self, name, depth, index):
+        self.name = name
+        self.depth = depth
+        self.index = index
 
     def eval_cps(self, env, cont):
-        val = env.lookup_variable_value(self.var)
+        return cont.apply_cont(lookup(env, self.depth, self.index))
+
+    def to_string(self):
+        return "var(%s)" % (self.name,)
+
+
+class GlobalVarExp(Exp):
+    # define の変数。値が格納される前ならエラー (仕様書 5.2節)
+    _immutable_fields_ = ["cell"]
+
+    def __init__(self, cell):
+        self.cell = cell
+
+    def eval_cps(self, env, cont):
+        val = self.cell.value
+        if val is UNDEFINED:
+            raise SchemeError()
         return cont.apply_cont(val)
 
+    def to_string(self):
+        return "global(%s)" % (self.cell.name,)
 
-class ProcExp(Exp):
-    # EOPL p154: (proc-exp var body) -> (apply-cont cont (proc-val (procedure var body env)))
-    def __init__(self, var, body):
-        self.var = var
+
+class LambdaExp(Exp):
+    _immutable_fields_ = ["nparams", "body"]
+
+    def __init__(self, nparams, body):
+        self.nparams = nparams
         self.body = body
 
     def eval_cps(self, env, cont):
-        return cont.apply_cont(ProcVal(self.var, self.body, env))
+        return cont.apply_cont(ClosureVal(self, env))
 
-
-class ZeroExp(Exp):
-    # EOPL p154: (zero?-exp exp1) -> (value-of/k exp1 env (zero1-cont cont))
-    def __init__(self, exp1):
-        self.exp1 = exp1
-
-    def eval_cps(self, env, cont):
-        return self.exp1.eval_cps(env, Zero1Cont(cont))
+    def to_string(self):
+        return "lambda/%d" % (self.nparams,)
 
 
 class IfExp(Exp):
-    # EOPL p154: (if-exp exp1 exp2 exp3)
-    #   -> (value-of/k exp1 env (if-test-cont exp2 exp3 env cont))
-    def __init__(self, exp1, exp2, exp3):
-        self.exp1 = exp1
-        self.exp2 = exp2
-        self.exp3 = exp3
+    # (value-of/k test env (if-cont conseq alt env cont))
+    _immutable_fields_ = ["test", "conseq", "alt"]
+
+    def __init__(self, test, conseq, alt):
+        self.test = test
+        self.conseq = conseq
+        self.alt = alt
 
     def eval_cps(self, env, cont):
-        return self.exp1.eval_cps(env, IfTestCont(self.exp2, self.exp3, env, cont))
+        return self.test.eval_cps(env, IfCont(self.conseq, self.alt, env, cont))
+
+    def to_string(self):
+        return "if"
 
 
-class LetExp(Exp):
-    # EOPL p154: (let-exp var exp1 body)
-    #   -> (value-of/k exp1 env (let-exp-cont var body env cont))
-    def __init__(self, var, exp1, body):
-        self.var = var
-        self.exp1 = exp1
+class AppExp(Exp):
+    # (value-of/k rator env (app-cont rands ⟨⟩ env cont))
+    _immutable_fields_ = ["rator", "rands[*]"]
+
+    def __init__(self, rator, rands):
+        self.rator = rator
+        self.rands = rands
+
+    def eval_cps(self, env, cont):
+        return self.rator.eval_cps(env, AppCont(self, [], env, cont))
+
+    def to_string(self):
+        return "app/%d" % (len(self.rands),)
+
+
+class SetLocalExp(Exp):
+    _immutable_fields_ = ["name", "depth", "index", "exp"]
+
+    def __init__(self, name, depth, index, exp):
+        self.name = name
+        self.depth = depth
+        self.index = index
+        self.exp = exp
+
+    def eval_cps(self, env, cont):
+        return self.exp.eval_cps(env, SetLocalCont(self.depth, self.index, env, cont))
+
+    def to_string(self):
+        return "set!(%s)" % (self.name,)
+
+
+class SetGlobalExp(Exp):
+    _immutable_fields_ = ["cell", "exp"]
+
+    def __init__(self, cell, exp):
+        self.cell = cell
+        self.exp = exp
+
+    def eval_cps(self, env, cont):
+        return self.exp.eval_cps(env, SetGlobalCont(self.cell, cont))
+
+    def to_string(self):
+        return "set!(%s)" % (self.cell.name,)
+
+
+class LetrecExp(Exp):
+    # (value-of/k body (extend-env-rec names lambdas env) cont)
+    # 初期値は lambda 式なので評価に継続が要らない
+    _immutable_fields_ = ["lambdas[*]", "body"]
+
+    def __init__(self, lambdas, body):
+        self.lambdas = lambdas
         self.body = body
 
+    @unroll_safe
     def eval_cps(self, env, cont):
-        return self.exp1.eval_cps(env, LetExpCont(self.var, self.body, env, cont))
+        n = len(self.lambdas)
+        frame = Frame([UNDEFINED] * n, env)
+        for i in range(n):
+            frame.vals[i] = ClosureVal(self.lambdas[i], frame)
+        return self.body.eval_cps(frame, cont)
+
+    def to_string(self):
+        return "letrec/%d" % (len(self.lambdas),)
 
 
-class DiffExp(Exp):
-    # EOPL p154: (diff-exp exp1 exp2)
-    #   -> (value-of/k exp1 env (diff1-cont exp2 env cont))
-    def __init__(self, exp1, exp2):
-        self.exp1 = exp1
-        self.exp2 = exp2
+class DefineExp(Exp):
+    # (define x e) の後に rest (残りの定義と主式) が続く。仕様書 8.4節 𝒟
+    _immutable_fields_ = ["cell", "exp", "rest"]
 
-    def eval_cps(self, env, cont):
-        return self.exp1.eval_cps(env, Diff1Cont(self.exp2, env, cont))
-
-
-class CallExp(Exp):
-    # EOPL p154: (call-exp rator rand)
-    #   -> (value-of/k rator env (rator-cont rand env cont))
-    def __init__(self, rator, rand):
-        self.rator = rator
-        self.rand = rand
-
-    def eval_cps(self, env, cont):
-        return self.rator.eval_cps(env, RatorCont(self.rand, env, cont))
-
-
-class PrintExp(Exp):
-    # 独自拡張: (print-exp exp1) -> (value-of/k exp1 env (print1-cont cont))
-    # exp1 の評価結果を副作用として出力し、その値をそのまま継続へ渡す。
-    def __init__(self, exp1):
-        self.exp1 = exp1
+    def __init__(self, cell, exp, rest):
+        self.cell = cell
+        self.exp = exp
+        self.rest = rest
 
     def eval_cps(self, env, cont):
-        return self.exp1.eval_cps(env, Print1Cont(cont))
+        return self.exp.eval_cps(env, DefineCont(self.cell, self.rest, cont))
 
-
-class LetRecExp(Exp):
-    # EOPL p154: (letrec-exp p-name b-var p-body letrec-body)
-    #   -> (value-of/k letrec-body (extend-env-rec p-name b-var p-body env) cont)
-    def __init__(self, p_name, b_var, p_body, letrec_body):
-        self.p_name = p_name
-        self.b_var = b_var
-        self.p_body = p_body
-        self.letrec_body = letrec_body
-
-    def eval_cps(self, env, cont):
-        new_env = env.extend_env_rec(self.p_name, self.b_var, self.p_body)
-        return self.letrec_body.eval_cps(new_env, cont)
+    def to_string(self):
+        return "define(%s)" % (self.cell.name,)

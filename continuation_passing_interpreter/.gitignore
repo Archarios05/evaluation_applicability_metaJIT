@@ -7,3 +7,4 @@ target-c
 jit-fib.log
 target-c
 target-c.nojit.bak
+target-c-nojit
