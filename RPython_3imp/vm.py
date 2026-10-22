@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # スタックベースの VM。3imp-4.3+4.4+4.5.scm の VM に相当
 # レジスタ: a (アキュムレータ) pc (3imp の x) f (フレーム) c (クロージャ) s (スタックトップ)
-from RPython_3imp.rpy import JitDriver, dont_look_inside
+from RPython_3imp.rpy import JitDriver, dont_look_inside, unroll_safe
 from RPython_3imp.value import (SchemeError, W_Object, W_Box, W_Frame, W_Closure, W_Functional,
                    W_Primitive, W_Continuation, W_Procedure, W_FALSE, W_UNDEFINED,
                    W_UNSPECIFIED)
@@ -40,6 +40,7 @@ class VM(object):
         self.stack[s] = w
         return s + 1
 
+    @unroll_safe
     def find_link(self, n, f):
         while n > 0:
             fn = self.stack[f - 1]

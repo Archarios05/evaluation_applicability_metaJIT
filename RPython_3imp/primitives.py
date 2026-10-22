@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# 標準手続き (仕様書 6章)。番号は syntax.PRIMITIVES の並びと同じ
+# 標準手続き 。番号は syntax.PRIMITIVES の並びと同じ
 # call-with-current-continuation はスタックを触るので vm.py の apply で扱う
 import os
 from RPython_3imp.rpy import ovfcheck

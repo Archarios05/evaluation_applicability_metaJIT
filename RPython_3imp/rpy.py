@@ -8,7 +8,7 @@ except AttributeError:
     MAXINT = sys.maxsize
 
 try:
-    from rpython.rlib.jit import JitDriver, dont_look_inside
+    from rpython.rlib.jit import JitDriver, dont_look_inside, unroll_safe
     from rpython.rlib.rarithmetic import ovfcheck
 except ImportError:
     class JitDriver(object):
@@ -22,6 +22,9 @@ except ImportError:
             pass
 
     def dont_look_inside(func):
+        return func
+
+    def unroll_safe(func):
         return func
 
     def ovfcheck(x):

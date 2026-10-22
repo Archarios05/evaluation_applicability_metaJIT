@@ -136,10 +136,10 @@ class Compiler(object):
     def here(self):
         return len(self.ops)
 
-    def emit0(self, op):
+    def emit0(self, op):#以下、引数の個数ごとの命令
         self.ops.append(op)
 
-    def emit1(self, op, x):
+    def emit1(self, op, x):#今書いた最後のオペランドの位置を返す
         self.ops.append(op)
         self.ops.append(x)
         return len(self.ops) - 1
