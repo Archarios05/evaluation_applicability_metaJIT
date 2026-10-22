@@ -10,7 +10,7 @@
 #  Cスタックを消費し続けて StackOverflow を起こした)。
 from rpy import JitDriver
 from cont import EndCont
-from classes import ApplyProcBounce, ApplyContBounce
+from bounce import ApplyProcBounce, ApplyContBounce
 
 
 def get_location(exp):
@@ -19,7 +19,7 @@ def get_location(exp):
 
 # greens=exp: クロージャ本体の構文木。同じ本体に戻ってきたらループとみなす
 jitdriver = JitDriver(greens=['exp'], reds=['env', 'cont'],
-                      get_printable_location=get_location)
+                      get_printable_location=get_location)#JITLOGオプション
 
 
 def trampoline(exp, env, cont):
@@ -39,3 +39,4 @@ def trampoline(exp, env, cont):
 def value_of_program(exp):
     # EOPL p159 value-of-program : Program -> FinalAnswer
     return trampoline(exp, None, EndCont())
+#コレ要らないかも、、、いつまでEOPLとの整合性を取ればいいかわからない

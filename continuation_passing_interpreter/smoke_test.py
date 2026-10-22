@@ -197,7 +197,7 @@ def tail_calls_stay_flat(text, expected):
 
 
 def test_tail_calls():
-    # 仕様書 3.6節
+  
     tail_calls_stay_flat("""(letrec ((even? (lambda (n) (if (zero? n) #t (odd? (- n 1)))))
                                      (odd? (lambda (n) (if (zero? n) #f (even? (- n 1))))))
                               (display (even? 10000)))""", "#t")
@@ -220,7 +220,7 @@ def test_tail_calls():
                             (define d (set! n (+ n 1)))
                             (if (< n 10000) (r r) (display n))""", "10000")
     # 非末尾再帰は値を返す側の apply_cont の連鎖がホストのスタックを使う。
-    # 上限を超えたら実装制限の違反として "error" を報告する (仕様書 9.2節)
+    # 上限を超えたら実装制限の違反として "error" を報告する 
     got = with_recursion_limit(300, lambda: run(
         """(define sum (lambda (n) (if (zero? n) 0 (+ n (sum (- n 1))))))
            (display (sum 1000))"""))

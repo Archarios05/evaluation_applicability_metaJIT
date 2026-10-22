@@ -4,32 +4,15 @@
 継続をデータ構造で表し (5.1節)、手続き適用をトランポリン化してある (5.2節)。
 パーサは `../s-reader` を使う。CEK版 `../RPythonCEK/` と値・環境・継続フレームの種類・
 例題をそろえてあるので、そのまま挙動・性能を比較できる。
-
 EOPL 5章の LETREC 言語で書いていた旧版はタグ `eopl-letrec` にある。
-
-## 評価の進み方
-
-- `Exp.eval_cps(env, cont)` と `Cont.apply_cont(val)` が、次の計算を**直接呼び出す**。
-- クロージャと継続手続きの適用だけは評価をせず、Bounce を返す。
-  - `ApplyProcBounce(body, env, cont)`: 拡張した環境で本体を評価する
-  - `ApplyContBounce(cont, val)`: 捕まえた継続に値を渡す
-- Bounce は呼出しの連鎖をそのまま戻って `interpreter.trampoline` に届き、
-  ホストのスタックはそこで巻き戻る。末尾呼出しはこれで一定の領域で回る (仕様書 3.6節)。
-- 標準手続きは呼び返しをしないので、その場で計算して継続に渡す。
-  `call-with-current-continuation` は引数の手続きを今の継続で適用する (それが Bounce を返す)。
-
-値を返す側の継続の連鎖 (非末尾再帰から戻るとき) はホストのスタックを使う。
-深い非末尾再帰ではホストのスタックが尽き、実装制限の違反として `error` を出力する
-(仕様書 9.2節。RPython では `StackOverflow`、CPython では `RecursionError` を捕まえる)。
-CEK版はここでもスタックを使わない。
-
 ## ファイル
 
 | ファイル | 中身 |
 | --- | --- |
-| `classes.py` | 手続き以外の値、`SchemeError`、`show`、Bounce (`ApplyProcBounce` / `ApplyContBounce`) |
+| `bounce.py` | トランポリンの Bounce (`ApplyProcBounce` / `ApplyContBounce`) |
+| `value.py` | 手続き以外の値、`SchemeError`、`show` |
 | `env.py` | 環境のフレーム `Frame` (字句アドレスで引く) と define の変数の場所 `GlobalCell` |
-| `primitives.py` | 標準手続き 22 個 (仕様書 6章)。`write_out` は出力先 |
+| `primitives.py` | 標準手続き 22 個 。`write_out` は出力先 |
 | `proc.py` | 手続き値 `ClosureVal` / `PrimVal` / `ContVal` と `apply_procedure_k` |
 | `cont.py` | 継続フレーム 6 種 (`EndCont` `IfCont` `AppCont` `SetLocalCont` `SetGlobalCont` `DefineCont`) |
 | `exp.py` | 構文木 10 種と `eval_cps` |
@@ -40,8 +23,9 @@ CEK版はここでもスタックを使わない。
 | `smoke_test.py` | CPython3 用テスト (例は RPython3imp / CEK版と同じ) |
 | `examples/` | ベンチマーク用の例題 |
 
-`env.py` / `primitives.py` / `convert.py` は CEK版とほぼ同じ (import 元が `value` か `classes` かだけ違う)。
-
+`value.py` / `env.py` / `primitives.py` / `convert.py` は CEK版とほぼ同じ。CPS版の `Value` は `Bounce` を継承し、
+手続きでない値の適用 `apply_procedure_k` を持つ点だけが違う。
+→CEKと揃えたい
 ## JIT
 
 ```python
@@ -50,7 +34,7 @@ jitdriver = JitDriver(greens=['exp'], reds=['env', 'cont'])
 
 - `jit_merge_point` は `trampoline` の `while` の先頭。ループのバックエッジが本物のジャンプになる。
 - green の `exp` はクロージャ本体の構文木。同じ本体に戻ってきたらループの先頭とみなす。
-  (旧版は green をクロージャ値 `proc` にしていた。値は実行時に作られるので、構文木のほうが素直)
+  (旧版は green をクロージャ値 `proc` にしていた。値は実行時に作られるので、構文木のほうがまだマシ？？）
 - 継続手続きの適用 (`ApplyContBounce`) は合流点を通さず内側の `while` で進める。
 
 ## 使い方
@@ -61,6 +45,9 @@ python target.py examples/fib.scm
 
 # WSL
 RPY=~/research/effect-jit-artifact/rpyeffect-jit/pypy/rpython/bin/rpython
+
+RPythonのディレクトリ指定
+
 python2 $RPY --opt=2   --output=target-c-nojit target.py
 python2 $RPY --opt=jit --output=target-c       target.py
 ./target-c examples/countdown.scm

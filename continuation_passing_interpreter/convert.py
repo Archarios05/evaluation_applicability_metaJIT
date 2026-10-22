@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-# s-reader の構文木 -> exp.py の構文木。
+# s-reader の構文木 -> exp.py の構文木←これ変える必要あるか？一旦保留
 # 変数を字句アドレス (depth, index) / GlobalCell / 標準手続きの定数に解決する。
-# 静的検査 (仕様書 7.1節) は s-reader が済ませているので、ここでは解決だけを行う。
+# 静的検査 は s-reader が済ませているので、ここでは解決だけを行う。
 import os
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "s-reader"))
 
 import syntax
-from classes import IntVal, TRUE, FALSE, NIL, UNDEFINED
+from value import IntVal, TRUE, FALSE, NIL, UNDEFINED
 from env import GlobalCell
 from proc import PrimVal
 from primitives import ARITY

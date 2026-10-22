@@ -2,7 +2,7 @@
 # 環境 (CPSインタプリタの env 引数)。
 # 変数は変換時に字句アドレス (depth, index) に置き換えてあるので (convert.py)、
 # 実行時は名前で探さずフレームを depth 枚たどって vals[index] を読む (EOPL 3.7節)。
-# フレームの各要素が仕様書 3.5節の「場所」に当たる。set! はここを書き換え、
+# フレームの各要素がR5RSの「場所」に当たる。set! はここを書き換え、
 # 同じフレームを持つクロージャすべてから見える。
 # トップ・レベルの環境は None。define の変数はフレームではなく GlobalCell に置く。
 from rpy import unroll_safe

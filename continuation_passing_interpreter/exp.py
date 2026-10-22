@@ -3,10 +3,10 @@
 # 変数参照は字句アドレスか GlobalCell に、標準手続きの名前は定数に解決済み。
 #
 # 各 Exp サブクラスの eval_cps(env, cont) が value-of/k の 1 つの場合に当たる
-# (仕様書 8.4節 ℰ の各場合)。RPython は match 文を使えないので、
+# 。RPython は match 文を使えないので、
 # 場合分けは仮想メソッドディスパッチで表す。
 from rpy import unroll_safe
-from classes import SchemeError, UNDEFINED
+from value import SchemeError, UNDEFINED
 from env import Frame, lookup
 from proc import ClosureVal, PrimVal
 from cont import IfCont, AppCont, SetLocalCont, SetGlobalCont, DefineCont
@@ -54,7 +54,7 @@ class LocalVarExp(Exp):
 
 
 class GlobalVarExp(Exp):
-    # define の変数。値が格納される前ならエラー (仕様書 5.2節)
+    # define の変数。値が格納される前ならエラー 
     _immutable_fields_ = ["cell"]
 
     def __init__(self, cell):
@@ -167,7 +167,7 @@ class LetrecExp(Exp):
 
 
 class DefineExp(Exp):
-    # (define x e) の後に rest (残りの定義と主式) が続く。仕様書 8.4節 𝒟
+    # (define x e) の後に rest (残りの定義と主式) が続く。
     _immutable_fields_ = ["cell", "exp", "rest"]
 
     def __init__(self, cell, exp, rest):

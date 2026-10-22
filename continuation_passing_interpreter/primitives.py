@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# 標準手続き (仕様書 6章, 8.6節)。番号は syntax.PRIMITIVES の並びと同じ。
+# 標準手続き 番号は syntax.PRIMITIVES の並びと同じ。
 # call-with-current-continuation は継続を触るので proc.PrimVal で扱う
 import os
 from rpy import ovfcheck
-from classes import (SchemeError, IntVal, PairVal, NIL, FALSE, UNSPECIFIED,
-                   wrap_bool, show)
+from value import (SchemeError, IntVal, PairVal, NIL, FALSE, UNSPECIFIED,
+                 wrap_bool, show)
 
 P_ADD = 0
 P_SUB = 1
@@ -50,7 +50,7 @@ def pair_of(val):
 
 
 def eq(x, y):
-    # 仕様書 6.4節
+    
     if isinstance(x, IntVal) and isinstance(y, IntVal):
         return x.value == y.value
     return x is y
@@ -84,7 +84,7 @@ def modulo(x, y):
 
 
 def arith(pid, x, y):
-    # 結果が固定長整数に収まらなければ実装制限の違反 (仕様書 9.2節)
+    # 結果が固定長整数に収まらなければ実装制限の違反
     try:
         if pid == P_ADD:
             return ovfcheck(x + y)

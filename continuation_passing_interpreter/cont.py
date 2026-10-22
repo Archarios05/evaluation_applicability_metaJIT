@@ -6,7 +6,7 @@
 # 継続は構築時に確定している情報だけを持ち、apply_cont は値 val だけを受け取る。
 # 各 apply_cont は exp.eval_cps(...) / cont.apply_cont(...) を末尾で直接呼ぶ。
 # Exp 側のモジュールは import しない (ダックタイピング)。
-from classes import SchemeError, FALSE, UNSPECIFIED, UNDEFINED
+from value import SchemeError, FALSE, UNSPECIFIED, UNDEFINED
 from env import assign
 
 
@@ -16,8 +16,8 @@ class Cont(object):
 
 
 class EndCont(Cont):
-    # 初期継続 κ0。最終値をそのまま返して trampoline を止める。
-    # 主式の値は出力しない (仕様書 5.3節)
+    # 初期継続。最終値をそのまま返して trampoline を止める。
+    # 主式の値は出力しない
     def apply_cont(self, val):
         return val
 
@@ -40,7 +40,7 @@ class IfCont(Cont):
 
 
 class AppCont(Cont):
-    # 手続き呼出しの演算子・オペランドを左から右へ評価する途中 (仕様書 4.3節)。
+    # 手続き呼出しの演算子・オペランドを左から右へ評価する途中 
     # vals はここまでに求めた値 (vals[0] が演算子)
     #   残りがある: (value-of/k e_i env (app-cont e* vals§⟨val⟩ env cont))
     #   残りがない: (apply-procedure/k vals[0] vals[1:] cont)
@@ -53,7 +53,8 @@ class AppCont(Cont):
         self.cont = cont
 
     def apply_cont(self, val):
-        # 継続は何度でも呼ばれうるので vals は書き換えずに作り直す
+        # 継続は何度でも呼ばれうるので vals は書き換えずに配列を作り直す
+        #10/22 マルチショットの継続を実装しないのであればここは書き換えでもいいかも？？その場合immutable_fields_ を書き換えるので多少の性能変化
         vals = self.vals + [val]
         rands = self.app.rands
         i = len(vals) - 1
@@ -79,7 +80,7 @@ class SetLocalCont(Cont):
 
 
 class SetGlobalCont(Cont):
-    # define の変数への set!。値が格納される前ならエラー (仕様書 4.7節)
+    # define の変数への set!。値が格納される前ならエラー 
     _immutable_fields_ = ["cell", "cont"]
 
     def __init__(self, cell, cont):
@@ -94,7 +95,7 @@ class SetGlobalCont(Cont):
 
 
 class DefineCont(Cont):
-    # 仕様書 8.4節 𝒟: 値を格納してから残りの定義と主式 rest に進む
+    # 値を格納してから残りの定義と主式 rest に進む
     _immutable_fields_ = ["cell", "rest", "cont"]
 
     def __init__(self, cell, rest, cont):

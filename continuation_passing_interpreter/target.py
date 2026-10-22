@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 # RPython 翻訳用のエントリポイント
 #   ./target-c prog.scm
-# エラーはどれも "error" の 1 行だけを出力する (仕様書 9.1節)
-import os
+# エラーはどれも "error" の 1 行だけを出力する 
 import primitives
 from convert import convert_program
 from reader import ParseError
 from syntax import parse_program
-from classes import SchemeError
+from value import SchemeError
 from interpreter import value_of_program
 from rpy import StackOverflow
 

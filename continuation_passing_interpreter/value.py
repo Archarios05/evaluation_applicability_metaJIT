@@ -1,45 +1,21 @@
 # -*- coding: utf-8 -*-
-# 値 (仕様書 8.3節 E = Z + Ep + M + F) のうち手続き以外の定義と、トランポリンの Bounce。
-# 手続きは proc.py。依存関係の起点なので他の自作モジュールはimportしない。
+# 値 (E = Z + Ep + M + F) のうち手続き以外の定義。
+# 手続きは proc.py、トランポリンの Bounce は bounce.py。
 #
 # RPython (Python2 サブセット) 向けに @dataclass や abc.ABC、引数注釈は使わず、
 # 素の __init__ を持つクラスのみで構成する。
 from rpy import dont_look_inside
+from bounce import Bounce
 
 
 class SchemeError(Exception):
-    # 仕様書 9.1節: エラーの種類は区別しない
     pass
-
-
-class Bounce(object):
-    # EOPL p159 Bounce = ExpVal ∪ (() -> Bounce)
-    # Scheme のクロージャ (lambda () ...) の代わりに、
-    # まだ実行していない計算をデータとして持つ (EOPL 演習5.18)。
-    pass
-
-
-class ApplyProcBounce(Bounce):
-    # クロージャ適用の (lambda () (value-of/k body (extend-env ...) cont))。
-    # 環境はもう拡張してあり、残りは本体を評価するだけ
-    def __init__(self, body, env, cont):
-        self.body = body
-        self.env = env
-        self.cont = cont
-
-
-class ApplyContBounce(Bounce):
-    # 継続手続きの適用 (lambda () (apply-cont cont val))。
-    # 今の継続を捨てるので、ホストのスタックもここで巻き戻す
-    def __init__(self, cont, val):
-        self.cont = cont
-        self.val = val
 
 
 class Value(Bounce):
     # Bounce のうち計算が終わった最終値の側
     def apply_procedure_k(self, args, cont):
-        # 手続きでない値の適用 (仕様書 4.3節)
+        # 手続きでない値の適用
         raise SchemeError()
 
     def to_string(self):
@@ -96,7 +72,7 @@ UNSPECIFIED = UnspecifiedVal()
 
 
 class UndefinedVal(Value):
-    # define の変数に値が格納される前の状態 (仕様書 5.2節)
+    # define の変数に値が格納される前の状態
     def to_string(self):
         return "#<undefined>"
 
@@ -105,7 +81,7 @@ UNDEFINED = UndefinedVal()
 
 
 class PairVal(Value):
-    # ペアは書換え不可能 (仕様書 3.5節)
+    # ペアは書換え不可能
     _immutable_fields_ = ["car", "cdr"]
 
     def __init__(self, car, cdr):
@@ -118,7 +94,6 @@ class PairVal(Value):
 
 @dont_look_inside
 def show(val):
-    # 仕様書 8.8節 show
     if isinstance(val, PairVal):
         parts = ["(", show(val.car)]
         rest = val.cdr
