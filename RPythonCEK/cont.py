@@ -25,7 +25,7 @@ class Kont(object):
 
 
 class EndKont(Kont):
-    # 初期継続 κ0。主式の値は出力しない (仕様書 5.3節)
+    # 初期継続 κ0。主式の値は出力しない
     def apply_kont(self, val):
         return HaltState(val)
 
@@ -53,7 +53,7 @@ class IfKont(Kont):
 
 
 class AppKont(Kont):
-    # 手続き呼出しの演算子・オペランドを左から右へ評価する途中 (仕様書 4.3節)。
+    # 手続き呼出しの演算子・オペランドを左から右へ評価する途中。
     # vals はここまでに求めた値 (vals[0] が演算子)
     #   <v, (app e* vals ρ κ)>_cont -> <e_i, ρ, (app e* vals§⟨v⟩ ρ κ)>  (残りがある)
     #                                -> vals§⟨v⟩ を適用                (残りがない)
@@ -97,7 +97,7 @@ class SetLocalKont(Kont):
 
 
 class SetGlobalKont(Kont):
-    # define の変数への set!。値が格納される前ならエラー (仕様書 4.7節)
+    # define の変数への set!。値が格納される前ならエラー
     _immutable_fields_ = ["cell", "kont"]
 
     def __init__(self, cell, kont):
@@ -115,7 +115,7 @@ class SetGlobalKont(Kont):
 
 
 class DefineKont(Kont):
-    # 仕様書 8.4節 𝒟: 値を格納してから残りの定義と主式 rest に進む
+    # 値を格納してから残りの定義と主式 rest に進む
     #   <v, (define cell rest κ)>_cont -> <rest, ρ, κ>
     _immutable_fields_ = ["cell", "rest", "kont"]
 

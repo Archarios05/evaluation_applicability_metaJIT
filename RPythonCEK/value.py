@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-# CEK機械が扱う値 (仕様書 8.3節 E = Z + Ep + M + F) のうち手続き以外の定義。
+# CEK機械が扱う値  E = Z + Ep + M + F) のうち手続き以外の定義。
 # 手続きは proc.py。依存関係の起点なので他の自作モジュールはimportしない。
 from rpy import dont_look_inside
 
 
 class SchemeError(Exception):
-    # 仕様書 9.1節: エラーの種類は区別しない
+    #: エラーの種類は区別しない
     pass
 
 
 class Value(object):
     def apply_procedure(self, args, kont):
-        # 手続きでない値の適用 (仕様書 4.3節)
+        # 手続きでない値の適用 
         raise SchemeError()
 
     def to_string(self):
@@ -68,7 +68,7 @@ UNSPECIFIED = UnspecifiedVal()
 
 
 class UndefinedVal(Value):
-    # define の変数に値が格納される前の状態 (仕様書 5.2節)
+    # define の変数に値が格納される前の状態 
     def to_string(self):
         return "#<undefined>"
 
@@ -77,7 +77,7 @@ UNDEFINED = UndefinedVal()
 
 
 class PairVal(Value):
-    # ペアは書換え不可能 (仕様書 3.5節)
+    # ペアは書換え不可能 
     _immutable_fields_ = ["car", "cdr"]
 
     def __init__(self, car, cdr):
@@ -90,7 +90,6 @@ class PairVal(Value):
 
 @dont_look_inside
 def show(val):
-    # 仕様書 8.8節 show
     if isinstance(val, PairVal):
         parts = ["(", show(val.car)]
         rest = val.cdr

@@ -1,0 +1,84 @@
+[dcf886e3576] {jit-log-opt-loop
+# Loop 1 (if) : loop with 49 ops
+[p0, p1]
++235: label(p0, p1, descr=TargetToken(134170699554848))
+debug_merge_point(0, 0, 'if')
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'prim(zero?)')
+debug_merge_point(0, 0, 'var(n)')
++240: p2 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
++251: p4 = getarrayitem_gc_r(p2, 0, descr=<ArrayP 8>)
++255: guard_class(p4, ConstClass(IntVal), descr=<Guard0x7a070ce2a0b0>) [p4, p1, p0]
++267: i6 = getfield_gc_i(p4, descr=<FieldS value.IntVal.inst_value 8 pure>)
++271: i7 = int_is_zero(i6)
++274: guard_false(i7, descr=<Guard0x7a070ce281d0>) [p4, p1, p0]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(loop)')
++287: p9 = getfield_gc_r(ConstPtr(ptr8), descr=<FieldP env.GlobalCell.inst_value 16>)
++298: i11 = instance_ptr_eq(p9, ConstPtr(ptr10))
++301: guard_false(i11, descr=<Guard0x7a070ce28200>) [p4, p1, p0]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
+debug_merge_point(0, 0, 'const(1)')
++307: i13 = int_sub_ovf(i6, 1)
++311: guard_no_overflow(descr=<Guard0x7a070ce28230>) [p4, p1, p0]
++317: guard_class(p9, 101121357617896, descr=<Guard0x7a070ce28260>) [p4, p1, p0]
++329: p15 = getfield_gc_r(p9, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++333: i16 = getfield_gc_i(p15, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++337: i18 = int_ne(1, i16)
++341: guard_false(i18, descr=<Guard0x7a070ce28290>) [p4, p1, p0]
++347: p19 = getfield_gc_r(p15, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++351: p20 = getfield_gc_r(p9, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++362: guard_value(p19, ConstPtr(ptr21), descr=<Guard0x7a070ce282c0>) [p4, p1, p0]
+debug_merge_point(0, 0, 'if')
++371: p22 = same_as_r(p20)
++374: label(p20, i13, p1, p9, p15, p22, descr=TargetToken(134170699554912))
+debug_merge_point(0, 0, 'if')
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'prim(zero?)')
+debug_merge_point(0, 0, 'var(n)')
++416: i23 = int_is_zero(i13)
++419: guard_false(i23, descr=<Guard0x7a070ce2a0f8>) [i13, p20, p1]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(loop)')
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
+debug_merge_point(0, 0, 'const(1)')
++425: i25 = int_sub_ovf(i13, 1)
++432: guard_no_overflow(descr=<Guard0x7a070ce282f0>) [i13, p20, p1]
+debug_merge_point(0, 0, 'if')
++438: jump(p22, i25, p1, p9, p15, p22, descr=TargetToken(134170699554912))
++464: --end of the loop--
+[dcf88a88276] jit-log-opt-loop}
+[dcf8a467aa4] {jit-summary
+Tracing:      	1	0.047763
+Backend:      	1	0.012409
+TOTAL:      		0.074033
+ops:             	333
+heapcached ops:  	70
+recorded ops:    	276
+  calls:         	17
+guards:          	70
+opt ops:         	46
+opt guards:      	9
+opt guards shared:	7
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	5
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[dcf8a482b38] jit-summary}

@@ -5,7 +5,7 @@
 #
 # 各 Exp サブクラスの eval_step(env, kont) が
 #   <exp, ρ, κ>_eval -> 次の状態
-# という遷移規則1本に対応する (仕様書 8.4節 ℰ の各場合)。
+# という遷移規則1本に対応する
 #
 # CPS版 (eval_cps) との違いは戻り値だけ:
 #   CPS版 : return cont.apply_cont(self.val)      # 呼び出して結果を返す
@@ -60,7 +60,7 @@ class LocalVarExp(Exp):
 
 
 class GlobalVarExp(Exp):
-    # define の変数。値が格納される前ならエラー (仕様書 5.2節)
+    # define の変数。値が格納される前ならエラー 
     _immutable_fields_ = ["cell"]
 
     def __init__(self, cell):
@@ -176,7 +176,7 @@ class LetrecExp(Exp):
 
 
 class DefineExp(Exp):
-    # (define x e) の後に rest (残りの定義と主式) が続く。仕様書 8.4節 𝒟
+    # (define x e) の後に rest (残りの定義と主式) が続く。
     #   <(define x e) rest, ρ, κ> -> <e, ρ, (define x rest κ)>
     _immutable_fields_ = ["cell", "exp", "rest"]
 

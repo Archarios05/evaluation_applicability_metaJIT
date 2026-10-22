@@ -214,7 +214,7 @@ def tail_calls_stay_flat(text, expected):
 
 
 def test_tail_calls():
-    # 仕様書 3.6節: 末尾呼出しでは継続が伸びない
+    #  末尾呼出しでは継続が伸びない
     tail_calls_stay_flat("""(letrec ((even? (lambda (n) (if (zero? n) #t (odd? (- n 1)))))
                                      (odd? (lambda (n) (if (zero? n) #f (even? (- n 1))))))
                               (display (even? 10000)))""", "#t")

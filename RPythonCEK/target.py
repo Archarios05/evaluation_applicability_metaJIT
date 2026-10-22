@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # RPython 翻訳用のエントリポイント
 #   ./target-c prog.scm
-# エラーはどれも "error" の 1 行だけを出力する (仕様書 9.1節)
+# エラーはどれも "error" の 1 行だけを出力する
 import os
 import primitives
 from convert import convert_program

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# 手続き値 (仕様書 8.3節 F)。apply_procedure が手続き適用の遷移規則
+# 手続き値 apply_procedure が手続き適用の遷移規則
 #   <v0 v1 ... vn を適用, κ> -> 次の状態
 # に当たり、状態を返すだけで自分からは評価しない。
 from value import Value, SchemeError
@@ -40,7 +40,7 @@ class PrimVal(ProcVal):
         if len(args) != self.arity:
             raise SchemeError()
         if self.pid == P_CWCC:
-            # proc を継続 κ のまま呼ぶ = 末尾呼出し (仕様書 6.7節)
+            # proc を継続 κ のまま呼ぶ = 末尾呼出し
             return args[0].apply_procedure([ContVal(kont)], kont)
         return ContState(call_primitive(self.pid, args), kont)
 

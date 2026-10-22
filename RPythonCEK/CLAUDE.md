@@ -74,7 +74,7 @@ value / env / state  →  primitives  →  proc  →  cont  →  exp  →  conve
 CPS版 (`../continuation_passing_interpreter/`) にも同じ変更を入れる。値・環境・
 継続フレームの種類・例題 (`examples/`) をそろえて挙動と性能を直接比べるための
 プロジェクトなので、片方だけ変えない。`primitives.py` / `env.py` / `convert.py` は
-CPS版とほぼ同じ内容 (import 元の `value` ↔ `classes` だけが違う)。
+CPS版とほぼ同じ内容。
 
 ## 継続は何度でも呼ばれる
 
