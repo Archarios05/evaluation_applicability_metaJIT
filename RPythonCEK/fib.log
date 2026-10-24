@@ -1,0 +1,1299 @@
+[dcfbc78d6c0] {jit-log-opt-loop
+# Loop 1 (if) : loop with 213 ops
+[p0, p1]
++651: label(p0, p1, descr=TargetToken(135767169097760))
+debug_merge_point(0, 0, 'if')
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(<)')
+debug_merge_point(0, 0, 'var(n)')
++656: p2 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
++667: p4 = getarrayitem_gc_r(p2, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++671: guard_class(p4, ConstClass(IntVal), descr=<Guard0x7b7ac1e2a0b0>) [p4, p1, p0]
++683: i6 = getfield_gc_i(p4, descr=<FieldS value.IntVal.inst_value 8 pure>)
++687: i8 = int_lt(i6, 2)
++691: guard_true(i8, descr=<Guard0x7b7ac1e28fb0>) [p4, p1, p0]
+debug_merge_point(0, 0, 'var(n)')
++697: guard_class(p1, 98930284395072, descr=<Guard0x7b7ac1e28fe0>) [p4, p1, p0]
++716: p10 = getfield_gc_r(p1, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++720: i11 = arraylen_gc(p10, descr=<ArrayP 8>)
++724: i13 = int_add_ovf(i11, 1)
++731: guard_no_overflow(descr=<Guard0x7b7ac1e29010>) [p4, p1, p0]
++737: p14 = new_array_clear(i13, descr=<ArrayP 8>)
++846: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p10, p14, 0, 0, i11, descr=<Callv 0 rriii EF=2 OS=1>)
++878: p19 = new_array_clear(1, descr=<ArrayP 8>)
++923: setarrayitem_gc(p19, 0, p4, descr=<ArrayP 8>)
++927: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p19, p14, 0, i11, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++957: p24 = getfield_gc_r(p1, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++961: p25 = getfield_gc_r(p24, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++965: i26 = arraylen_gc(p25, descr=<ArrayP 8>)
++969: i27 = int_lt(i11, i26)
++972: guard_false(i27, descr=<Guard0x7b7ac1e2a0f8>) [i26, i11, p1, p25, p14, None, None]
++978: p30 = getarrayitem_gc_pure_r(p14, 0, descr=<ArrayP 8>)
++982: p31 = new_array_clear(i11, descr=<ArrayP 8>)
++1086: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p14, p31, 1, 0, i11, descr=<Callv 0 rriii EF=2 OS=1>)
++1122: p35 = getfield_gc_r(p1, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1126: guard_class(p30, 98930284395416, descr=<Guard0x7b7ac1e2a140>) [p30, p31, p35, None, None]
++1140: i37 = getfield_gc_i(p30, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++1145: i38 = int_ne(i11, i37)
++1148: guard_false(i38, descr=<Guard0x7b7ac1e29040>) [p30, p31, p35, None, None]
++1154: i39 = getfield_gc_i(p30, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++1159: i41 = int_eq(i39, 21)
++1163: guard_false(i41, descr=<Guard0x7b7ac1e29070>) [p30, p31, p35, None, None]
++1169: i43 = int_eq(i39, 20)
++1173: guard_false(i43, descr=<Guard0x7b7ac1e290a0>) [p30, p31, p35, None, None]
++1179: p45 = getarrayitem_gc_r(p31, 0, descr=<ArrayP 8>)
++1190: i47 = int_eq(i39, 11)
++1194: guard_false(i47, descr=<Guard0x7b7ac1e290d0>) [p30, p31, p35, None, None]
++1200: i49 = int_eq(i39, 12)
++1204: guard_false(i49, descr=<Guard0x7b7ac1e29100>) [p30, p31, p35, None, None]
++1210: i51 = int_eq(i39, 15)
++1214: guard_false(i51, descr=<Guard0x7b7ac1e29130>) [p30, p31, p35, None, None]
++1220: i53 = int_eq(i39, 16)
++1224: guard_false(i53, descr=<Guard0x7b7ac1e29160>) [p30, p31, p35, None, None]
++1230: i55 = int_eq(i39, 17)
++1234: guard_false(i55, descr=<Guard0x7b7ac1e29190>) [p30, p31, p35, None, None]
++1240: i57 = int_eq(i39, 18)
++1244: guard_false(i57, descr=<Guard0x7b7ac1e291c0>) [p30, p31, p35, None, None]
++1250: i59 = int_eq(i39, 19)
++1254: guard_false(i59, descr=<Guard0x7b7ac1e291f0>) [p30, p31, p35, None, None]
++1260: p61 = getarrayitem_gc_r(p31, 1, descr=<ArrayP 8>)
++1264: i63 = int_eq(i39, 13)
++1268: guard_false(i63, descr=<Guard0x7b7ac1e29220>) [p30, p31, p35, None, None]
++1274: i65 = int_eq(i39, 14)
++1278: guard_false(i65, descr=<Guard0x7b7ac1e29250>) [p30, p31, p35, None, None]
++1284: i67 = int_le(i39, 5)
++1288: guard_true(i67, descr=<Guard0x7b7ac1e29280>) [p30, p31, p35, None, None]
++1294: guard_class(p45, ConstClass(IntVal), descr=<Guard0x7b7ac1e292b0>) [p30, p31, p35, None, None]
++1307: i69 = getfield_gc_i(p45, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1311: guard_class(p61, ConstClass(IntVal), descr=<Guard0x7b7ac1e292e0>) [p30, p31, p35, None, None]
++1323: i71 = getfield_gc_i(p61, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1327: guard_value(i39, 0, descr=<Guard0x7b7ac1e29310>) [p30, p31, p35, None, None]
++1337: i73 = int_add_ovf(i69, i71)
++1340: guard_no_overflow(descr=<Guard0x7b7ac1e29340>) [p30, p31, p35, None, None]
++1346: guard_class(p35, 98930284395072, descr=<Guard0x7b7ac1e29370>) [p30, p31, p35, None, None]
++1359: p75 = getfield_gc_r(p35, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++1363: i76 = arraylen_gc(p75, descr=<ArrayP 8>)
++1367: i78 = int_add_ovf(i76, 1)
++1374: guard_no_overflow(descr=<Guard0x7b7ac1e293a0>) [p30, p31, p35, None, None]
++1380: p79 = new_array_clear(i78, descr=<ArrayP 8>)
++1484: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p75, p79, 0, 0, i76, descr=<Callv 0 rriii EF=2 OS=1>)
++1520: p84 = new_array_clear(1, descr=<ArrayP 8>)
++1565: p85 = new_with_vtable(descr=<SizeDescr 16>)
++1576: setfield_gc(p85, i73, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1580: setarrayitem_gc(p84, 0, p85, descr=<ArrayP 8>)
++1584: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p84, p79, 0, i76, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1618: p90 = getfield_gc_r(p35, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1622: p91 = getfield_gc_r(p90, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1626: i92 = arraylen_gc(p91, descr=<ArrayP 8>)
++1630: i93 = int_lt(i76, i92)
++1633: guard_true(i93, descr=<Guard0x7b7ac1e2a188>) [i92, i76, p35, p91, p79, None, None]
++1639: p94 = getarrayitem_gc_pure_r(p91, i76, descr=<ArrayP 8>)
++1644: p95 = getfield_gc_r(p35, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++1648: p96 = getfield_gc_r(p35, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1659: guard_value(p94, ConstPtr(ptr97), descr=<Guard0x7b7ac1e293d0>) [i92, i76, p35, p91, p79, None, None]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++1675: p99 = getfield_gc_r(ConstPtr(ptr98), descr=<FieldP env.GlobalCell.inst_value 16>)
++1686: i101 = instance_ptr_eq(p99, ConstPtr(ptr100))
++1689: guard_false(i101, descr=<Guard0x7b7ac1e29400>) [i92, i76, p35, p91, p79, None, None]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++1695: p102 = getfield_gc_r(p95, descr=<FieldP env.Frame.inst_vals 16>)
++1700: p104 = getarrayitem_gc_r(p102, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++1704: guard_class(p104, ConstClass(IntVal), descr=<Guard0x7b7ac1e29430>) [i92, i76, p35, p91, p79, None, None]
++1716: i106 = getfield_gc_i(p104, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1720: i108 = int_sub_ovf(i106, 2)
++1724: guard_no_overflow(descr=<Guard0x7b7ac1e29460>) [i92, i76, p35, p91, p79, None, None]
++1730: guard_class(p99, 98930284395240, descr=<Guard0x7b7ac1e29490>) [i92, i76, p35, p91, p79, None, None]
++1743: p110 = getfield_gc_r(p99, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++1747: i111 = getfield_gc_i(p110, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++1751: i113 = int_ne(1, i111)
++1755: guard_false(i113, descr=<Guard0x7b7ac1e294c0>) [i92, i76, p35, p91, p79, None, None]
++1761: p114 = getfield_gc_r(p110, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++1765: p115 = getfield_gc_r(p99, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++1776: guard_value(p114, ConstPtr(ptr116), descr=<Guard0x7b7ac1e294f0>) [i92, i76, p35, p91, p79, None, None]
+debug_merge_point(0, 0, 'if')
++1785: p117 = same_as_r(p115)
++1788: label(p115, i108, p90, p95, p96, p79, i92, p91, p99, p110, p117, descr=TargetToken(135767169097824))
+debug_merge_point(0, 0, 'if')
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(<)')
+debug_merge_point(0, 0, 'var(n)')
+debug_merge_point(0, 0, 'const(2)')
++1845: i119 = int_lt(i108, 2)
+guard_true(i119, descr=<Guard0x7b7ac1e2a1d0>) [i119, p79, p96, p95, p90, i108, p115]
+debug_merge_point(0, 0, 'var(n)')
++1867: i120 = arraylen_gc(p79, descr=<ArrayP 8>)
++1878: i122 = int_add_ovf(i120, 1)
++1885: guard_no_overflow(descr=<Guard0x7b7ac1e29520>) [i119, p79, p96, p95, p90, i108, p115]
++1891: p123 = new_array_clear(i122, descr=<ArrayP 8>)
++2014: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p79, p123, 0, 0, i120, descr=<Callv 0 rriii EF=2 OS=1>)
++2046: p128 = new_array_clear(1, descr=<ArrayP 8>)
++2091: p129 = new_with_vtable(descr=<SizeDescr 16>)
++2102: setfield_gc(p129, i108, descr=<FieldS value.IntVal.inst_value 8 pure>)
++2106: setarrayitem_gc(p128, 0, p129, descr=<ArrayP 8>)
++2110: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p128, p123, 0, i120, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++2140: i134 = int_lt(i120, i92)
++2147: guard_false(i134, descr=<Guard0x7b7ac1e2a218>) [i92, i120, p91, p123, p79, p96, p95, p90, None, None]
++2153: p136 = getarrayitem_gc_pure_r(p123, 0, descr=<ArrayP 8>)
++2157: p137 = new_array_clear(i120, descr=<ArrayP 8>)
++2260: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p123, p137, 1, 0, i120, descr=<Callv 0 rriii EF=2 OS=1>)
++2292: guard_class(p136, 98930284395416, descr=<Guard0x7b7ac1e2a260>) [p136, p137, p96, None, None, None, None, None, None]
++2306: i142 = getfield_gc_i(p136, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++2310: i143 = int_ne(i120, i142)
++2313: guard_false(i143, descr=<Guard0x7b7ac1e29550>) [p136, p137, p96, None, None, None, None, None, None]
++2319: i144 = getfield_gc_i(p136, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++2323: i146 = int_eq(i144, 21)
++2327: guard_false(i146, descr=<Guard0x7b7ac1e29580>) [p136, p137, p96, None, None, None, None, None, None]
++2333: i148 = int_eq(i144, 20)
++2337: guard_false(i148, descr=<Guard0x7b7ac1e295b0>) [p136, p137, p96, None, None, None, None, None, None]
++2343: p150 = getarrayitem_gc_r(p137, 0, descr=<ArrayP 8>)
++2348: i152 = int_eq(i144, 11)
++2352: guard_false(i152, descr=<Guard0x7b7ac1e295e0>) [p136, p137, p96, None, None, None, None, None, None]
++2358: i154 = int_eq(i144, 12)
++2362: guard_false(i154, descr=<Guard0x7b7ac1e29610>) [p136, p137, p96, None, None, None, None, None, None]
++2368: i156 = int_eq(i144, 15)
++2372: guard_false(i156, descr=<Guard0x7b7ac1e29640>) [p136, p137, p96, None, None, None, None, None, None]
++2378: i158 = int_eq(i144, 16)
++2382: guard_false(i158, descr=<Guard0x7b7ac1e29670>) [p136, p137, p96, None, None, None, None, None, None]
++2388: i160 = int_eq(i144, 17)
++2392: guard_false(i160, descr=<Guard0x7b7ac1e296a0>) [p136, p137, p96, None, None, None, None, None, None]
++2398: i162 = int_eq(i144, 18)
++2402: guard_false(i162, descr=<Guard0x7b7ac1e296d0>) [p136, p137, p96, None, None, None, None, None, None]
++2408: i164 = int_eq(i144, 19)
++2412: guard_false(i164, descr=<Guard0x7b7ac1e29700>) [p136, p137, p96, None, None, None, None, None, None]
++2418: p166 = getarrayitem_gc_r(p137, 1, descr=<ArrayP 8>)
++2423: i168 = int_eq(i144, 13)
++2427: guard_false(i168, descr=<Guard0x7b7ac1e29730>) [p136, p137, p96, None, None, None, None, None, None]
++2433: i170 = int_eq(i144, 14)
++2437: guard_false(i170, descr=<Guard0x7b7ac1e29760>) [p136, p137, p96, None, None, None, None, None, None]
++2443: i172 = int_le(i144, 5)
++2447: guard_true(i172, descr=<Guard0x7b7ac1e29790>) [p136, p137, p96, None, None, None, None, None, None]
++2453: guard_class(p150, ConstClass(IntVal), descr=<Guard0x7b7ac1e297c0>) [p136, p137, p96, None, None, None, None, None, None]
++2465: i174 = getfield_gc_i(p150, descr=<FieldS value.IntVal.inst_value 8 pure>)
++2469: guard_class(p166, ConstClass(IntVal), descr=<Guard0x7b7ac1e297f0>) [p136, p137, p96, None, None, None, None, None, None]
++2482: i176 = getfield_gc_i(p166, descr=<FieldS value.IntVal.inst_value 8 pure>)
++2486: guard_value(i144, 0, descr=<Guard0x7b7ac1e29820>) [p136, p137, p96, None, None, None, None, None, None]
++2496: i178 = int_add_ovf(i174, i176)
++2499: guard_no_overflow(descr=<Guard0x7b7ac1e29850>) [p136, p137, p96, None, None, None, None, None, None]
++2505: guard_class(p96, 98930284395072, descr=<Guard0x7b7ac1e29880>) [p136, p137, p96, None, None, None, None, None, None]
++2525: p180 = getfield_gc_r(p96, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++2529: i181 = arraylen_gc(p180, descr=<ArrayP 8>)
++2533: i183 = int_add_ovf(i181, 1)
++2540: guard_no_overflow(descr=<Guard0x7b7ac1e298b0>) [p136, p137, p96, None, None, None, None, None, None]
++2546: p184 = new_array_clear(i183, descr=<ArrayP 8>)
++2656: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p180, p184, 0, 0, i181, descr=<Callv 0 rriii EF=2 OS=1>)
++2688: p189 = new_array_clear(1, descr=<ArrayP 8>)
++2733: p190 = new_with_vtable(descr=<SizeDescr 16>)
++2744: setfield_gc(p190, i178, descr=<FieldS value.IntVal.inst_value 8 pure>)
++2755: setarrayitem_gc(p189, 0, p190, descr=<ArrayP 8>)
++2759: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p189, p184, 0, i181, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++2789: p195 = getfield_gc_r(p96, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++2793: p196 = getfield_gc_r(p195, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++2797: i197 = arraylen_gc(p196, descr=<ArrayP 8>)
++2802: i198 = int_lt(i181, i197)
++2805: guard_true(i198, descr=<Guard0x7b7ac1e2a2a8>) [i197, i181, p96, p196, p184, None, None, None, None, None, None]
++2811: p199 = getarrayitem_gc_pure_r(p196, i181, descr=<ArrayP 8>)
++2816: p200 = getfield_gc_r(p96, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++2820: p201 = getfield_gc_r(p96, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++2831: guard_value(p199, ConstPtr(ptr202), descr=<Guard0x7b7ac1e298e0>) [i197, i181, p96, p196, p184, None, None, None, None, None, None]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++2840: p203 = getfield_gc_r(p200, descr=<FieldP env.Frame.inst_vals 16>)
++2844: p205 = getarrayitem_gc_r(p203, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++2848: guard_class(p205, ConstClass(IntVal), descr=<Guard0x7b7ac1e29910>) [i197, i181, p96, p196, p184, None, None, None, None, None, None]
++2860: i207 = getfield_gc_i(p205, descr=<FieldS value.IntVal.inst_value 8 pure>)
++2864: i209 = int_sub_ovf(i207, 2)
++2868: guard_no_overflow(descr=<Guard0x7b7ac1e29940>) [i197, i181, p96, p196, p184, None, None, None, None, None, None]
+debug_merge_point(0, 0, 'if')
++2874: jump(p117, i209, p195, p200, p201, p184, i197, p196, p99, p110, p117, descr=TargetToken(135767169097824))
++2928: --end of the loop--
+[dcfbd1aa234] jit-log-opt-loop}
+[dcfbe19908a] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e28fb0 with 45 ops
+[p0, p1, p2]
++126: guard_class(p0, ConstClass(IntVal), descr=<Guard0x7b7ac1e2a380>) [p0, p1, p2]
++138: i4 = getfield_gc_i(p0, descr=<FieldS value.IntVal.inst_value 8 pure>)
++142: i6 = int_lt(i4, 2)
++146: guard_false(i6, descr=<Guard0x7b7ac1e29af0>) [p0, p1, p2]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(+)')
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++159: p8 = getfield_gc_r(ConstPtr(ptr7), descr=<FieldP env.GlobalCell.inst_value 16>)
++170: i10 = instance_ptr_eq(p8, ConstPtr(ptr9))
++173: guard_false(i10, descr=<Guard0x7b7ac1e29b20>) [p0, p1, p2]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++179: p11 = getfield_gc_r(p2, descr=<FieldP env.Frame.inst_vals 16>)
++183: p13 = getarrayitem_gc_r(p11, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(1)')
++187: guard_class(p13, ConstClass(IntVal), descr=<Guard0x7b7ac1e29b50>) [p0, p1, p2]
++200: i15 = getfield_gc_i(p13, descr=<FieldS value.IntVal.inst_value 8 pure>)
++204: i17 = int_sub_ovf(i15, 1)
++208: guard_no_overflow(descr=<Guard0x7b7ac1e29b80>) [p0, p1, p2]
++214: guard_class(p8, 98930284395240, descr=<Guard0x7b7ac1e29bb0>) [p0, p1, p2]
++227: p19 = getfield_gc_r(p8, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++231: i20 = getfield_gc_i(p19, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++235: i22 = int_ne(1, i20)
++239: guard_false(i22, descr=<Guard0x7b7ac1e29be0>) [p0, p1, p2]
++245: p23 = getfield_gc_r(p19, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++249: p24 = getfield_gc_r(p8, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++260: guard_value(p23, ConstPtr(ptr25), descr=<Guard0x7b7ac1e29c10>) [p0, p1, p2]
+debug_merge_point(0, 0, 'if')
++269: p26 = new_with_vtable(descr=<SizeDescr 24>)
++312: p28 = new_array_clear(1, descr=<ArrayP 8>)
++331: p29 = new_with_vtable(descr=<SizeDescr 16>)
++342: setfield_gc(p29, i17, descr=<FieldS value.IntVal.inst_value 8 pure>)
++346: setarrayitem_gc(p28, 0, p29, descr=<ArrayP 8>)
++350: p31 = new_with_vtable(descr=<SizeDescr 40>)
++361: p33 = new_array_clear(1, descr=<ArrayP 8>)
++388: setarrayitem_gc(p33, 0, ConstPtr(ptr35), descr=<ArrayP 8>)
++392: setfield_gc(p26, p28, descr=<FieldP env.Frame.inst_vals 16>)
++396: setfield_gc(p26, p24, descr=<FieldP env.Frame.inst_parent 8 pure>)
++407: setfield_gc(p31, ConstPtr(ptr36), descr=<FieldP cont.AppKont.inst_app 8 pure>)
++411: setfield_gc(p31, p2, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++415: setfield_gc(p31, p1, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++426: setfield_gc(p31, p33, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++430: jump(p26, p31, descr=TargetToken(135767169097760))
++464: --end of the loop--
+[dcfbe2029ea] jit-log-opt-bridge}
+[dcfbecc4790] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2a0f8 with 42 ops
+[i0, i1, p2, p3, p4]
++158: i5 = int_lt(i1, i0)
++161: guard_true(i5, descr=<Guard0x7b7ac1e2a4a0>) [i0, i1, p2, p3, p4]
++167: i7 = int_lt(i1, 0)
++171: guard_false(i7, descr=<Guard0x7b7ac1e42140>) [i0, i1, p2, p3, p4]
++177: p8 = getarrayitem_gc_pure_r(p3, i1, descr=<ArrayP 8>)
++182: p9 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++186: p10 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++190: p11 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++201: guard_value(p8, ConstPtr(ptr12), descr=<Guard0x7b7ac1e42170>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++217: p14 = getfield_gc_r(ConstPtr(ptr13), descr=<FieldP env.GlobalCell.inst_value 16>)
++228: i16 = instance_ptr_eq(p14, ConstPtr(ptr15))
++231: guard_false(i16, descr=<Guard0x7b7ac1e421a0>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++237: p17 = getfield_gc_r(p9, descr=<FieldP env.Frame.inst_vals 16>)
++241: p19 = getarrayitem_gc_r(p17, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++245: guard_class(p19, ConstClass(IntVal), descr=<Guard0x7b7ac1e421d0>) [i0, i1, p2, p3, p4]
++258: i21 = getfield_gc_i(p19, descr=<FieldS value.IntVal.inst_value 8 pure>)
++262: i23 = int_sub_ovf(i21, 2)
++266: guard_no_overflow(descr=<Guard0x7b7ac1e42200>) [i0, i1, p2, p3, p4]
++272: guard_class(p14, 98930284395240, descr=<Guard0x7b7ac1e42230>) [i0, i1, p2, p3, p4]
++285: p25 = getfield_gc_r(p14, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++289: i26 = getfield_gc_i(p25, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++293: i28 = int_ne(1, i26)
++297: guard_false(i28, descr=<Guard0x7b7ac1e42260>) [i0, i1, p2, p3, p4]
++303: p29 = getfield_gc_r(p25, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++307: p30 = getfield_gc_r(p14, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++325: guard_value(p29, ConstPtr(ptr31), descr=<Guard0x7b7ac1e42290>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'if')
++334: guard_nonnull(p10, descr=<Guard0x7b7ac1e2a4e8>) [p4, p11, p9, p10, i23, p30]
++343: guard_subclass(p10, 98930284394464, descr=<Guard0x7b7ac1e2a530>) [p4, p11, p9, p10, i23, p30]
++378: p33 = getfield_gc_r(p10, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++383: guard_nonnull(p33, descr=<Guard0x7b7ac1e2a578>) [p4, p11, p9, p10, i23, p30]
++392: guard_gc_type(p33, 1208, descr=<Guard0x7b7ac1e2a5c0>) [p4, p11, p9, p10, i23, p30]
++405: i35 = arraylen_gc(p33, descr=<ArrayP 8>)
++409: i37 = int_ge(i35, 1)
++413: guard_true(i37, descr=<Guard0x7b7ac1e2a608>) [p4, p11, p9, p10, i23, p30]
++419: jump(p30, i23, p10, p9, p11, p4, i35, p33, p14, p25, p30, descr=TargetToken(135767169097824))
++496: --end of the loop--
+[dcfbecf99f4] jit-log-opt-bridge}
+[dcfbf2d64f6] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2a2a8 with 92 ops
+[i0, i1, p2, p3, p4]
++286: i5 = int_lt(i1, i0)
++289: guard_false(i5, descr=<Guard0x7b7ac1e2a698>) [i0, i1, p2, p3, p4]
++295: p7 = getarrayitem_gc_pure_r(p4, 0, descr=<ArrayP 8>)
++299: i8 = arraylen_gc(p4, descr=<ArrayP 8>)
++303: i10 = int_sub(i8, 1)
++307: p11 = new_array_clear(i10, descr=<ArrayP 8>)
++413: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p4, p11, 1, 0, i10, descr=<Callv 0 rriii EF=2 OS=1>)
++445: p15 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++449: guard_class(p7, 98930284395416, descr=<Guard0x7b7ac1e2a6e0>) [p7, p11, p15]
++463: i17 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++468: i18 = int_ne(i10, i17)
++471: guard_false(i18, descr=<Guard0x7b7ac1e429b0>) [p7, p11, p15]
++477: i19 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++482: i21 = int_eq(i19, 21)
++486: guard_false(i21, descr=<Guard0x7b7ac1e429e0>) [p7, p11, p15]
++492: i23 = int_eq(i19, 20)
++496: guard_false(i23, descr=<Guard0x7b7ac1e42a10>) [p7, p11, p15]
++502: p25 = getarrayitem_gc_r(p11, 0, descr=<ArrayP 8>)
++506: i27 = int_eq(i19, 11)
++510: guard_false(i27, descr=<Guard0x7b7ac1e42a40>) [p7, p11, p15]
++516: i29 = int_eq(i19, 12)
++520: guard_false(i29, descr=<Guard0x7b7ac1e42a70>) [p7, p11, p15]
++526: i31 = int_eq(i19, 15)
++530: guard_false(i31, descr=<Guard0x7b7ac1e42aa0>) [p7, p11, p15]
++536: i33 = int_eq(i19, 16)
++540: guard_false(i33, descr=<Guard0x7b7ac1e42ad0>) [p7, p11, p15]
++546: i35 = int_eq(i19, 17)
++550: guard_false(i35, descr=<Guard0x7b7ac1e42b00>) [p7, p11, p15]
++556: i37 = int_eq(i19, 18)
++560: guard_false(i37, descr=<Guard0x7b7ac1e42b30>) [p7, p11, p15]
++566: i39 = int_eq(i19, 19)
++570: guard_false(i39, descr=<Guard0x7b7ac1e42b60>) [p7, p11, p15]
++576: p41 = getarrayitem_gc_r(p11, 1, descr=<ArrayP 8>)
++580: i43 = int_eq(i19, 13)
++584: guard_false(i43, descr=<Guard0x7b7ac1e42b90>) [p7, p11, p15]
++590: i45 = int_eq(i19, 14)
++594: guard_false(i45, descr=<Guard0x7b7ac1e42bc0>) [p7, p11, p15]
++600: i47 = int_le(i19, 5)
++604: guard_true(i47, descr=<Guard0x7b7ac1e42bf0>) [p7, p11, p15]
++610: guard_class(p25, ConstClass(IntVal), descr=<Guard0x7b7ac1e42c20>) [p7, p11, p15]
++622: i49 = getfield_gc_i(p25, descr=<FieldS value.IntVal.inst_value 8 pure>)
++626: guard_class(p41, ConstClass(IntVal), descr=<Guard0x7b7ac1e42c50>) [p7, p11, p15]
++639: i51 = getfield_gc_i(p41, descr=<FieldS value.IntVal.inst_value 8 pure>)
++643: guard_value(i19, 0, descr=<Guard0x7b7ac1e42c80>) [p7, p11, p15]
++653: i53 = int_add_ovf(i49, i51)
++656: guard_no_overflow(descr=<Guard0x7b7ac1e42cb0>) [p7, p11, p15]
++662: guard_class(p15, 98930284395072, descr=<Guard0x7b7ac1e42ce0>) [p7, p11, p15]
++675: p55 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++679: i56 = arraylen_gc(p55, descr=<ArrayP 8>)
++683: i58 = int_add_ovf(i56, 1)
++690: guard_no_overflow(descr=<Guard0x7b7ac1e42d10>) [p7, p11, p15]
++696: p59 = new_array_clear(i58, descr=<ArrayP 8>)
++806: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p55, p59, 0, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++838: p64 = new_array_clear(1, descr=<ArrayP 8>)
++883: p65 = new_with_vtable(descr=<SizeDescr 16>)
++894: setfield_gc(p65, i53, descr=<FieldS value.IntVal.inst_value 8 pure>)
++905: setarrayitem_gc(p64, 0, p65, descr=<ArrayP 8>)
++909: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p64, p59, 0, i56, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++939: p70 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++943: p71 = getfield_gc_r(p70, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++948: i72 = arraylen_gc(p71, descr=<ArrayP 8>)
++952: i73 = int_lt(i56, i72)
++955: guard_true(i73, descr=<Guard0x7b7ac1e2a728>) [i72, i56, p15, p71, p59]
++961: p74 = getarrayitem_gc_pure_r(p71, i56, descr=<ArrayP 8>)
++966: p75 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++970: p76 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++981: guard_value(p74, ConstPtr(ptr77), descr=<Guard0x7b7ac1e42d40>) [i72, i56, p15, p71, p59]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++997: p79 = getfield_gc_r(ConstPtr(ptr78), descr=<FieldP env.GlobalCell.inst_value 16>)
++1008: i81 = instance_ptr_eq(p79, ConstPtr(ptr80))
++1011: guard_false(i81, descr=<Guard0x7b7ac1e42d70>) [i72, i56, p15, p71, p59]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++1017: p82 = getfield_gc_r(p75, descr=<FieldP env.Frame.inst_vals 16>)
++1021: p84 = getarrayitem_gc_r(p82, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++1025: guard_class(p84, ConstClass(IntVal), descr=<Guard0x7b7ac1e42da0>) [i72, i56, p15, p71, p59]
++1037: i86 = getfield_gc_i(p84, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1041: i88 = int_sub_ovf(i86, 2)
++1045: guard_no_overflow(descr=<Guard0x7b7ac1e42dd0>) [i72, i56, p15, p71, p59]
++1051: guard_class(p79, 98930284395240, descr=<Guard0x7b7ac1e42e00>) [i72, i56, p15, p71, p59]
++1063: p90 = getfield_gc_r(p79, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++1067: i91 = getfield_gc_i(p90, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++1071: i93 = int_ne(1, i91)
++1075: guard_false(i93, descr=<Guard0x7b7ac1e42e30>) [i72, i56, p15, p71, p59]
++1081: p94 = getfield_gc_r(p90, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++1085: p95 = getfield_gc_r(p79, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++1103: guard_value(p94, ConstPtr(ptr96), descr=<Guard0x7b7ac1e42e60>) [i72, i56, p15, p71, p59]
+debug_merge_point(0, 0, 'if')
++1112: jump(p95, i88, p70, p75, p76, p59, i72, p71, p79, p90, p95, descr=TargetToken(135767169097824))
++1184: --end of the loop--
+[dcfbf478d06] jit-log-opt-bridge}
+[dcfbfb02669] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2a1d0 with 50 ops
+[i0, p1, p2, p3, p4, i5, p6]
++110: guard_false(i0, descr=<Guard0x7b7ac1e2a848>) [i0, p1, p2, p3, p4, i5, p6]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(+)')
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++126: p8 = getfield_gc_r(ConstPtr(ptr7), descr=<FieldP env.GlobalCell.inst_value 16>)
++137: i10 = instance_ptr_eq(p8, ConstPtr(ptr9))
++140: guard_false(i10, descr=<Guard0x7b7ac1e43040>) [i0, p1, p2, p3, p4, i5, p6]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
+debug_merge_point(0, 0, 'const(1)')
++146: i12 = int_sub_ovf(i5, 1)
++153: guard_no_overflow(descr=<Guard0x7b7ac1e43070>) [i0, p1, p2, p3, p4, i5, p6]
++159: guard_class(p8, 98930284395240, descr=<Guard0x7b7ac1e430a0>) [i0, p1, p2, p3, p4, i5, p6]
++172: p14 = getfield_gc_r(p8, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++176: i15 = getfield_gc_i(p14, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++180: i17 = int_ne(1, i15)
++184: guard_false(i17, descr=<Guard0x7b7ac1e430d0>) [i0, p1, p2, p3, p4, i5, p6]
++190: p18 = getfield_gc_r(p14, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++194: p19 = getfield_gc_r(p8, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++205: guard_value(p18, ConstPtr(ptr20), descr=<Guard0x7b7ac1e43100>) [i0, p1, p2, p3, p4, i5, p6]
+debug_merge_point(0, 0, 'if')
++214: p21 = new_with_vtable(descr=<SizeDescr 24>)
++254: p23 = new_array_clear(1, descr=<ArrayP 8>)
++274: p24 = new_with_vtable(descr=<SizeDescr 16>)
++285: setfield_gc(p24, i12, descr=<FieldS value.IntVal.inst_value 8 pure>)
++289: setarrayitem_gc(p23, 0, p24, descr=<ArrayP 8>)
++293: p26 = new_with_vtable(descr=<SizeDescr 40>)
++304: p27 = new_with_vtable(descr=<SizeDescr 24>)
++315: setfield_gc(p27, p6, descr=<FieldP env.Frame.inst_parent 8 pure>)
++326: p29 = new_array_clear(1, descr=<ArrayP 8>)
++345: p30 = new_with_vtable(descr=<SizeDescr 16>)
++356: setfield_gc(p30, i5, descr=<FieldS value.IntVal.inst_value 8 pure>)
++360: setarrayitem_gc(p29, 0, p30, descr=<ArrayP 8>)
++364: setfield_gc(p27, p29, descr=<FieldP env.Frame.inst_vals 16>)
++368: p32 = new_with_vtable(descr=<SizeDescr 40>)
++379: setfield_gc(p32, p4, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++390: setfield_gc(p32, p3, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++401: setfield_gc(p32, p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++405: setfield_gc(p32, p1, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++416: p34 = new_array_clear(1, descr=<ArrayP 8>)
++442: setarrayitem_gc(p34, 0, ConstPtr(ptr36), descr=<ArrayP 8>)
++446: setfield_gc(p21, p19, descr=<FieldP env.Frame.inst_parent 8 pure>)
++450: setfield_gc(p21, p23, descr=<FieldP env.Frame.inst_vals 16>)
++461: setfield_gc(p26, ConstPtr(ptr37), descr=<FieldP cont.AppKont.inst_app 8 pure>)
++465: setfield_gc(p26, p27, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++469: setfield_gc(p26, p32, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++473: setfield_gc(p26, p34, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++477: jump(p21, p26, descr=TargetToken(135767169097760))
++512: --end of the loop--
+[dcfbfb391e1] jit-log-opt-bridge}
+[dcfbfe82019] {jit-log-opt-loop
+# Loop 6 (app/1) : entry bridge with 32 ops
+[p0, p1]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++226: p3 = getfield_gc_r(ConstPtr(ptr2), descr=<FieldP env.GlobalCell.inst_value 16>)
++242: i5 = instance_ptr_eq(p3, ConstPtr(ptr4))
+guard_false(i5, descr=<Guard0x7b7ac1e2a8d8>) [i5, p3, p1, p0]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++263: p6 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
++274: p8 = getarrayitem_gc_r(p6, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++278: guard_class(p8, ConstClass(IntVal), descr=<Guard0x7b7ac1e43220>) [i5, p3, p1, p0]
++290: i10 = getfield_gc_i(p8, descr=<FieldS value.IntVal.inst_value 8 pure>)
++294: i12 = int_sub_ovf(i10, 2)
++298: guard_no_overflow(descr=<Guard0x7b7ac1e43250>) [i5, p3, p1, p0]
++304: guard_class(p3, 98930284395240, descr=<Guard0x7b7ac1e43280>) [i5, p3, p1, p0]
++316: p14 = getfield_gc_r(p3, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++320: i15 = getfield_gc_i(p14, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++324: i17 = int_ne(1, i15)
++328: guard_false(i17, descr=<Guard0x7b7ac1e432b0>) [i5, p3, p1, p0]
++334: p18 = getfield_gc_r(p14, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++338: p19 = getfield_gc_r(p3, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++349: guard_value(p18, ConstPtr(ptr20), descr=<Guard0x7b7ac1e432e0>) [i5, p3, p1, p0]
+debug_merge_point(0, 0, 'if')
++358: p21 = new_with_vtable(descr=<SizeDescr 24>)
++395: p23 = new_array_clear(1, descr=<ArrayP 8>)
++414: p24 = new_with_vtable(descr=<SizeDescr 16>)
++425: setfield_gc(p24, i12, descr=<FieldS value.IntVal.inst_value 8 pure>)
++429: setarrayitem_gc(p23, 0, p24, descr=<ArrayP 8>)
++433: setfield_gc(p21, p23, descr=<FieldP env.Frame.inst_vals 16>)
++437: setfield_gc(p21, p19, descr=<FieldP env.Frame.inst_parent 8 pure>)
++441: jump(p21, p1, descr=TargetToken(135767169097760))
++464: --end of the loop--
+[dcfbfe9d0c1] jit-log-opt-loop}
+[dcfc0664151] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2a728 with 151 ops
+[i0, i1, p2, p3, p4]
++446: i5 = int_lt(i1, i0)
++449: guard_false(i5, descr=<Guard0x7b7ac1e2a968>) [i0, i1, p2, p3, p4]
++455: p7 = getarrayitem_gc_pure_r(p4, 0, descr=<ArrayP 8>)
++459: i8 = arraylen_gc(p4, descr=<ArrayP 8>)
++463: i10 = int_sub(i8, 1)
++467: p11 = new_array_clear(i10, descr=<ArrayP 8>)
++573: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p4, p11, 1, 0, i10, descr=<Callv 0 rriii EF=2 OS=1>)
++605: p15 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++609: guard_class(p7, 98930284395416, descr=<Guard0x7b7ac1e2a9b0>) [p7, p11, p15]
++623: i17 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++627: i18 = int_ne(i10, i17)
++630: guard_false(i18, descr=<Guard0x7b7ac1e43fd0>) [p7, p11, p15]
++636: i19 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++640: i21 = int_eq(i19, 21)
++644: guard_false(i21, descr=<Guard0x7b7ac1e4c020>) [p7, p11, p15]
++650: i23 = int_eq(i19, 20)
++654: guard_false(i23, descr=<Guard0x7b7ac1e4c050>) [p7, p11, p15]
++660: p25 = getarrayitem_gc_r(p11, 0, descr=<ArrayP 8>)
++665: i27 = int_eq(i19, 11)
++669: guard_false(i27, descr=<Guard0x7b7ac1e4c080>) [p7, p11, p15]
++675: i29 = int_eq(i19, 12)
++679: guard_false(i29, descr=<Guard0x7b7ac1e4c0b0>) [p7, p11, p15]
++685: i31 = int_eq(i19, 15)
++689: guard_false(i31, descr=<Guard0x7b7ac1e4c0e0>) [p7, p11, p15]
++695: i33 = int_eq(i19, 16)
++699: guard_false(i33, descr=<Guard0x7b7ac1e4c110>) [p7, p11, p15]
++705: i35 = int_eq(i19, 17)
++709: guard_false(i35, descr=<Guard0x7b7ac1e4c140>) [p7, p11, p15]
++715: i37 = int_eq(i19, 18)
++719: guard_false(i37, descr=<Guard0x7b7ac1e4c170>) [p7, p11, p15]
++725: i39 = int_eq(i19, 19)
++729: guard_false(i39, descr=<Guard0x7b7ac1e4c1a0>) [p7, p11, p15]
++735: p41 = getarrayitem_gc_r(p11, 1, descr=<ArrayP 8>)
++740: i43 = int_eq(i19, 13)
++744: guard_false(i43, descr=<Guard0x7b7ac1e4c1d0>) [p7, p11, p15]
++750: i45 = int_eq(i19, 14)
++754: guard_false(i45, descr=<Guard0x7b7ac1e4c200>) [p7, p11, p15]
++760: i47 = int_le(i19, 5)
++764: guard_true(i47, descr=<Guard0x7b7ac1e4c230>) [p7, p11, p15]
++770: guard_class(p25, ConstClass(IntVal), descr=<Guard0x7b7ac1e4c260>) [p7, p11, p15]
++782: i49 = getfield_gc_i(p25, descr=<FieldS value.IntVal.inst_value 8 pure>)
++786: guard_class(p41, ConstClass(IntVal), descr=<Guard0x7b7ac1e4c290>) [p7, p11, p15]
++799: i51 = getfield_gc_i(p41, descr=<FieldS value.IntVal.inst_value 8 pure>)
++803: guard_value(i19, 0, descr=<Guard0x7b7ac1e4c2c0>) [p7, p11, p15]
++813: i53 = int_add_ovf(i49, i51)
++816: guard_no_overflow(descr=<Guard0x7b7ac1e4c2f0>) [p7, p11, p15]
++822: guard_class(p15, 98930284395072, descr=<Guard0x7b7ac1e4c320>) [p7, p11, p15]
++835: p55 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++839: i56 = arraylen_gc(p55, descr=<ArrayP 8>)
++843: i58 = int_add_ovf(i56, 1)
++850: guard_no_overflow(descr=<Guard0x7b7ac1e4c350>) [p7, p11, p15]
++856: p59 = new_array_clear(i58, descr=<ArrayP 8>)
++973: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p55, p59, 0, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++1005: p64 = new_array_clear(1, descr=<ArrayP 8>)
++1050: p65 = new_with_vtable(descr=<SizeDescr 16>)
++1061: setfield_gc(p65, i53, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1072: setarrayitem_gc(p64, 0, p65, descr=<ArrayP 8>)
++1076: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p64, p59, 0, i56, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1106: p70 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1117: p71 = getfield_gc_r(p70, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1121: i72 = arraylen_gc(p71, descr=<ArrayP 8>)
++1125: i73 = int_lt(i56, i72)
++1128: guard_false(i73, descr=<Guard0x7b7ac1e2a9f8>) [i72, i56, p15, p71, p59]
++1134: p75 = getarrayitem_gc_pure_r(p59, 0, descr=<ArrayP 8>)
++1138: p76 = new_array_clear(i56, descr=<ArrayP 8>)
++1244: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p59, p76, 1, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++1276: p80 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1280: guard_class(p75, 98930284395416, descr=<Guard0x7b7ac1e2aa40>) [p75, p76, p80]
++1293: i82 = getfield_gc_i(p75, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++1297: i83 = int_ne(i56, i82)
++1300: guard_false(i83, descr=<Guard0x7b7ac1e4c380>) [p75, p76, p80]
++1306: i84 = getfield_gc_i(p75, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++1310: i86 = int_eq(i84, 21)
++1314: guard_false(i86, descr=<Guard0x7b7ac1e4c3b0>) [p75, p76, p80]
++1320: i88 = int_eq(i84, 20)
++1324: guard_false(i88, descr=<Guard0x7b7ac1e4c3e0>) [p75, p76, p80]
++1330: p90 = getarrayitem_gc_r(p76, 0, descr=<ArrayP 8>)
++1335: i92 = int_eq(i84, 11)
++1339: guard_false(i92, descr=<Guard0x7b7ac1e4c410>) [p75, p76, p80]
++1345: i94 = int_eq(i84, 12)
++1349: guard_false(i94, descr=<Guard0x7b7ac1e4c440>) [p75, p76, p80]
++1355: i96 = int_eq(i84, 15)
++1359: guard_false(i96, descr=<Guard0x7b7ac1e4c470>) [p75, p76, p80]
++1365: i98 = int_eq(i84, 16)
++1369: guard_false(i98, descr=<Guard0x7b7ac1e4c4a0>) [p75, p76, p80]
++1375: i100 = int_eq(i84, 17)
++1379: guard_false(i100, descr=<Guard0x7b7ac1e4c4d0>) [p75, p76, p80]
++1385: i102 = int_eq(i84, 18)
++1389: guard_false(i102, descr=<Guard0x7b7ac1e4c500>) [p75, p76, p80]
++1395: i104 = int_eq(i84, 19)
++1399: guard_false(i104, descr=<Guard0x7b7ac1e4c530>) [p75, p76, p80]
++1405: p106 = getarrayitem_gc_r(p76, 1, descr=<ArrayP 8>)
++1410: i108 = int_eq(i84, 13)
++1414: guard_false(i108, descr=<Guard0x7b7ac1e4c560>) [p75, p76, p80]
++1420: i110 = int_eq(i84, 14)
++1424: guard_false(i110, descr=<Guard0x7b7ac1e4c590>) [p75, p76, p80]
++1430: i112 = int_le(i84, 5)
++1434: guard_true(i112, descr=<Guard0x7b7ac1e4c5c0>) [p75, p76, p80]
++1440: guard_class(p90, ConstClass(IntVal), descr=<Guard0x7b7ac1e4c5f0>) [p75, p76, p80]
++1452: i114 = getfield_gc_i(p90, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1456: guard_class(p106, ConstClass(IntVal), descr=<Guard0x7b7ac1e4c620>) [p75, p76, p80]
++1469: i116 = getfield_gc_i(p106, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1473: guard_value(i84, 0, descr=<Guard0x7b7ac1e4c650>) [p75, p76, p80]
++1483: i118 = int_add_ovf(i114, i116)
++1486: guard_no_overflow(descr=<Guard0x7b7ac1e4c680>) [p75, p76, p80]
++1492: guard_class(p80, 98930284395072, descr=<Guard0x7b7ac1e4c6b0>) [p75, p76, p80]
++1505: p120 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++1509: i121 = arraylen_gc(p120, descr=<ArrayP 8>)
++1513: i123 = int_add_ovf(i121, 1)
++1520: guard_no_overflow(descr=<Guard0x7b7ac1e4c6e0>) [p75, p76, p80]
++1526: p124 = new_array_clear(i123, descr=<ArrayP 8>)
++1636: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p120, p124, 0, 0, i121, descr=<Callv 0 rriii EF=2 OS=1>)
++1668: p129 = new_array_clear(1, descr=<ArrayP 8>)
++1713: p130 = new_with_vtable(descr=<SizeDescr 16>)
++1724: setfield_gc(p130, i118, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1735: setarrayitem_gc(p129, 0, p130, descr=<ArrayP 8>)
++1739: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p129, p124, 0, i121, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1769: p135 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1773: p136 = getfield_gc_r(p135, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1777: i137 = arraylen_gc(p136, descr=<ArrayP 8>)
++1782: i138 = int_lt(i121, i137)
++1785: guard_true(i138, descr=<Guard0x7b7ac1e2aa88>) [i137, i121, p80, p136, p124]
++1791: p139 = getarrayitem_gc_pure_r(p136, i121, descr=<ArrayP 8>)
++1796: p140 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++1800: p141 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1811: guard_value(p139, ConstPtr(ptr142), descr=<Guard0x7b7ac1e4c710>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++1827: p144 = getfield_gc_r(ConstPtr(ptr143), descr=<FieldP env.GlobalCell.inst_value 16>)
++1838: i146 = instance_ptr_eq(p144, ConstPtr(ptr145))
++1841: guard_false(i146, descr=<Guard0x7b7ac1e4c740>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++1847: p147 = getfield_gc_r(p140, descr=<FieldP env.Frame.inst_vals 16>)
++1851: p149 = getarrayitem_gc_r(p147, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++1855: guard_class(p149, ConstClass(IntVal), descr=<Guard0x7b7ac1e4c770>) [i137, i121, p80, p136, p124]
++1867: i151 = getfield_gc_i(p149, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1871: i153 = int_sub_ovf(i151, 2)
++1875: guard_no_overflow(descr=<Guard0x7b7ac1e4c7a0>) [i137, i121, p80, p136, p124]
++1881: guard_class(p144, 98930284395240, descr=<Guard0x7b7ac1e4c7d0>) [i137, i121, p80, p136, p124]
++1893: p155 = getfield_gc_r(p144, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++1897: i156 = getfield_gc_i(p155, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++1901: i158 = int_ne(1, i156)
++1905: guard_false(i158, descr=<Guard0x7b7ac1e4c800>) [i137, i121, p80, p136, p124]
++1911: p159 = getfield_gc_r(p155, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++1915: p160 = getfield_gc_r(p144, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++1933: guard_value(p159, ConstPtr(ptr161), descr=<Guard0x7b7ac1e4c830>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'if')
++1942: jump(p160, i153, p135, p140, p141, p124, i137, p136, p144, p155, p160, descr=TargetToken(135767169097824))
++2016: --end of the loop--
+[dcfc0af4274] jit-log-opt-bridge}
+[dcfc11ffc7f] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2a9f8 with 42 ops
+[i0, i1, p2, p3, p4]
++158: i5 = int_lt(i1, i0)
++161: guard_true(i5, descr=<Guard0x7b7ac1e2ab18>) [i0, i1, p2, p3, p4]
++167: i7 = int_lt(i1, 0)
++171: guard_false(i7, descr=<Guard0x7b7ac1e4cd40>) [i0, i1, p2, p3, p4]
++177: p8 = getarrayitem_gc_pure_r(p3, i1, descr=<ArrayP 8>)
++182: p9 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++186: p10 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++190: p11 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++201: guard_value(p8, ConstPtr(ptr12), descr=<Guard0x7b7ac1e4cd70>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++217: p14 = getfield_gc_r(ConstPtr(ptr13), descr=<FieldP env.GlobalCell.inst_value 16>)
++228: i16 = instance_ptr_eq(p14, ConstPtr(ptr15))
++231: guard_false(i16, descr=<Guard0x7b7ac1e4cda0>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++237: p17 = getfield_gc_r(p9, descr=<FieldP env.Frame.inst_vals 16>)
++241: p19 = getarrayitem_gc_r(p17, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++245: guard_class(p19, ConstClass(IntVal), descr=<Guard0x7b7ac1e4cdd0>) [i0, i1, p2, p3, p4]
++258: i21 = getfield_gc_i(p19, descr=<FieldS value.IntVal.inst_value 8 pure>)
++262: i23 = int_sub_ovf(i21, 2)
++266: guard_no_overflow(descr=<Guard0x7b7ac1e4ce00>) [i0, i1, p2, p3, p4]
++272: guard_class(p14, 98930284395240, descr=<Guard0x7b7ac1e4ce30>) [i0, i1, p2, p3, p4]
++286: p25 = getfield_gc_r(p14, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++291: i26 = getfield_gc_i(p25, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++295: i28 = int_ne(1, i26)
++299: guard_false(i28, descr=<Guard0x7b7ac1e4ce60>) [i0, i1, p2, p3, p4]
++305: p29 = getfield_gc_r(p25, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++309: p30 = getfield_gc_r(p14, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++328: guard_value(p29, ConstPtr(ptr31), descr=<Guard0x7b7ac1e4ce90>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'if')
++337: guard_nonnull(p10, descr=<Guard0x7b7ac1e2ab60>) [p4, p11, p9, p10, i23, p30]
++346: guard_subclass(p10, 98930284394464, descr=<Guard0x7b7ac1e2aba8>) [p4, p11, p9, p10, i23, p30]
++381: p33 = getfield_gc_r(p10, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++385: guard_nonnull(p33, descr=<Guard0x7b7ac1e2abf0>) [p4, p11, p9, p10, i23, p30]
++394: guard_gc_type(p33, 1208, descr=<Guard0x7b7ac1e2ac38>) [p4, p11, p9, p10, i23, p30]
++407: i35 = arraylen_gc(p33, descr=<ArrayP 8>)
++411: i37 = int_ge(i35, 1)
++415: guard_true(i37, descr=<Guard0x7b7ac1e2ac80>) [p4, p11, p9, p10, i23, p30]
++421: jump(p30, i23, p10, p9, p11, p4, i35, p33, p14, p25, p30, descr=TargetToken(135767169097824))
++496: --end of the loop--
+[dcfc1225d67] jit-log-opt-bridge}
+[dcfc1c470a8] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2aa88 with 151 ops
+[i0, i1, p2, p3, p4]
++446: i5 = int_lt(i1, i0)
++449: guard_false(i5, descr=<Guard0x7b7ac1e2ad10>) [i0, i1, p2, p3, p4]
++455: p7 = getarrayitem_gc_pure_r(p4, 0, descr=<ArrayP 8>)
++459: i8 = arraylen_gc(p4, descr=<ArrayP 8>)
++463: i10 = int_sub(i8, 1)
++467: p11 = new_array_clear(i10, descr=<ArrayP 8>)
++573: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p4, p11, 1, 0, i10, descr=<Callv 0 rriii EF=2 OS=1>)
++605: p15 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++609: guard_class(p7, 98930284395416, descr=<Guard0x7b7ac1e2ad58>) [p7, p11, p15]
++623: i17 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++628: i18 = int_ne(i10, i17)
++631: guard_false(i18, descr=<Guard0x7b7ac1e4dd00>) [p7, p11, p15]
++637: i19 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++642: i21 = int_eq(i19, 21)
++646: guard_false(i21, descr=<Guard0x7b7ac1e4dd30>) [p7, p11, p15]
++652: i23 = int_eq(i19, 20)
++656: guard_false(i23, descr=<Guard0x7b7ac1e4dd60>) [p7, p11, p15]
++662: p25 = getarrayitem_gc_r(p11, 0, descr=<ArrayP 8>)
++666: i27 = int_eq(i19, 11)
++670: guard_false(i27, descr=<Guard0x7b7ac1e4dd90>) [p7, p11, p15]
++676: i29 = int_eq(i19, 12)
++680: guard_false(i29, descr=<Guard0x7b7ac1e4ddc0>) [p7, p11, p15]
++686: i31 = int_eq(i19, 15)
++690: guard_false(i31, descr=<Guard0x7b7ac1e4ddf0>) [p7, p11, p15]
++696: i33 = int_eq(i19, 16)
++700: guard_false(i33, descr=<Guard0x7b7ac1e4de20>) [p7, p11, p15]
++706: i35 = int_eq(i19, 17)
++710: guard_false(i35, descr=<Guard0x7b7ac1e4de50>) [p7, p11, p15]
++716: i37 = int_eq(i19, 18)
++720: guard_false(i37, descr=<Guard0x7b7ac1e4de80>) [p7, p11, p15]
++726: i39 = int_eq(i19, 19)
++730: guard_false(i39, descr=<Guard0x7b7ac1e4deb0>) [p7, p11, p15]
++736: p41 = getarrayitem_gc_r(p11, 1, descr=<ArrayP 8>)
++740: i43 = int_eq(i19, 13)
++744: guard_false(i43, descr=<Guard0x7b7ac1e4dee0>) [p7, p11, p15]
++750: i45 = int_eq(i19, 14)
++754: guard_false(i45, descr=<Guard0x7b7ac1e4df10>) [p7, p11, p15]
++760: i47 = int_le(i19, 5)
++764: guard_true(i47, descr=<Guard0x7b7ac1e4df40>) [p7, p11, p15]
++770: guard_class(p25, ConstClass(IntVal), descr=<Guard0x7b7ac1e4df70>) [p7, p11, p15]
++782: i49 = getfield_gc_i(p25, descr=<FieldS value.IntVal.inst_value 8 pure>)
++786: guard_class(p41, ConstClass(IntVal), descr=<Guard0x7b7ac1e4dfa0>) [p7, p11, p15]
++799: i51 = getfield_gc_i(p41, descr=<FieldS value.IntVal.inst_value 8 pure>)
++803: guard_value(i19, 0, descr=<Guard0x7b7ac1e4dfd0>) [p7, p11, p15]
++813: i53 = int_add_ovf(i49, i51)
++816: guard_no_overflow(descr=<Guard0x7b7ac1e56020>) [p7, p11, p15]
++822: guard_class(p15, 98930284395072, descr=<Guard0x7b7ac1e56050>) [p7, p11, p15]
++835: p55 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++839: i56 = arraylen_gc(p55, descr=<ArrayP 8>)
++843: i58 = int_add_ovf(i56, 1)
++850: guard_no_overflow(descr=<Guard0x7b7ac1e56080>) [p7, p11, p15]
++856: p59 = new_array_clear(i58, descr=<ArrayP 8>)
++973: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p55, p59, 0, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++1005: p64 = new_array_clear(1, descr=<ArrayP 8>)
++1050: p65 = new_with_vtable(descr=<SizeDescr 16>)
++1061: setfield_gc(p65, i53, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1072: setarrayitem_gc(p64, 0, p65, descr=<ArrayP 8>)
++1076: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p64, p59, 0, i56, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1106: p70 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1117: p71 = getfield_gc_r(p70, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1121: i72 = arraylen_gc(p71, descr=<ArrayP 8>)
++1125: i73 = int_lt(i56, i72)
++1128: guard_false(i73, descr=<Guard0x7b7ac1e2ada0>) [i72, i56, p15, p71, p59]
++1134: p75 = getarrayitem_gc_pure_r(p59, 0, descr=<ArrayP 8>)
++1138: p76 = new_array_clear(i56, descr=<ArrayP 8>)
++1244: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p59, p76, 1, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++1276: p80 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1281: guard_class(p75, 98930284395416, descr=<Guard0x7b7ac1e2ade8>) [p75, p76, p80]
++1294: i82 = getfield_gc_i(p75, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++1298: i83 = int_ne(i56, i82)
++1301: guard_false(i83, descr=<Guard0x7b7ac1e560b0>) [p75, p76, p80]
++1307: i84 = getfield_gc_i(p75, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++1311: i86 = int_eq(i84, 21)
++1315: guard_false(i86, descr=<Guard0x7b7ac1e560e0>) [p75, p76, p80]
++1321: i88 = int_eq(i84, 20)
++1325: guard_false(i88, descr=<Guard0x7b7ac1e56110>) [p75, p76, p80]
++1331: p90 = getarrayitem_gc_r(p76, 0, descr=<ArrayP 8>)
++1335: i92 = int_eq(i84, 11)
++1339: guard_false(i92, descr=<Guard0x7b7ac1e56140>) [p75, p76, p80]
++1345: i94 = int_eq(i84, 12)
++1349: guard_false(i94, descr=<Guard0x7b7ac1e56170>) [p75, p76, p80]
++1355: i96 = int_eq(i84, 15)
++1359: guard_false(i96, descr=<Guard0x7b7ac1e561a0>) [p75, p76, p80]
++1365: i98 = int_eq(i84, 16)
++1369: guard_false(i98, descr=<Guard0x7b7ac1e561d0>) [p75, p76, p80]
++1375: i100 = int_eq(i84, 17)
++1379: guard_false(i100, descr=<Guard0x7b7ac1e56200>) [p75, p76, p80]
++1385: i102 = int_eq(i84, 18)
++1389: guard_false(i102, descr=<Guard0x7b7ac1e56230>) [p75, p76, p80]
++1395: i104 = int_eq(i84, 19)
++1399: guard_false(i104, descr=<Guard0x7b7ac1e56260>) [p75, p76, p80]
++1405: p106 = getarrayitem_gc_r(p76, 1, descr=<ArrayP 8>)
++1409: i108 = int_eq(i84, 13)
++1413: guard_false(i108, descr=<Guard0x7b7ac1e56290>) [p75, p76, p80]
++1419: i110 = int_eq(i84, 14)
++1423: guard_false(i110, descr=<Guard0x7b7ac1e562c0>) [p75, p76, p80]
++1429: i112 = int_le(i84, 5)
++1433: guard_true(i112, descr=<Guard0x7b7ac1e562f0>) [p75, p76, p80]
++1439: guard_class(p90, ConstClass(IntVal), descr=<Guard0x7b7ac1e56320>) [p75, p76, p80]
++1451: i114 = getfield_gc_i(p90, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1455: guard_class(p106, ConstClass(IntVal), descr=<Guard0x7b7ac1e56350>) [p75, p76, p80]
++1468: i116 = getfield_gc_i(p106, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1472: guard_value(i84, 0, descr=<Guard0x7b7ac1e56380>) [p75, p76, p80]
++1482: i118 = int_add_ovf(i114, i116)
++1485: guard_no_overflow(descr=<Guard0x7b7ac1e563b0>) [p75, p76, p80]
++1491: guard_class(p80, 98930284395072, descr=<Guard0x7b7ac1e563e0>) [p75, p76, p80]
++1505: p120 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++1509: i121 = arraylen_gc(p120, descr=<ArrayP 8>)
++1513: i123 = int_add_ovf(i121, 1)
++1520: guard_no_overflow(descr=<Guard0x7b7ac1e56410>) [p75, p76, p80]
++1526: p124 = new_array_clear(i123, descr=<ArrayP 8>)
++1636: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p120, p124, 0, 0, i121, descr=<Callv 0 rriii EF=2 OS=1>)
++1668: p129 = new_array_clear(1, descr=<ArrayP 8>)
++1713: p130 = new_with_vtable(descr=<SizeDescr 16>)
++1724: setfield_gc(p130, i118, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1735: setarrayitem_gc(p129, 0, p130, descr=<ArrayP 8>)
++1739: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p129, p124, 0, i121, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1769: p135 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1773: p136 = getfield_gc_r(p135, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1777: i137 = arraylen_gc(p136, descr=<ArrayP 8>)
++1781: i138 = int_lt(i121, i137)
++1784: guard_true(i138, descr=<Guard0x7b7ac1e2ae30>) [i137, i121, p80, p136, p124]
++1790: p139 = getarrayitem_gc_pure_r(p136, i121, descr=<ArrayP 8>)
++1795: p140 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++1799: p141 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1810: guard_value(p139, ConstPtr(ptr142), descr=<Guard0x7b7ac1e56440>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++1826: p144 = getfield_gc_r(ConstPtr(ptr143), descr=<FieldP env.GlobalCell.inst_value 16>)
++1837: i146 = instance_ptr_eq(p144, ConstPtr(ptr145))
++1840: guard_false(i146, descr=<Guard0x7b7ac1e56470>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++1846: p147 = getfield_gc_r(p140, descr=<FieldP env.Frame.inst_vals 16>)
++1850: p149 = getarrayitem_gc_r(p147, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++1854: guard_class(p149, ConstClass(IntVal), descr=<Guard0x7b7ac1e564a0>) [i137, i121, p80, p136, p124]
++1866: i151 = getfield_gc_i(p149, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1870: i153 = int_sub_ovf(i151, 2)
++1874: guard_no_overflow(descr=<Guard0x7b7ac1e564d0>) [i137, i121, p80, p136, p124]
++1880: guard_class(p144, 98930284395240, descr=<Guard0x7b7ac1e56500>) [i137, i121, p80, p136, p124]
++1892: p155 = getfield_gc_r(p144, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++1896: i156 = getfield_gc_i(p155, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++1900: i158 = int_ne(1, i156)
++1904: guard_false(i158, descr=<Guard0x7b7ac1e56530>) [i137, i121, p80, p136, p124]
++1910: p159 = getfield_gc_r(p155, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++1914: p160 = getfield_gc_r(p144, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++1932: guard_value(p159, ConstPtr(ptr161), descr=<Guard0x7b7ac1e56560>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'if')
++1941: jump(p160, i153, p135, p140, p141, p124, i137, p136, p144, p155, p160, descr=TargetToken(135767169097824))
++2016: --end of the loop--
+[dcfc1f8fd29] jit-log-opt-bridge}
+[dcfc291dfe8] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2ada0 with 42 ops
+[i0, i1, p2, p3, p4]
++158: i5 = int_lt(i1, i0)
++161: guard_true(i5, descr=<Guard0x7b7ac1e2aec0>) [i0, i1, p2, p3, p4]
++167: i7 = int_lt(i1, 0)
++171: guard_false(i7, descr=<Guard0x7b7ac1e56890>) [i0, i1, p2, p3, p4]
++177: p8 = getarrayitem_gc_pure_r(p3, i1, descr=<ArrayP 8>)
++182: p9 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++186: p10 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++190: p11 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++201: guard_value(p8, ConstPtr(ptr12), descr=<Guard0x7b7ac1e568c0>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++217: p14 = getfield_gc_r(ConstPtr(ptr13), descr=<FieldP env.GlobalCell.inst_value 16>)
++228: i16 = instance_ptr_eq(p14, ConstPtr(ptr15))
++231: guard_false(i16, descr=<Guard0x7b7ac1e568f0>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++237: p17 = getfield_gc_r(p9, descr=<FieldP env.Frame.inst_vals 16>)
++241: p19 = getarrayitem_gc_r(p17, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++245: guard_class(p19, ConstClass(IntVal), descr=<Guard0x7b7ac1e56920>) [i0, i1, p2, p3, p4]
++258: i21 = getfield_gc_i(p19, descr=<FieldS value.IntVal.inst_value 8 pure>)
++262: i23 = int_sub_ovf(i21, 2)
++266: guard_no_overflow(descr=<Guard0x7b7ac1e56950>) [i0, i1, p2, p3, p4]
++272: guard_class(p14, 98930284395240, descr=<Guard0x7b7ac1e56980>) [i0, i1, p2, p3, p4]
++286: p25 = getfield_gc_r(p14, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++291: i26 = getfield_gc_i(p25, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++295: i28 = int_ne(1, i26)
++299: guard_false(i28, descr=<Guard0x7b7ac1e569b0>) [i0, i1, p2, p3, p4]
++305: p29 = getfield_gc_r(p25, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++309: p30 = getfield_gc_r(p14, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++328: guard_value(p29, ConstPtr(ptr31), descr=<Guard0x7b7ac1e569e0>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'if')
++337: guard_nonnull(p10, descr=<Guard0x7b7ac1e2af08>) [p4, p11, p9, p10, i23, p30]
++346: guard_subclass(p10, 98930284394464, descr=<Guard0x7b7ac1e2af50>) [p4, p11, p9, p10, i23, p30]
++380: p33 = getfield_gc_r(p10, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++384: guard_nonnull(p33, descr=<Guard0x7b7ac1e2af98>) [p4, p11, p9, p10, i23, p30]
++393: guard_gc_type(p33, 1208, descr=<Guard0x7b7ac1e2afe0>) [p4, p11, p9, p10, i23, p30]
++407: i35 = arraylen_gc(p33, descr=<ArrayP 8>)
++411: i37 = int_ge(i35, 1)
++415: guard_true(i37, descr=<Guard0x7b7ac1e2b028>) [p4, p11, p9, p10, i23, p30]
++421: jump(p30, i23, p10, p9, p11, p4, i35, p33, p14, p25, p30, descr=TargetToken(135767169097824))
++496: --end of the loop--
+[dcfc2957b6c] jit-log-opt-bridge}
+[dcfc3fc73e8] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2ae30 with 151 ops
+[i0, i1, p2, p3, p4]
++446: i5 = int_lt(i1, i0)
++449: guard_false(i5, descr=<Guard0x7b7ac1e2b0b8>) [i0, i1, p2, p3, p4]
++455: p7 = getarrayitem_gc_pure_r(p4, 0, descr=<ArrayP 8>)
++460: i8 = arraylen_gc(p4, descr=<ArrayP 8>)
++465: i10 = int_sub(i8, 1)
++469: p11 = new_array_clear(i10, descr=<ArrayP 8>)
++575: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p4, p11, 1, 0, i10, descr=<Callv 0 rriii EF=2 OS=1>)
++607: p15 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++611: guard_class(p7, 98930284395416, descr=<Guard0x7b7ac1e2b100>) [p7, p11, p15]
++624: i17 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++628: i18 = int_ne(i10, i17)
++631: guard_false(i18, descr=<Guard0x7b7ac1e57850>) [p7, p11, p15]
++637: i19 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++641: i21 = int_eq(i19, 21)
++645: guard_false(i21, descr=<Guard0x7b7ac1e57880>) [p7, p11, p15]
++651: i23 = int_eq(i19, 20)
++655: guard_false(i23, descr=<Guard0x7b7ac1e578b0>) [p7, p11, p15]
++661: p25 = getarrayitem_gc_r(p11, 0, descr=<ArrayP 8>)
++665: i27 = int_eq(i19, 11)
++669: guard_false(i27, descr=<Guard0x7b7ac1e578e0>) [p7, p11, p15]
++675: i29 = int_eq(i19, 12)
++679: guard_false(i29, descr=<Guard0x7b7ac1e57910>) [p7, p11, p15]
++685: i31 = int_eq(i19, 15)
++689: guard_false(i31, descr=<Guard0x7b7ac1e57940>) [p7, p11, p15]
++695: i33 = int_eq(i19, 16)
++699: guard_false(i33, descr=<Guard0x7b7ac1e57970>) [p7, p11, p15]
++705: i35 = int_eq(i19, 17)
++709: guard_false(i35, descr=<Guard0x7b7ac1e579a0>) [p7, p11, p15]
++715: i37 = int_eq(i19, 18)
++719: guard_false(i37, descr=<Guard0x7b7ac1e579d0>) [p7, p11, p15]
++725: i39 = int_eq(i19, 19)
++729: guard_false(i39, descr=<Guard0x7b7ac1e57a00>) [p7, p11, p15]
++735: p41 = getarrayitem_gc_r(p11, 1, descr=<ArrayP 8>)
++739: i43 = int_eq(i19, 13)
++743: guard_false(i43, descr=<Guard0x7b7ac1e57a30>) [p7, p11, p15]
++749: i45 = int_eq(i19, 14)
++753: guard_false(i45, descr=<Guard0x7b7ac1e57a60>) [p7, p11, p15]
++759: i47 = int_le(i19, 5)
++763: guard_true(i47, descr=<Guard0x7b7ac1e57a90>) [p7, p11, p15]
++769: guard_class(p25, ConstClass(IntVal), descr=<Guard0x7b7ac1e57ac0>) [p7, p11, p15]
++781: i49 = getfield_gc_i(p25, descr=<FieldS value.IntVal.inst_value 8 pure>)
++785: guard_class(p41, ConstClass(IntVal), descr=<Guard0x7b7ac1e57af0>) [p7, p11, p15]
++798: i51 = getfield_gc_i(p41, descr=<FieldS value.IntVal.inst_value 8 pure>)
++802: guard_value(i19, 0, descr=<Guard0x7b7ac1e57b20>) [p7, p11, p15]
++812: i53 = int_add_ovf(i49, i51)
++815: guard_no_overflow(descr=<Guard0x7b7ac1e57b50>) [p7, p11, p15]
++821: guard_class(p15, 98930284395072, descr=<Guard0x7b7ac1e57b80>) [p7, p11, p15]
++834: p55 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++838: i56 = arraylen_gc(p55, descr=<ArrayP 8>)
++842: i58 = int_add_ovf(i56, 1)
++849: guard_no_overflow(descr=<Guard0x7b7ac1e57bb0>) [p7, p11, p15]
++855: p59 = new_array_clear(i58, descr=<ArrayP 8>)
++972: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p55, p59, 0, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++1004: p64 = new_array_clear(1, descr=<ArrayP 8>)
++1049: p65 = new_with_vtable(descr=<SizeDescr 16>)
++1060: setfield_gc(p65, i53, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1071: setarrayitem_gc(p64, 0, p65, descr=<ArrayP 8>)
++1075: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p64, p59, 0, i56, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1105: p70 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1116: p71 = getfield_gc_r(p70, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1120: i72 = arraylen_gc(p71, descr=<ArrayP 8>)
++1124: i73 = int_lt(i56, i72)
++1127: guard_false(i73, descr=<Guard0x7b7ac1e2b148>) [i72, i56, p15, p71, p59]
++1133: p75 = getarrayitem_gc_pure_r(p59, 0, descr=<ArrayP 8>)
++1138: p76 = new_array_clear(i56, descr=<ArrayP 8>)
++1244: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p59, p76, 1, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++1276: p80 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1280: guard_class(p75, 98930284395416, descr=<Guard0x7b7ac1e2b190>) [p75, p76, p80]
++1294: i82 = getfield_gc_i(p75, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++1298: i83 = int_ne(i56, i82)
++1301: guard_false(i83, descr=<Guard0x7b7ac1e57be0>) [p75, p76, p80]
++1307: i84 = getfield_gc_i(p75, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++1311: i86 = int_eq(i84, 21)
++1315: guard_false(i86, descr=<Guard0x7b7ac1e57c10>) [p75, p76, p80]
++1321: i88 = int_eq(i84, 20)
++1325: guard_false(i88, descr=<Guard0x7b7ac1e57c40>) [p75, p76, p80]
++1331: p90 = getarrayitem_gc_r(p76, 0, descr=<ArrayP 8>)
++1335: i92 = int_eq(i84, 11)
++1339: guard_false(i92, descr=<Guard0x7b7ac1e57c70>) [p75, p76, p80]
++1345: i94 = int_eq(i84, 12)
++1349: guard_false(i94, descr=<Guard0x7b7ac1e57ca0>) [p75, p76, p80]
++1355: i96 = int_eq(i84, 15)
++1359: guard_false(i96, descr=<Guard0x7b7ac1e57cd0>) [p75, p76, p80]
++1365: i98 = int_eq(i84, 16)
++1369: guard_false(i98, descr=<Guard0x7b7ac1e57d00>) [p75, p76, p80]
++1375: i100 = int_eq(i84, 17)
++1379: guard_false(i100, descr=<Guard0x7b7ac1e57d30>) [p75, p76, p80]
++1385: i102 = int_eq(i84, 18)
++1389: guard_false(i102, descr=<Guard0x7b7ac1e57d60>) [p75, p76, p80]
++1395: i104 = int_eq(i84, 19)
++1399: guard_false(i104, descr=<Guard0x7b7ac1e57d90>) [p75, p76, p80]
++1405: p106 = getarrayitem_gc_r(p76, 1, descr=<ArrayP 8>)
++1409: i108 = int_eq(i84, 13)
++1413: guard_false(i108, descr=<Guard0x7b7ac1e57dc0>) [p75, p76, p80]
++1419: i110 = int_eq(i84, 14)
++1423: guard_false(i110, descr=<Guard0x7b7ac1e57df0>) [p75, p76, p80]
++1429: i112 = int_le(i84, 5)
++1433: guard_true(i112, descr=<Guard0x7b7ac1e57e20>) [p75, p76, p80]
++1439: guard_class(p90, ConstClass(IntVal), descr=<Guard0x7b7ac1e57e50>) [p75, p76, p80]
++1451: i114 = getfield_gc_i(p90, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1455: guard_class(p106, ConstClass(IntVal), descr=<Guard0x7b7ac1e57e80>) [p75, p76, p80]
++1468: i116 = getfield_gc_i(p106, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1472: guard_value(i84, 0, descr=<Guard0x7b7ac1e57eb0>) [p75, p76, p80]
++1482: i118 = int_add_ovf(i114, i116)
++1485: guard_no_overflow(descr=<Guard0x7b7ac1e57ee0>) [p75, p76, p80]
++1491: guard_class(p80, 98930284395072, descr=<Guard0x7b7ac1e57f10>) [p75, p76, p80]
++1505: p120 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++1510: i121 = arraylen_gc(p120, descr=<ArrayP 8>)
++1514: i123 = int_add_ovf(i121, 1)
++1521: guard_no_overflow(descr=<Guard0x7b7ac1e57f40>) [p75, p76, p80]
++1527: p124 = new_array_clear(i123, descr=<ArrayP 8>)
++1637: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p120, p124, 0, 0, i121, descr=<Callv 0 rriii EF=2 OS=1>)
++1669: p129 = new_array_clear(1, descr=<ArrayP 8>)
++1714: p130 = new_with_vtable(descr=<SizeDescr 16>)
++1725: setfield_gc(p130, i118, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1736: setarrayitem_gc(p129, 0, p130, descr=<ArrayP 8>)
++1740: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p129, p124, 0, i121, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1770: p135 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1775: p136 = getfield_gc_r(p135, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1779: i137 = arraylen_gc(p136, descr=<ArrayP 8>)
++1783: i138 = int_lt(i121, i137)
++1786: guard_true(i138, descr=<Guard0x7b7ac1e2b1d8>) [i137, i121, p80, p136, p124]
++1792: p139 = getarrayitem_gc_pure_r(p136, i121, descr=<ArrayP 8>)
++1797: p140 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++1802: p141 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1814: guard_value(p139, ConstPtr(ptr142), descr=<Guard0x7b7ac1e57f70>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++1830: p144 = getfield_gc_r(ConstPtr(ptr143), descr=<FieldP env.GlobalCell.inst_value 16>)
++1841: i146 = instance_ptr_eq(p144, ConstPtr(ptr145))
++1844: guard_false(i146, descr=<Guard0x7b7ac1e57fa0>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++1850: p147 = getfield_gc_r(p140, descr=<FieldP env.Frame.inst_vals 16>)
++1854: p149 = getarrayitem_gc_r(p147, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++1858: guard_class(p149, ConstClass(IntVal), descr=<Guard0x7b7ac1e57fd0>) [i137, i121, p80, p136, p124]
++1870: i151 = getfield_gc_i(p149, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1874: i153 = int_sub_ovf(i151, 2)
++1878: guard_no_overflow(descr=<Guard0x7b7ac1e64020>) [i137, i121, p80, p136, p124]
++1884: guard_class(p144, 98930284395240, descr=<Guard0x7b7ac1e64050>) [i137, i121, p80, p136, p124]
++1896: p155 = getfield_gc_r(p144, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++1900: i156 = getfield_gc_i(p155, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++1904: i158 = int_ne(1, i156)
++1908: guard_false(i158, descr=<Guard0x7b7ac1e64080>) [i137, i121, p80, p136, p124]
++1914: p159 = getfield_gc_r(p155, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++1918: p160 = getfield_gc_r(p144, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++1936: guard_value(p159, ConstPtr(ptr161), descr=<Guard0x7b7ac1e640b0>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'if')
++1945: jump(p160, i153, p135, p140, p141, p124, i137, p136, p144, p155, p160, descr=TargetToken(135767169097824))
++2016: --end of the loop--
+[dcfc43a07a8] jit-log-opt-bridge}
+[dcfc68ae9dc] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2b148 with 42 ops
+[i0, i1, p2, p3, p4]
++158: i5 = int_lt(i1, i0)
++161: guard_true(i5, descr=<Guard0x7b7ac1e2b268>) [i0, i1, p2, p3, p4]
++167: i7 = int_lt(i1, 0)
++171: guard_false(i7, descr=<Guard0x7b7ac1e643e0>) [i0, i1, p2, p3, p4]
++177: p8 = getarrayitem_gc_pure_r(p3, i1, descr=<ArrayP 8>)
++182: p9 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++186: p10 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++190: p11 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++201: guard_value(p8, ConstPtr(ptr12), descr=<Guard0x7b7ac1e64410>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++217: p14 = getfield_gc_r(ConstPtr(ptr13), descr=<FieldP env.GlobalCell.inst_value 16>)
++228: i16 = instance_ptr_eq(p14, ConstPtr(ptr15))
++231: guard_false(i16, descr=<Guard0x7b7ac1e64440>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++237: p17 = getfield_gc_r(p9, descr=<FieldP env.Frame.inst_vals 16>)
++241: p19 = getarrayitem_gc_r(p17, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++245: guard_class(p19, ConstClass(IntVal), descr=<Guard0x7b7ac1e64470>) [i0, i1, p2, p3, p4]
++258: i21 = getfield_gc_i(p19, descr=<FieldS value.IntVal.inst_value 8 pure>)
++262: i23 = int_sub_ovf(i21, 2)
++266: guard_no_overflow(descr=<Guard0x7b7ac1e644a0>) [i0, i1, p2, p3, p4]
++272: guard_class(p14, 98930284395240, descr=<Guard0x7b7ac1e644d0>) [i0, i1, p2, p3, p4]
++286: p25 = getfield_gc_r(p14, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++290: i26 = getfield_gc_i(p25, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++294: i28 = int_ne(1, i26)
++298: guard_false(i28, descr=<Guard0x7b7ac1e64500>) [i0, i1, p2, p3, p4]
++304: p29 = getfield_gc_r(p25, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++308: p30 = getfield_gc_r(p14, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++326: guard_value(p29, ConstPtr(ptr31), descr=<Guard0x7b7ac1e64530>) [i0, i1, p2, p3, p4]
+debug_merge_point(0, 0, 'if')
++335: guard_nonnull(p10, descr=<Guard0x7b7ac1e2b2b0>) [p4, p11, p9, p10, i23, p30]
++344: guard_subclass(p10, 98930284394464, descr=<Guard0x7b7ac1e2b2f8>) [p4, p11, p9, p10, i23, p30]
++378: p33 = getfield_gc_r(p10, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++382: guard_nonnull(p33, descr=<Guard0x7b7ac1e2b340>) [p4, p11, p9, p10, i23, p30]
++391: guard_gc_type(p33, 1208, descr=<Guard0x7b7ac1e2b388>) [p4, p11, p9, p10, i23, p30]
++405: i35 = arraylen_gc(p33, descr=<ArrayP 8>)
++410: i37 = int_ge(i35, 1)
++414: guard_true(i37, descr=<Guard0x7b7ac1e2b3d0>) [p4, p11, p9, p10, i23, p30]
++420: jump(p30, i23, p10, p9, p11, p4, i35, p33, p14, p25, p30, descr=TargetToken(135767169097824))
++496: --end of the loop--
+[dcfc68e5e64] jit-log-opt-bridge}
+[dcfd3f816f8] {jit-log-opt-bridge
+# bridge out of Guard 0x7b7ac1e2b1d8 with 151 ops
+[i0, i1, p2, p3, p4]
++446: i5 = int_lt(i1, i0)
++449: guard_false(i5, descr=<Guard0x7b7ac1e2b460>) [i0, i1, p2, p3, p4]
++455: p7 = getarrayitem_gc_pure_r(p4, 0, descr=<ArrayP 8>)
++459: i8 = arraylen_gc(p4, descr=<ArrayP 8>)
++463: i10 = int_sub(i8, 1)
++467: p11 = new_array_clear(i10, descr=<ArrayP 8>)
++573: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p4, p11, 1, 0, i10, descr=<Callv 0 rriii EF=2 OS=1>)
++605: p15 = getfield_gc_r(p2, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++610: guard_class(p7, 98930284395416, descr=<Guard0x7b7ac1e2b4a8>) [p7, p11, p15]
++623: i17 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++627: i18 = int_ne(i10, i17)
++630: guard_false(i18, descr=<Guard0x7b7ac1e653a0>) [p7, p11, p15]
++636: i19 = getfield_gc_i(p7, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++640: i21 = int_eq(i19, 21)
++644: guard_false(i21, descr=<Guard0x7b7ac1e653d0>) [p7, p11, p15]
++650: i23 = int_eq(i19, 20)
++654: guard_false(i23, descr=<Guard0x7b7ac1e65400>) [p7, p11, p15]
++660: p25 = getarrayitem_gc_r(p11, 0, descr=<ArrayP 8>)
++664: i27 = int_eq(i19, 11)
++668: guard_false(i27, descr=<Guard0x7b7ac1e65430>) [p7, p11, p15]
++674: i29 = int_eq(i19, 12)
++678: guard_false(i29, descr=<Guard0x7b7ac1e65460>) [p7, p11, p15]
++684: i31 = int_eq(i19, 15)
++688: guard_false(i31, descr=<Guard0x7b7ac1e65490>) [p7, p11, p15]
++694: i33 = int_eq(i19, 16)
++698: guard_false(i33, descr=<Guard0x7b7ac1e654c0>) [p7, p11, p15]
++704: i35 = int_eq(i19, 17)
++708: guard_false(i35, descr=<Guard0x7b7ac1e654f0>) [p7, p11, p15]
++714: i37 = int_eq(i19, 18)
++718: guard_false(i37, descr=<Guard0x7b7ac1e65520>) [p7, p11, p15]
++724: i39 = int_eq(i19, 19)
++728: guard_false(i39, descr=<Guard0x7b7ac1e65550>) [p7, p11, p15]
++734: p41 = getarrayitem_gc_r(p11, 1, descr=<ArrayP 8>)
++738: i43 = int_eq(i19, 13)
++742: guard_false(i43, descr=<Guard0x7b7ac1e65580>) [p7, p11, p15]
++748: i45 = int_eq(i19, 14)
++752: guard_false(i45, descr=<Guard0x7b7ac1e655b0>) [p7, p11, p15]
++758: i47 = int_le(i19, 5)
++762: guard_true(i47, descr=<Guard0x7b7ac1e655e0>) [p7, p11, p15]
++768: guard_class(p25, ConstClass(IntVal), descr=<Guard0x7b7ac1e65610>) [p7, p11, p15]
++780: i49 = getfield_gc_i(p25, descr=<FieldS value.IntVal.inst_value 8 pure>)
++784: guard_class(p41, ConstClass(IntVal), descr=<Guard0x7b7ac1e65640>) [p7, p11, p15]
++797: i51 = getfield_gc_i(p41, descr=<FieldS value.IntVal.inst_value 8 pure>)
++801: guard_value(i19, 0, descr=<Guard0x7b7ac1e65670>) [p7, p11, p15]
++811: i53 = int_add_ovf(i49, i51)
++814: guard_no_overflow(descr=<Guard0x7b7ac1e656a0>) [p7, p11, p15]
++820: guard_class(p15, 98930284395072, descr=<Guard0x7b7ac1e656d0>) [p7, p11, p15]
++833: p55 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++837: i56 = arraylen_gc(p55, descr=<ArrayP 8>)
++841: i58 = int_add_ovf(i56, 1)
++848: guard_no_overflow(descr=<Guard0x7b7ac1e65700>) [p7, p11, p15]
++854: p59 = new_array_clear(i58, descr=<ArrayP 8>)
++971: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p55, p59, 0, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++1003: p64 = new_array_clear(1, descr=<ArrayP 8>)
++1048: p65 = new_with_vtable(descr=<SizeDescr 16>)
++1059: setfield_gc(p65, i53, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1070: setarrayitem_gc(p64, 0, p65, descr=<ArrayP 8>)
++1074: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p64, p59, 0, i56, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1104: p70 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1115: p71 = getfield_gc_r(p70, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1119: i72 = arraylen_gc(p71, descr=<ArrayP 8>)
++1123: i73 = int_lt(i56, i72)
++1126: guard_false(i73, descr=<Guard0x7b7ac1e2b4f0>) [i72, i56, p15, p71, p59]
++1132: p75 = getarrayitem_gc_pure_r(p59, 0, descr=<ArrayP 8>)
++1136: p76 = new_array_clear(i56, descr=<ArrayP 8>)
++1242: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p59, p76, 1, 0, i56, descr=<Callv 0 rriii EF=2 OS=1>)
++1274: p80 = getfield_gc_r(p15, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1278: guard_class(p75, 98930284395416, descr=<Guard0x7b7ac1e2b538>) [p75, p76, p80]
++1292: i82 = getfield_gc_i(p75, descr=<FieldS proc.PrimVal.inst_arity 8 pure>)
++1297: i83 = int_ne(i56, i82)
++1300: guard_false(i83, descr=<Guard0x7b7ac1e65730>) [p75, p76, p80]
++1306: i84 = getfield_gc_i(p75, descr=<FieldS proc.PrimVal.inst_pid 24 pure>)
++1311: i86 = int_eq(i84, 21)
++1315: guard_false(i86, descr=<Guard0x7b7ac1e65760>) [p75, p76, p80]
++1321: i88 = int_eq(i84, 20)
++1325: guard_false(i88, descr=<Guard0x7b7ac1e65790>) [p75, p76, p80]
++1331: p90 = getarrayitem_gc_r(p76, 0, descr=<ArrayP 8>)
++1335: i92 = int_eq(i84, 11)
++1339: guard_false(i92, descr=<Guard0x7b7ac1e657c0>) [p75, p76, p80]
++1345: i94 = int_eq(i84, 12)
++1349: guard_false(i94, descr=<Guard0x7b7ac1e657f0>) [p75, p76, p80]
++1355: i96 = int_eq(i84, 15)
++1359: guard_false(i96, descr=<Guard0x7b7ac1e65820>) [p75, p76, p80]
++1365: i98 = int_eq(i84, 16)
++1369: guard_false(i98, descr=<Guard0x7b7ac1e65850>) [p75, p76, p80]
++1375: i100 = int_eq(i84, 17)
++1379: guard_false(i100, descr=<Guard0x7b7ac1e65880>) [p75, p76, p80]
++1385: i102 = int_eq(i84, 18)
++1389: guard_false(i102, descr=<Guard0x7b7ac1e658b0>) [p75, p76, p80]
++1395: i104 = int_eq(i84, 19)
++1399: guard_false(i104, descr=<Guard0x7b7ac1e658e0>) [p75, p76, p80]
++1405: p106 = getarrayitem_gc_r(p76, 1, descr=<ArrayP 8>)
++1409: i108 = int_eq(i84, 13)
++1413: guard_false(i108, descr=<Guard0x7b7ac1e65910>) [p75, p76, p80]
++1419: i110 = int_eq(i84, 14)
++1423: guard_false(i110, descr=<Guard0x7b7ac1e65940>) [p75, p76, p80]
++1429: i112 = int_le(i84, 5)
++1433: guard_true(i112, descr=<Guard0x7b7ac1e65970>) [p75, p76, p80]
++1439: guard_class(p90, ConstClass(IntVal), descr=<Guard0x7b7ac1e659a0>) [p75, p76, p80]
++1451: i114 = getfield_gc_i(p90, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1455: guard_class(p106, ConstClass(IntVal), descr=<Guard0x7b7ac1e659d0>) [p75, p76, p80]
++1468: i116 = getfield_gc_i(p106, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1472: guard_value(i84, 0, descr=<Guard0x7b7ac1e65a00>) [p75, p76, p80]
++1482: i118 = int_add_ovf(i114, i116)
++1485: guard_no_overflow(descr=<Guard0x7b7ac1e65a30>) [p75, p76, p80]
++1491: guard_class(p80, 98930284395072, descr=<Guard0x7b7ac1e65a60>) [p75, p76, p80]
++1504: p120 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++1508: i121 = arraylen_gc(p120, descr=<ArrayP 8>)
++1512: i123 = int_add_ovf(i121, 1)
++1519: guard_no_overflow(descr=<Guard0x7b7ac1e65a90>) [p75, p76, p80]
++1525: p124 = new_array_clear(i123, descr=<ArrayP 8>)
++1635: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p120, p124, 0, 0, i121, descr=<Callv 0 rriii EF=2 OS=1>)
++1667: p129 = new_array_clear(1, descr=<ArrayP 8>)
++1712: p130 = new_with_vtable(descr=<SizeDescr 16>)
++1723: setfield_gc(p130, i118, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1734: setarrayitem_gc(p129, 0, p130, descr=<ArrayP 8>)
++1738: call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p129, p124, 0, i121, 1, descr=<Callv 0 rriii EF=2 OS=1>)
++1768: p135 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_app 8 pure>)
++1772: p136 = getfield_gc_r(p135, descr=<FieldP exp.AppExp.inst_rands 8 pure>)
++1777: i137 = arraylen_gc(p136, descr=<ArrayP 8>)
++1781: i138 = int_lt(i121, i137)
++1784: guard_true(i138, descr=<Guard0x7b7ac1e2b580>) [i137, i121, p80, p136, p124]
++1790: p139 = getarrayitem_gc_pure_r(p136, i121, descr=<ArrayP 8>)
++1795: p140 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++1799: p141 = getfield_gc_r(p80, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++1810: guard_value(p139, ConstPtr(ptr142), descr=<Guard0x7b7ac1e65ac0>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(fib)')
++1826: p144 = getfield_gc_r(ConstPtr(ptr143), descr=<FieldP env.GlobalCell.inst_value 16>)
++1837: i146 = instance_ptr_eq(p144, ConstPtr(ptr145))
++1840: guard_false(i146, descr=<Guard0x7b7ac1e65af0>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
++1846: p147 = getfield_gc_r(p140, descr=<FieldP env.Frame.inst_vals 16>)
++1850: p149 = getarrayitem_gc_r(p147, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'const(2)')
++1854: guard_class(p149, ConstClass(IntVal), descr=<Guard0x7b7ac1e65b20>) [i137, i121, p80, p136, p124]
++1866: i151 = getfield_gc_i(p149, descr=<FieldS value.IntVal.inst_value 8 pure>)
++1870: i153 = int_sub_ovf(i151, 2)
++1874: guard_no_overflow(descr=<Guard0x7b7ac1e65b50>) [i137, i121, p80, p136, p124]
++1880: guard_class(p144, 98930284395240, descr=<Guard0x7b7ac1e65b80>) [i137, i121, p80, p136, p124]
++1892: p155 = getfield_gc_r(p144, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++1896: i156 = getfield_gc_i(p155, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++1900: i158 = int_ne(1, i156)
++1904: guard_false(i158, descr=<Guard0x7b7ac1e65bb0>) [i137, i121, p80, p136, p124]
++1910: p159 = getfield_gc_r(p155, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++1914: p160 = getfield_gc_r(p144, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++1932: guard_value(p159, ConstPtr(ptr161), descr=<Guard0x7b7ac1e65be0>) [i137, i121, p80, p136, p124]
+debug_merge_point(0, 0, 'if')
++1941: jump(p160, i153, p135, p140, p141, p124, i137, p136, p144, p155, p160, descr=TargetToken(135767169097824))
++2016: --end of the loop--
+[dcfd42e20e0] jit-log-opt-bridge}
+[dcfd98f8f86] {jit-summary
+Tracing:      	13	0.094309
+Backend:      	13	0.028416
+TOTAL:      		0.333574
+ops:             	3848
+heapcached ops:  	751
+recorded ops:    	3274
+  calls:         	199
+guards:          	947
+opt ops:         	1201
+opt guards:      	365
+opt guards shared:	307
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	19
+nvholes:         	4
+nvreused:        	1
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	2
+Total # of bridges:	11
+Freed # of loops:	0
+Freed # of bridges:	0
+[dcfd991100e] jit-summary}
