@@ -1,0 +1,4 @@
+*-c
+*.pyc
+/__pycache__/
+3imp-c-nojit
