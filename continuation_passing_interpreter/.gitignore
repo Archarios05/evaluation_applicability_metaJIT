@@ -1,0 +1,10 @@
+/essproglan-5.pdf
+__pycache__/
+*.pyc
+memo.md
+jit.log
+target-c
+jit-fib.log
+target-c
+target-c.nojit.bak
+target-c-nojit
