@@ -1,0 +1,3269 @@
+% Initial environment
+
+%\vfill\eject
+\chapter{標準手続き}
+\label{initialenv}
+\label{builtinchapter}
+
+\mainindex{initial environment}
+\mainindex{top level environment}
+\mainindex{library procedure}
+
+この章は Scheme の組込み手続きを記述する。
+初期の (つまり ``トップ・レベル'' の) Scheme 環境は，
+有用な値を収めている場所へと束縛された数多くの変数とともに始まる。
+そして，その値の大多数はデータを操作するプリミティブ手続きである。
+たとえば，変数 {\cf abs} は数の絶対値を計算する１引数の
+手続き (を初期値として収めている場所) へと束縛され，
+変数 {\cf +} は数の和を計算する手続きへと束縛される。
+他の組込み手続きを使って容易に書くことのできる組込み手続きは，
+``ライブラリ手続き'' として分類される。
+
+プログラムはトップ=レベル定義を使って任意の変数を束縛してよい。
+そして後からその束縛を代入によって変更してよい (\ref{assignment}節参照)。
+これらの演算は Scheme の組込み手続きの振舞を改変しない。
+定義によって導入されていないトップ=レベルの束縛を変更することは，
+組込み手続きの振舞に対して未規定の効果をもつ。
+
+\section{等価性述語}
+\label{equivalencesection}
+
+{\em 述語} (\defining{predicate}\/) とは，
+いつでもブーリアン値 (\schtrue{} または \schfalse) を返す手続きである。
+{\em 等価性述語} (\defining{equivalence predicate}\/) とは，
+数学的な等価関係の計算機上の相当物である (対称律と反射律と推移律が成り立つ)。
+この節で記述する等価性述語のうち，
+{\cf eq?}\ が最も細かく (つまり最も識別が厳しく)，{\cf equal?}\ が最も粗い。
+{\cf eqv?}\ は {\cf eq?}\ よりもわずかに甘く識別する。\todo{Pitman doesn't like
+this paragraph.  Lift the discussion from the Maclisp manual.  Explain
+why there's more than one predicate.}
+
+
+\begin{entry}{%
+\proto{eqv?}{ \vari{obj} \varii{obj}}{手続き}}
+
+{\cf eqv?} 手続きはある有用な等価関係をオブジェクトに対して定義する。
+簡単にいえば，もしも \vari{obj} と \varii{obj} が通常同じオブジェクトだと
+見なしてよいものならば，\schtrue{} を返す。
+この関係にはいささか解釈の余地があるが，
+下記の部分的な {\cf eqv?} の規定は Scheme のすべての実装に対して成り立つ。
+
+次が成り立つならば {\cf eqv?} 手続きは \schtrue{} を返す:
+
+\begin{itemize}
+\item \vari{obj} と \varii{obj} がともに \schtrue{} またはともに \schfalse で
+ある。
+
+\item \vari{obj} と \varii{obj} がともにシンボルであって，かつ
+
+\begin{scheme}
+(string=? (symbol->string obj1)
+          (symbol->string obj2))
+    \ev  \schtrue%
+\end{scheme}
+
+\begin{note} 
+これは \vari{obj} と \varii{obj} のどちらも，
+\ref{symbolsection}節でほのめかされているような ``未インターンのシンボル'' で
+はないことを仮定している。
+この報告書は，実装依存の拡張に対する {\cf eqv?} の振舞をあえて規定する
+ようなことはしない。
+\end{note}
+
+\item \vari{obj} と \varii{obj} がともに数であって, 数値的に
+等しく (\ref{numbersection}節の {\cf =} を見よ)，かつともに
+正確数\index{exact}またはともに不正確数\index{inexact}である。
+
+\item \vari{obj} と \varii{obj} がともに文字であって，
+かつ {\cf char=?} 手続き (\ref{charactersection}節) で同じ文字だと判定される。
+
+\item \vari{obj} と \varii{obj} がともに空リストである。
+
+\item \vari{obj} と \varii{obj} がともにペア，ベクタ，または文字列であって，
+記憶領域の中の同じ場所を表す (\ref{storagemodel}節)。
+
+\item \vari{obj} と \varii{obj} がともに手続きであって，
+場所タグが等しい (\ref{lambda}節)。
+\end{itemize}
+
+次が成り立つならば {\cf eqv?} 手続きは \schfalse{} を返す:
+
+\begin{itemize}
+\item \vari{obj} と \varii{obj} の型が異なる (\ref{disjointness}節)。
+
+\item \vari{obj} と \varii{obj} の一方が \schtrue{} で他方が \schfalse{} で
+ある。
+
+\item \vari{obj} と \varii{obj} がともにシンボルだが
+
+\begin{scheme}
+(string=? (symbol->string \vari{obj})
+          (symbol->string \varii{obj}))
+    \ev  \schfalse%
+\end{scheme}
+
+\item \vari{obj} と \varii{obj} の一方が正確数で他方が不正確数である。
+
+\item \vari{obj} と \varii{obj} がともに数であって，
+{\cf =} 手続きが \schfalse{} を返す。
+
+\item \vari{obj} と \varii{obj} がともに文字であって，
+{\cf char=?} 手続きが \schfalse{} を返す。
+
+\item \vari{obj} と \varii{obj} の一方が空リストだが他方がそうでない。
+
+\item \vari{obj} と \varii{obj} がともにペア，ベクタ，または文字列であって，
+別々の場所を表している。
+
+\item \vari{obj} と \varii{obj} がともに手続きであって，
+なんらかの引数に対して異なった振舞をする (異なった値を返す，または
+異なった副作用をもつ) だろう。
+
+\end{itemize}
+
+\begin{scheme}
+(eqv? 'a 'a)                     \ev  \schtrue
+(eqv? 'a 'b)                     \ev  \schfalse
+(eqv? 2 2)                       \ev  \schtrue
+(eqv? '() '())                   \ev  \schtrue
+(eqv? 100000000 100000000)       \ev  \schtrue
+(eqv? (cons 1 2) (cons 1 2))     \ev  \schfalse
+(eqv? (lambda () 1)
+      (lambda () 2))             \ev  \schfalse
+(eqv? \#f 'nil)                  \ev  \schfalse
+(let ((p (lambda (x) x)))
+  (eqv? p p))		         \ev  \schtrue%
+\end{scheme}
+
+下記の例は，上記の規則が {\cf eqv?} の振舞を完全には規定していない
+という実例を示している。このような場合について言えることは，
+{\cf eqv?} の返す値はブーリアンでなければならないということだけである。
+
+\begin{scheme}
+(eqv? "" "")             \ev  \unspecified
+(eqv? '\#() '\#())         \ev  \unspecified
+(eqv? (lambda (x) x)
+      (lambda (x) x))    \ev  \unspecified
+(eqv? (lambda (x) x)
+      (lambda (y) y))    \ev  \unspecified%
+\end{scheme}
+
+次の例は，ローカルな状態をもった手続きに対する {\cf eqv?}\ の使用を示している。
+{\cf gen-counter} は毎回別々の手続きを返しているはずである。なぜなら，
+各手続きはそれ自身の内部カウンタをもっているからである。
+一方，{\cf gen-loser} は毎回等価な手続きを返している。なぜなら，
+そのローカル状態は，手続きの値または副作用に影響しないからである。
+
+\begin{scheme}
+(define gen-counter
+  (lambda ()
+    (let ((n 0))
+      (lambda () (set! n (+ n 1)) n))))
+(let ((g (gen-counter)))
+  (eqv? g g))           \ev  \schtrue
+(eqv? (gen-counter) (gen-counter))
+                        \ev  \schfalse
+(define gen-loser
+  (lambda ()
+    (let ((n 0))
+      (lambda () (set! n (+ n 1)) 27))))
+(let ((g (gen-loser)))
+  (eqv? g g))           \ev  \schtrue
+(eqv? (gen-loser) (gen-loser))
+                        \ev  \unspecified
+
+(letrec ((f (lambda () (if (eqv? f g) 'both 'f)))
+         (g (lambda () (if (eqv? f g) 'both 'g))))
+  (eqv? f g))
+                        \ev  \unspecified
+
+(letrec ((f (lambda () (if (eqv? f g) 'f 'both)))
+         (g (lambda () (if (eqv? f g) 'g 'both))))
+  (eqv? f g))
+                        \ev  \schfalse%
+\end{scheme}
+
+% Objects of distinct types must never be regarded as the same object,
+% except that \schfalse{} and the empty list\index{empty list} are permitted to
+% be identical.
+%
+% \begin{scheme}
+% (eqv? '() \schfalse)    \ev  \unspecified%
+% \end{scheme}
+
+定数オブジェクト (リテラル式が返すオブジェクト) を改変することはエラー
+だから，適切なところで実装が定数どうしの構造を共有化することは，
+要求はされていないけれども，許されている。
+したがって定数についての {\cf eqv?} の値はときどき実装依存である。
+
+\begin{scheme}
+(eqv? '(a) '(a))                 \ev  \unspecified
+(eqv? "a" "a")                   \ev  \unspecified
+(eqv? '(b) (cdr '(a b)))	 \ev  \unspecified
+(let ((x '(a)))
+  (eqv? x x))                    \ev  \schtrue%
+\end{scheme}
+
+\begin{rationale} 
+{\cf eqv?} の上記の定義は，手続きとリテラルの取扱いにおいて実装に自由度を
+許している。つまり，実装は，二つの手続きないし二つのリテラルが互いに等価で
+あることを検出することも検出しそこなうことも自由であり，
+両者の表現に使用するポインタまたはビット・パターンが同一であることを以て
+等価なオブジェクトであることと同一視することにしてもしなくてもよい。
+\end{rationale}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{eq?}{ \vari{obj} \varii{obj}}{手続き}}
+
+{\cf eq?}\ は，いくつかの場合において {\cf eqv?}\ よりも細かく差異を
+見分けられることを除けば，{\cf eqv?}\ と同様である。
+
+\vest {\cf eq?}\ と {\cf eqv?}\ はシンボル，ブーリアン，空リスト，ペア，
+手続き，および非空の文字列とベクタに対して同じ振舞をすることが保証されている。
+数と文字に対する {\cf eq?} の振舞は実装依存だが，いつでも真か偽を返し，
+そして真を返すようなときは，{\cf eqv?}\ もまた真を返す。
+{\cf eq?} は空ベクタと空文字列に対しても {\cf eqv?} と違う振舞をしてよい。
+
+\begin{scheme}
+(eq? 'a 'a)                     \ev  \schtrue
+(eq? '(a) '(a))                 \ev  \unspecified
+(eq? (list 'a) (list 'a))       \ev  \schfalse
+(eq? "a" "a")                   \ev  \unspecified
+(eq? "" "")                     \ev  \unspecified
+(eq? '() '())                   \ev  \schtrue
+(eq? 2 2)                       \ev  \unspecified
+(eq? \#\backwhack{}A \#\backwhack{}A) \ev  \unspecified
+(eq? car car)                   \ev  \schtrue
+(let ((n (+ 2 3)))
+  (eq? n n))      \ev  \unspecified
+(let ((x '(a)))
+  (eq? x x))      \ev  \schtrue
+(let ((x '\#()))
+  (eq? x x))      \ev  \schtrue
+(let ((p (lambda (x) x)))
+  (eq? p p))      \ev  \schtrue%
+\end{scheme}
+
+\todo{Needs to be explained better above.  How can this be made to be
+not confusing?  A table maybe?}
+
+\begin{rationale} 普通，{\cf eq?}\ は {\cf eqv?}\ よりもずっと
+効率的に---たとえば，なにか複雑な演算ではなく単純なポインタ比較として---実装
+することが可能だろう。
+一つの理由として，{\cf eq?}\ をポインタ比較として実装するといつでも定数時間で
+終了するだろうが，二つの数の {\cf eqv?}\ を定数時間で計算することは
+必ずしも可能とは限らないからである。
+手続きを使って状態付きオブジェクトを実装するような応用においては，
+{\cf eq?}\ は {\cf eqv?}\ と同じ制約に従うから，
+{\cf eq?}\ を {\cf eqv?}\ のように使ってもよい。
+\end{rationale}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{equal?}{ \vari{obj} \varii{obj}}{ライブラリ手続き}}
+
+{\cf equal?} は再帰的にペア，ベクタ，および文字列の内容を比較し，
+それ以外の数やシンボルなどのオブジェクトに対しては {\cf eqv?} を適用する。
+おおざっぱな原則として，同じように印字されるオブジェクトどうしは
+一般に {\cf equal?} である。
+もし引数が循環データ構造ならば，{\cf equal?}\ は停止しないかもしれない。
+
+\begin{scheme}
+(equal? 'a 'a)                  \ev  \schtrue
+(equal? '(a) '(a))              \ev  \schtrue
+(equal? '(a (b) c)
+        '(a (b) c))             \ev  \schtrue
+(equal? "abc" "abc")            \ev  \schtrue
+(equal? 2 2)                    \ev  \schtrue
+(equal? (make-vector 5 'a)
+        (make-vector 5 'a))     \ev  \schtrue
+(equal? (lambda (x) x)
+        (lambda (y) y))  \ev  \unspecified%
+\end{scheme}
+
+\end{entry}
+
+
+\section{数}
+\label{numbersection}
+\index{number}
+
+%%R4%% The excessive use of the code font in this section was
+% confusing, somewhat obnoxious, and inconsistent with the rest
+% of the report and with parts of the section itself.  I added
+% a \tupe no-op, and changed most old uses of \type to \tupe,
+% to make it easier to change the fonts back if people object
+% to the change.
+
+\newcommand{\type}[1]{{\it#1}}
+\newcommand{\tupe}[1]{{#1}}
+
+数値計算は伝統的に Lisp コミュニティから無視されてきた。
+Common Lisp 以前には数値計算を体系化するための熟慮された戦略は皆無だった。
+そして MacLisp システム\cite{Pitman83}を例外として，数値コードを効率的に
+実行するための努力はほとんどなされなかった。
+この報告書は Common Lisp 委員会の労作を高く認め，彼らの勧告の多くを受け入れる。
+見方によっては，この報告書は彼らの提案を Scheme の目的に沿うように
+単純化し一般化している。
+
+数学上の数，それをモデル化しようとしている Scheme の数，
+Scheme の数の実装に使われる機械表現，
+および数を書くために使われる表記法，この四者を区別することが大切である。
+この報告書は \type{number}, \type{complex}, \type{real}, \type{rational},
+および \type{integer} という型を使って，数学上の数と Scheme の数の両方を
+言い表す。
+固定小数点数や浮動小数点数のような機械表現は，
+\type{fixnum} や \type{flonum} のような名前によって言い表される。
+
+%%R4%% I did some reorganizing here to move the discussion of mathematical
+% numbers before the discussion of the Scheme numbers, hoping that this
+% would help to motivate the discussion of representation independence.
+
+\subsection{数値型}
+\label{numericaltypes}
+\index{numerical types}
+
+%%R4%% A Scheme system provides data of type \type{number}, which is the most
+%general numerical type supported by that system.
+%\type{Number} is
+%likely to be a complicated union type implemented in terms of
+%\type{fixnum}s, \type{bignum}s, \type{flonum}s, and so forth, but this
+%should not be apparent to a naive user.  What the user should see is
+%that the usual operations on numbers produce the mathematically
+%expected results, within the limits of the implementation.
+
+%%R4%%  I rewrote the following paragraph to make the various levels of
+% the tower into subsets of each other, instead of relating them by
+% injections.  I think the injections tended to put people in the frame
+% of mind of thinking about coercions between non-overlapping numeric
+% types in mainstream programming languages.
+
+\vest 数学的には，数は，各レベルがそれぞれその上位レベルの部分集合であるような
+部分型の塔に編成できる:
+\begin{tabbing}
+\ \ \ \ \ \ \ \ \ \=\tupe{number} (数) \\
+\> \tupe{complex} (複素数) \\
+\> \tupe{real} (実数) \\
+\> \tupe{rational} (有理数) \\
+\> \tupe{integer} (整数)
+\end{tabbing}
+
+たとえば，3 は整数である。したがって 3 は有理数でも，実数でも，複素数でもある。
+同じことが 3 をモデル化した Scheme の数についても成り立つ。
+Scheme の数に対して，これらの型は述語 \ide{number?}, \ide{complex?}, 
+\ide{real?}, \ide{rational?}, および \ide{integer?} によって定義される。
+
+数の型とその計算機内部での表現との間に単純な関係はない。
+たいていの Scheme の実装は少なくとも二種類の 3 の表現を提供するだろうが，
+これら様々な表現はみな同じ整数を表すというわけである。
+
+%%R4%% I moved "Implementations of Scheme are not required to implement
+% the whole tower..." to the subsection on implementation restrictions.
+
+Scheme の数値演算は数を---可能な限りその表現から独立した---抽象データとして
+取り扱う。
+たとえ Scheme の実装が fixnum や flonum，あるいはその他の数の表現を使うと
+しても，このことは単純なプログラムを書くカジュアルなプログラマの目に
+明らかであるべきではない。
+
+しかし，正確に表現された数と，そうとは限らない数とを区別することは必要である。
+たとえば，データ構造への添字は，記号代数系における多項式係数と同様，
+正確に知られなければならない。
+他方，計測の結果というものは本質的に不正確である。
+また，無理数は有理数によって近似され得るが，そのときは不正確な近似になる。
+正確数が要求される箇所での不正確数の使用を捕捉するため，
+Scheme は正確数を不正確数から明示的に区別する。
+この区別は型の次元に対して直交的である。
+
+\subsection{正確性}
+
+%%R4%% I tried to direct the following paragraph away from philosophizing
+% about the exactness of mathematical numbers, and toward philosophizing
+% about the exactness of Scheme numbers.
+
+\mainindex{exactness} \label{exactly}
+Scheme の数は \type{exact} (正確) か \type{inexact} (不正確) かの
+いずれかである。
+もしも数が正確定数として書かれたか，または正確数から正確演算だけを使って
+導出されたならば，その数は正確数である。
+もしも数が不正確定数として書かれたか，不正確な材料を使って導出されたか，
+あるいは不正確演算を使って導出されたならば，その数は不正確数である。
+このように不正確性は，数のもつ伝染性の性質である。
+%%R4%% The rest of this paragraph (from R3RS) has been dropped.
+
+\vest 二つの実装がある計算に対して正確な結果を算出するとき，
+そこで不正確な中間結果とかかわらなかったならば，
+二つの最終結果は数学的に等価になるだろう。
+これは一般に，不正確数とかかわる計算には成り立たない。
+なぜなら浮動小数点演算のような近似的方法が使われ得るからである。
+しかし結果を数学上の理想的な結果に現実的な範囲で近付けることは
+各実装の義務である。
+
+\vest {\cf +} のような有理演算は，正確な引数が与えられたときは，
+いつでも正確な結果を算出するべきである。
+もし演算が正確な結果を算出できないならば，
+実装制限の違反を報告してもよいし，黙ってその結果を不正確値に変換してもよい。
+\ref{restrictions}節を見よ。
+
+\vest \ide{inexact->exact} を例外として，この節で記述される演算は一般に，
+なんであれ不正確な引数が与えられたときは，不正確な結果を返さなければならない。
+ただし，もしも引数の不正確性が結果の値に影響しないことが証明できるならば，
+その演算は正確な結果を返してよい。
+たとえば，正確なゼロとの乗算は，たとえ他方の引数が不正確であっても，
+正確なゼロを結果として算出してよい。
+
+\subsection{実装制限}
+
+\index{implementation restriction}\label{restrictions}
+
+\vest Scheme の実装は，\ref{numericaltypes}節で与えられた部分型の塔全体を
+実装することは要求されていないが，
+実装の目的と Scheme 言語の精神にともに合致した一貫性のあるサブセットを
+実装しなければならない。
+たとえば，すべての数が実数であるような実装でも依然，かなり有用であり得る。
+
+\vest 実装はまた，この節の要求を満たす限り，どの型であれ，
+それに対してある限定された値域の数をサポートするだけでよい。
+どの型であれ，その正確数に対してサポートする値域が，
+その不正確数に対してサポートする値域と異なっていてもよい。
+たとえば，flonum を使ってすべての不正確実数を表現するような実装が，
+不正確実数の値域を (したがって不正確整数と不正確有理数の値域をも) flonum 形式
+のダイナミック・レンジに限定する一方で，
+正確整数と正確有理数に対しては事実上無制限の値域をサポートしてもよい。
+なお，このような実装では，表現可能な不正確整数および不正確有理数の
+数の間隔は，このレンジの限界に接近するにつれて非常に大きくなりやすい。
+
+\vest Scheme の実装は，リストやベクタや文字列の添字として使われ得るか，
+またはリストやベクタや文字列の長さの計算から結果として得られ得るような数の
+値域にわたって正確整数をサポートしなければならない。
+\ide{length}, \ide{vector-length}, および \ide{string-length} の各手続きは
+正確整数を返さなければならない。
+正確整数以外のものを添字として使うことはエラーである。
+なお，添字値域内の整数定数が，正確整数の構文で表現されているならば，
+たとえいかなる実装制限がこの値域外に適用されていようとも，
+その定数は実際に正確整数として読み込まれるものとする。
+最後に，下記に挙げる手続きは，もしも引数がすべて正確整数であって，
+かつ数学的に期待される結果が実装において正確整数として表現可能ならば，
+いつでも正確整数の結果を返すものとする:
+
+\begin{scheme}
++            -             *
+quotient     remainder     modulo
+max          min           abs
+numerator    denominator   gcd
+lcm          floor         ceiling
+truncate     round         rationalize
+expt%
+\end{scheme}
+
+\vest 事実上無制限のサイズと精度をもった正確整数と正確有理数を
+サポートすることと，
+正確な引数が与えられたときはいつでも正確な結果を返すように
+上記の手続きと {\cf /} 手続きを実装すること，
+この二つが実装に対して---要求はされていないが---奨励されている。
+もしもこれらの手続きの一つが，正確引数が与えられたときに正確な結果を
+かなえられないならば，実装制限の違反を報告してもよいし，黙ってその結果を
+不正確数に変換してもよい。
+このような変換は後からエラーの原因となるかもしれない。
+
+%%R4%% I moved this stuff here.
+% It seems to me that the only thing that this requires is that
+% implementations that support inexact numbers have to have both
+% exact and inexact representations for the integers 0 through 15.
+% If that's what it's saying, I'd rather say it that way.
+% On the other hand, letting the limit be as small as 15 sounds a
+% tad silly, though I think I understand how that number was arrived at.
+% (Or is 35 the number?)
+%
+%Implementations are encouraged, but not required, to support \tupe{inexact}
+%numbers.  For any implementation that supports \tupe{inexact} numbers,
+%there is a subset of the integers for which there are both \tupe{exact} and
+%\tupe{inexact} representations.  This subset must include all non-negative
+%integers up to some limit specified by the implementation.  This limit
+%must be 16 or greater.  The
+%\ide{exact\coerce{}inexact} and \ide{inexact\coerce{}exact}
+%procedures implement the natural one-to-one correspondence between
+%the \tupe{inexact} and \tupe{exact} integers within this range.
+
+\vest 実装は浮動小数点やその他の近似的な表現戦略を不正確数を表すために
+使ってよい。
+%%R4%% The following sentence seemed a bit condescending as well as
+% awkward.  It didn't seem to be very enforceable, so I flushed it.
+%
+%This is not to
+%say that implementors need not use the best known algorithms for
+%\tupe{inexact} computations---only that approximate methods of high
+%quality are allowed.
+%
+この報告書は，
+flonum 表現を使う実装が IEEE 32-bit and 64-bit floating point standards に
+従うこと，
+そして他の表現を使う実装はこれらの浮動小数点規格\cite{IEEE}を使って
+達成可能な精度と互角以上であることを---要求はしないが---推奨する。
+
+\vest とりわけ，flonum 表現を使う実装は次の規則に従わなければ
+ならない:  \tupe{flonum} 結果はその演算への不正確引数のどれを表現するために
+使われた精度とも，少なくとも同等の精度で表現されなければならない。
+{\cf sqrt} のような潜在的に不正確な演算は，
+正確引数に適用されたとき，可能ならばいつでも正確な答えを算出する (たとえば，
+正確数 4 の平方根---square root---は正確数 2 になるべきで
+ある) ことが望ましい (が要求はされていない)。
+しかしながら，もしも ({\cf sqrt} でのごとく) 正確数を演算した結果が
+不正確数になってしまうならば，
+そしてその不正確数が flonum として表現されるならば，
+そのときは，利用可能な最も高精度の flonum 形式が使われなければならない。
+しかし，もしも結果がなにか別の方法で表現されるならば，そのときは，
+その表現は利用可能な最も高精度の flonum 形式と少なくとも同等の精度で
+なければならない。
+
+Scheme は数に対して様々な表記法を許しているが，
+個々の実装はその一部をサポートするだけでよい。
+たとえば，すべての数が実数であるような実装が，
+複素数に対する直交座標および極座標の記法をサポートする必要はない。
+もし実装が，正確数として表現できないような正確数値定数に出会ったならば，
+実装は実装制限の違反を報告してもよいし，黙ってその定数を不正確数で
+表現してもよい。
+
+
+\subsection{数値定数の構文}
+\label{numbernotations}
+
+%@@@@LOSE@@@@
+
+%%R4%%  I removed the following paragraph in an attempt to tighten up
+% this subsection.  Except for its first sentence, which I moved to
+% the subsection on implementation restrictions, I think its content
+% is implied by the rest of the section.
+%
+%Although Scheme allows a variety of written representations of numbers,
+%any particular implementation may support only some of them.
+%These syntaxes are intended to be purely notational; any kind of number
+%may be written in any form that the user deems convenient.  Of course,
+%writing 1/7 as a limited-precision decimal fraction will not express the
+%number exactly, but this approximate form of expression may be just what
+%the user wants to see.
+
+数に対する表記表現の構文は\ref{numbersyntax}節で形式的に記述される。
+英字の大文字と小文字は数値定数において区別されないことに注意せよ。
+
+%%R4%%  See section~\ref{numberformats} for many examples.
+
+数は，基数接頭辞 (radix prefix) の使用により二進，八進，十進，または
+十六進で書かれ得る。
+基数接頭辞は {\cf \#b}\sharpindex{b} (binary, 二進), 
+{\cf \#o}\sharpindex{o} (octal, 八進), 
+{\cf \#d}\sharpindex{d} (decimal, 十進), 
+および {\cf \#x}\sharpindex{x} (hexadecimal, 十六進) である。
+基数接頭辞がなければ，十進数での表現だと仮定される。
+
+数値定数は，接頭辞により正確か不正確かを指定され得る。
+その接頭辞は正確 (\tupe{exact}) が {\cf \#e}\sharpindex{e}，
+不正確 (\tupe{inexact}) が {\cf \#i}\sharpindex{i} である。
+基数接頭辞を使うとき，
+正確性接頭辞 (exactness prefix) はその前に現れても後ろに現れてもよい。
+もし数の表記表現に正確性接頭辞がなければ，
+その定数は不正確でも正確でもあり得る。
+もしそれが小数点，指数部，または数字代わりの ``\sharpsign'' 文字を
+含んでいるならば不正確数であり，
+そうでなければ正確数である。
+
+様々な精度の不正確数をもったシステムでは，
+定数の精度を指定することが有用であり得る。
+この目的のため，
+数値定数はその不正確表現の望ましい精度を示す指数部マーカとともに書かれ得る。
+英字 {\cf s}, {\cf f}, {\cf d}, および {\cf l} は
+それぞれ \var{short}, \var{single}, \var{double}, および \var{long} 精度の
+使用を指定する。
+(不正確数の内部表現が四種類に満たないとき，この四つのサイズ指定は
+利用可能な指定の上へと写像される。たとえば，
+二種類の内部表現をもった実装は short と single，および long と double を
+それぞれ一つに写してよい。)\ \  なお，
+指数部マーカ {\cf e} は実装のデフォルト精度を指定する。
+デフォルト精度は \var{double} と少なくとも同等の精度だが，
+実装はこのデフォルトを利用者が設定できるようにしてもよい。
+
+\begin{scheme}
+3.14159265358979F0
+       {\rm single に丸めて ---} 3.141593
+0.6L0
+       {\rm long に拡張して ---} .600000000000000%
+\end{scheme}
+
+
+\subsection{数値演算}
+
+読者は\ref{typeconventions}節を参照して，
+数値ルーチンの引数の型についての制限を指定するために使われた命名規約の
+まとめを読まれたい。
+%%R4%% The following sentence has already been said twice, and the
+% term "exactness-preserving" is no longer defined by the Report.
+%
+%  Remember that
+%an exactness-preserving operation may coerce its result to inexact if the
+%implementation is unable to represent it exactly.
+この節における用例は，
+正確記法を使って書かれた数値定数がどれも実際に正確数として表現されると
+いうことを仮定している。
+例によっては，不正確記法を使って書かれた数値定数のいくつかが
+精度を失うことなく表現可能であるということも仮定しており，
+その不正確定数には flonum を使って不正確数を表現する実装においてこれが
+成り立ちそうなものが選ばれている。
+
+\todo{Scheme provides the usual set of operations for manipulating
+numbers, etc.}
+
+\begin{entry}{%
+\proto{number?}{ obj}{手続き}
+\proto{complex?}{ obj}{手続き}
+\proto{real?}{ obj}{手続き}
+\proto{rational?}{ obj}{手続き}
+\proto{integer?}{ obj}{手続き}}
+
+これらの数値型述語は，数に限らず，どの種類の引数にも適用できる。
+これらは，もしオブジェクトが述語の名前の型ならば \schtrue{} を返し，
+そうでなければ \schfalse{} を返す。
+一般に，もしある型述語がある数について真ならば，
+すべての上位の型述語もまたその数について真である。
+したがって，もしある型述語がある数について偽ならば，
+すべての下位の型述語もまたその数について偽である。
+%%R4%% The new section on implementation restrictions subsumes: 
+% Not every system
+%supports all of these types; for example, it is entirely possible to have a
+%Scheme system that has only \tupe{integer}s.  Nonetheless every implementation
+%of Scheme must have all of these predicates.
+
+\vr{z} を不正確複素数とするとき，{\cf (real? \vr{z})} が真である
+必要十分条件は {\cf (zero? (imag-part \vr{z}))} が真であることである。
+\vr{x} を不正確実数とするとき，{\cf (integer? \vr{x})} が真である
+必要十分条件は {\cf (= \vr{x} (round \vr{x}))} である。
+
+\begin{scheme}
+(complex? 3+4i)         \ev  \schtrue
+(complex? 3)            \ev  \schtrue
+(real? 3)               \ev  \schtrue
+(real? -2.5+0.0i)       \ev  \schtrue
+(real? \#e1e10)          \ev  \schtrue
+(rational? 6/10)        \ev  \schtrue
+(rational? 6/3)         \ev  \schtrue
+(integer? 3+0i)         \ev  \schtrue
+(integer? 3.0)          \ev  \schtrue
+(integer? 8/4)          \ev  \schtrue%
+\end{scheme}
+
+\begin{note}
+不正確数に対するこれらの型述語の振舞は信頼できない。
+なぜなら，いかなる誤差が結果に影響するかもしれないからである。
+\end{note}
+
+\begin{note}
+多くの実装では \ide{rational?} 手続きは \ide{real?} と同一になり，
+\ide{complex?} 手続きは \ide{number?} と同一になるだろう。
+しかし，普通でない実装ではいくつかの無理数を正確に表現できるかもしれないし，
+あるいは数の体系を拡張してある種の非複素数をサポートしているかもしれない。
+\end{note}
+
+\end{entry}
+
+\begin{entry}{%
+\proto{exact?}{ \vr{z}}{手続き}
+\proto{inexact?}{ \vr{z}}{手続き}}
+
+これらの数値述語は数量の正確性についてのテストを定めている。
+どの Scheme 数についても，これらの述語のうちの正確に一つが真である。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{=}{ \vri{z} \vrii{z} \vriii{z} \dotsfoo}{手続き}
+\proto{<}{ \vri{x} \vrii{x} \vriii{x} \dotsfoo}{手続き}
+\proto{>}{ \vri{x} \vrii{x} \vriii{x} \dotsfoo}{手続き}
+\proto{<=}{ \vri{x} \vrii{x} \vriii{x} \dotsfoo}{手続き}
+\proto{>=}{ \vri{x} \vrii{x} \vriii{x} \dotsfoo}{手続き}}
+
+%- Some implementations allow these procedures to take many arguments, to 
+%- facilitate range checks.  
+これらの手続きは引数が (それぞれ) 等しい，
+狭義単調増加，狭義単調減少，広義単調増加，
+または広義単調減少ならば \schtrue{} を返す。
+
+これらの述語は推移的であることが要求されている。
+
+\begin{note}
+Lisp ライクな言語におけるこれらの述語の伝統的な実装は推移的ではない。
+\end{note}
+
+\begin{note}
+不正確数をこれらの述語を使って比較することはエラーではないが，
+その結果は信頼できないかもしれない。
+なぜなら小さな誤差が結果に影響するかもしれないからである。
+とりわけ \ide{=} と \ide{zero?} が影響されやすい。
+疑わしいときは，数値解析の専門家に相談されたい。
+\end{note}
+
+\end{entry}
+
+\begin{entry}{%
+\proto{zero?}{ \vr{z}}{ライブラリ手続き}
+\proto{positive?}{ \vr{x}}{ライブラリ手続き}
+\proto{negative?}{ \vr{x}}{ライブラリ手続き}
+\proto{odd?}{ \vr{n}}{ライブラリ手続き}
+\proto{even?}{ \vr{n}}{ライブラリ手続き}}
+
+これらの数値述語は特定の性質について数をテストし，
+\schtrue{} または \schfalse を返す。上記の注を見よ。
+
+\end{entry}
+
+\begin{entry}{%
+\proto{max}{ \vri{x} \vrii{x} \dotsfoo}{ライブラリ手続き}
+\proto{min}{ \vri{x} \vrii{x} \dotsfoo}{ライブラリ手続き}}
+
+これらの述語は引数のうちの最大値 (maximum) または最小値 (minimum) を返す。
+
+\begin{scheme}
+(max 3 4)              \ev  4    ; 正確数
+(max 3.9 4)            \ev  4.0  ; 不正確数%
+\end{scheme}
+
+\begin{note}
+もし引数のどれかが不正確数ならば，結果も不正確数になる (ただし，
+その誤差が結果に影響するほど大きくないことを手続きが証明できるならば，
+その限りではないが，そのようなことは普通でない実装においてのみ可能である)。
+もし {\cf min} または {\cf max} が正確数と不正確数を比較するために使われ，
+かつ精度を失うことなく不正確数としてその結果である数値を表現できないならば，
+そのとき手続きは実装制限の違反を報告してよい。
+\end{note}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{+}{ \vri{z} \dotsfoo}{手続き}
+\proto{*}{ \vri{z} \dotsfoo}{手続き}}
+
+これらの手続きは引数の和または積を返す。
+%- These procedures are exactness preserving.
+
+\begin{scheme}
+(+ 3 4)                 \ev  7
+(+ 3)                   \ev  3
+(+)                     \ev  0
+(* 4)                   \ev  4
+(*)                     \ev  1%
+\end{scheme} 
+ 
+\end{entry}
+
+
+\begin{entry}{%
+\proto{-}{ \vri{z} \vrii{z}}{手続き}
+\rproto{-}{ \vr{z}}{手続き}
+\rproto{-}{ \vri{z} \vrii{z} \dotsfoo}{省略可能手続き}
+\proto{/}{ \vri{z} \vrii{z}}{手続き}
+\rproto{/}{ \vr{z}}{手続き}
+\rproto{/}{ \vri{z} \vrii{z} \dotsfoo}{省略可能手続き}}
+
+２個以上の引数に対し，これらの手続きは引数の---左結合での---差または商を返す。
+１引数に対しては，引数の加法または乗法での逆元を返す。
+%- These procedures are exactness preserving, except that division may
+%- coerce its result to inexact in implementations that do not support
+%- \tupe{ratnum}s. 
+
+\begin{scheme}
+(- 3 4)                 \ev  -1
+(- 3 4 5)               \ev  -6
+(- 3)                   \ev  -3
+(/ 3 4 5)               \ev  3/20
+(/ 3)                   \ev  1/3%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{abs}{ x}{ライブラリ手続き}}
+
+{\cf abs} は引数の絶対値 (absolute value) を返す。
+%- {\cf Abs} is exactness preserving when its argument is real.
+\begin{scheme}
+(abs -7)                \ev  7
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{quotient}{ \vri{n} \vrii{n}}{手続き}
+\proto{remainder}{ \vri{n} \vrii{n}}{手続き}
+\proto{modulo}{ \vri{n} \vrii{n}}{手続き}}
+
+これらの手続きは数論的な (整数の) 除算を実装する。
+\vrii{n} は非ゼロであること。
+三つすべての手続きが整数を返す。
+もしも \vri{n}/\vrii{n} が整数ならば:
+\begin{scheme}
+    (quotient \vri{n} \vrii{n})   \ev \vri{n}/\vrii{n}
+    (remainder \vri{n} \vrii{n})  \ev 0
+    (modulo \vri{n} \vrii{n})     \ev 0
+\end{scheme}
+もしも \vri{n}/\vrii{n} が整数でなければ:
+\begin{scheme}
+    (quotient \vri{n} \vrii{n})   \ev \vr{n_q}
+    (remainder \vri{n} \vrii{n})  \ev \vr{n_r}
+    (modulo \vri{n} \vrii{n})     \ev \vr{n_m}
+\end{scheme}
+ここで \vr{n_q} はゼロ方向に丸めた $\vri{n}/\vrii{n}$,
+$0 < |\vr{n_r}| < |\vrii{n}|$, $0 < |\vr{n_m}| < |\vrii{n}|$,
+\vr{n_r} と \vr{n_m} は \vri{n} から \vrii{n} の倍数だけ異なる,
+\vr{n_r} は \vri{n} と同符号, 
+かつ \vr{n_m} は \vrii{n} と同符号とする。
+
+このことから私たちは整数 \vri{n} と整数 \vrii{n} ($\neq 0$) に対して
+次を結論できる:
+\begin{scheme}
+     (= \vri{n} (+ (* \vrii{n} (quotient \vri{n} \vrii{n}))
+           (remainder \vri{n} \vrii{n})))
+                                 \ev  \schtrue%
+\end{scheme}
+ただし，この計算に関係したすべての数が正確数であるとする。
+
+\begin{scheme}
+(modulo 13 4)           \ev  1
+(remainder 13 4)        \ev  1
+
+(modulo -13 4)          \ev  3
+(remainder -13 4)       \ev  -1
+
+(modulo 13 -4)          \ev  -3
+(remainder 13 -4)       \ev  1
+
+(modulo -13 -4)         \ev  -1
+(remainder -13 -4)      \ev  -1
+
+(remainder -13 -4.0)    \ev  -1.0  ; 不正確数%
+\end{scheme}
+\end{entry}
+
+\begin{entry}{%
+\proto{gcd}{ \vri{n} \dotsfoo}{ライブラリ手続き}
+\proto{lcm}{ \vri{n} \dotsfoo}{ライブラリ手続き}}
+
+これらの手続きは引数の最大公約数 (greatest common divisor) または
+最小公倍数 (least common multiple) を返す。
+結果はつねに非負である。
+%- These procedures are exactness preserving.
+
+%%R4%% I added the inexact example.
+\begin{scheme}
+(gcd 32 -36)            \ev  4
+(gcd)                   \ev  0
+(lcm 32 -36)            \ev  288
+(lcm 32.0 -36)          \ev  288.0  ; 不正確数
+(lcm)                   \ev  1%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{numerator}{ \vr{q}}{手続き}
+\proto{denominator}{ \vr{q}}{手続き}}
+
+これらの手続きは引数の分子 (numerator) または分母 (denominator) を返す。
+結果は，引数があたかも既約分数として表現されているかのように計算される。
+分母はつねに正である。\  0 の分母は 1 であると定義されている。
+%- The remarks about denominators are new.
+%- Clearly, they are exactness-preserving procedures.
+\todo{More description and examples needed.}
+\begin{scheme}
+(numerator (/ 6 4))  \ev  3
+(denominator (/ 6 4))  \ev  2
+(denominator
+  (exact->inexact (/ 6 4))) \ev 2.0%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{floor}{ x}{手続き}
+\proto{ceiling}{ x}{手続き}
+\proto{truncate}{ x}{手続き}
+\proto{round}{ x}{手続き}
+}
+
+これらの手続きは整数を返す。
+\vest {\cf floor} は \vr{x} 以下の最大の整数を返す。
+{\cf ceiling} は \vr{x} 以上の最小の整数を返す。
+{\cf truncate} は絶対値が \vr{x} の絶対値以下であって \vr{x} に最も近い整数
+を返す。
+{\cf round} は \vr{x} に最も近い整数を返す，
+ただし \vr{x} が二つの整数の中間ならば偶数へと丸める。
+
+\begin{rationale}
+{\cf round} が偶数へと丸めることは，
+IEEE floating point standard で規定されたデフォルト丸めモードと一致する。
+\end{rationale}
+
+\begin{note}
+もしもこれらの手続きへの引数が不正確数ならば，その結果もまた不正確数になる。
+もし正確値が必要ならば，結果を {\cf inexact->exact} 手続きに渡せばよい。
+\end{note}
+
+\begin{scheme}
+(floor -4.3)          \ev  -5.0
+(ceiling -4.3)        \ev  -4.0
+(truncate -4.3)       \ev  -4.0
+(round -4.3)          \ev  -4.0
+
+(floor 3.5)           \ev  3.0
+(ceiling 3.5)         \ev  4.0
+(truncate 3.5)        \ev  3.0
+(round 3.5)           \ev  4.0  ; 不正確数
+
+(round 7/2)           \ev  4    ; 正確数
+(round 7)             \ev  7%
+\end{scheme}
+
+\end{entry}
+
+\begin{entry}{%
+\proto{rationalize}{ x y}{ライブラリ手続き}
+%- \proto{rationalize}{ x}{手続き}
+}
+
+{\cf rationalize} は，\vr{x} に対して \vr{y} 以内の誤差で等しい{\em 最も
+単純な}有理数を返す。\mainindex{simplest rational}
+有理数 $r_1$, $r_2$ について $r_1 = p_1/q_1$, $r_2 = p_2/q_2$ (ただし
+既約分数) とするとき，$|p_1| \leq |p_2|$ かつ $|q_1| \leq |q_2|$ ならば，
+有理数 $r_1$ は有理数 $r_2$ {\em より単純}である。
+たとえば $3/5$ は $4/7$ より単純である。
+すべての有理数がこの順序で比較できるわけでは
+ないが (たとえば $2/7$ と $3/5$)，数直線上のいかなる区間も，
+その区間内の他のどの有理数よりも単純であるような有理数を１個
+含んでいる ($2/7$ と $3/5$ の間にはより単純な $2/5$ が存在する)。
+$0 = 0/1$ がすべての有理数のうちで最も単純であることに注意せよ。
+
+\begin{scheme}
+(rationalize
+  (inexact->exact .3) 1/10)  \ev 1/3    ; 正確数
+(rationalize .3 1/10)        \ev \#i1/3  ; 不正確数%
+\end{scheme}
+
+\end{entry}
+
+\begin{entry}{%
+\proto{exp}{ \vr{z}}{手続き}
+\proto{log}{ \vr{z}}{手続き}
+\proto{sin}{ \vr{z}}{手続き}
+\proto{cos}{ \vr{z}}{手続き}
+\proto{tan}{ \vr{z}}{手続き}
+\proto{asin}{ \vr{z}}{手続き}
+\proto{acos}{ \vr{z}}{手続き}
+\proto{atan}{ \vr{z}}{手続き}
+\rproto{atan}{ \vr{y} \vr{x}}{手続き}}
+
+これらの手続きは，一般的な実数をサポートするどの実装にも含まれる。
+これらはおなじみの超越関数を計算する。
+{\cf log} は \vr{z} の自然対数を計算する (常用対数ではない)。
+{\cf asin}, {\cf acos}, および {\cf atan} はそれぞれ arcsine ($\sin^{-1}$),
+arccosine ($\cos^{-1}$), および arctangent ($\tan^{-1}$) を計算する。
+二引数の {\cf atan} は，たとえ一般的な複素数をサポートしない実装であっても，
+{\tt (angle (make-rectangular \vr{x} \vr{y}))} を計算する (下記参照)。
+
+一般に，数学上の関数 log, arcsine, arccosine, および arctangent は
+多価関数として定義される。
+しかし，ここでは $\log z$ の値として，虚部が区間 $(-\pi, \pi]$ 内に存在する
+ような値を採ることにする。
+$\log 0$ は未定義とする。
+このように $\log$ を定義したとき，
+$\sin^{-1} z$, $\cos^{-1} z$, および  $\tan^{-1} z$ の値は以下の公式に
+よって決まる:
+$$\sin^{-1} z = -i \log (i z + \sqrt{1 - z^2})$$
+$$\cos^{-1} z = \pi / 2 - \sin^{-1} z$$
+$$\tan^{-1} z = (\log (1 + i z) - \log (1 - i z)) / (2 i)$$
+
+上記の規定は\cite{CLtL}に従っており，そしてそれは翻って\cite{Penfield81}を
+引用している。これらの関数の branch cut，境界条件，および実装のより詳細な
+議論についてはこれらの原典を参照せよ。
+可能ならばいつでも，これらの手続きは実数引数から実数結果を算出する。
+
+%%R4%%
+\todo{The cited references are likely to change their branch cuts
+soon to allow for the possibility of distinct positive and negative
+zeroes, as in IEEE floating point.  We may not want to follow those
+changes, since we may want a complex number with zero imaginary part
+(whether positive or negative zero) to be treated as a real.  I don't
+think there are any better standards for complex arithmetic than the
+ones cited, so we're really on our own here.}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{sqrt}{ \vr{z}}{手続き}}
+
+\vr{z} の平方根の主値を返す。
+結果は正の実部をもつか，あるいはゼロの実部と非負の虚部をもつ。
+\end{entry}
+
+
+\begin{entry}{%
+\proto{expt}{ \vri{z} \vrii{z}}{手続き}}
+
+\vri{z} の \vrii{z} 乗を返す。
+$z_1 \neq 0$ に対して
+$${z_1}^{z_2} = e^{z_2 \log {z_1}}$$
+$0^z$ は，$z = 0$ ならば 1，そうでなければ 0 である。
+\end{entry}
+
+%- \begin{entry}{%- 
+%- \proto{approximate}{ z x}{手続き}}
+%- 
+%- Returns an approximation to \vr{z} in a representation whose precision is
+%- the same as that 
+%- of the representation of \vr{x}, which must be an inexact number.  The
+%- result is always inexact.
+%- 
+%- \begin{scheme}
+%- (approximate 3.1415926535 1F10)
+%-         \ev  3.14159F0
+%- (approximate 3.1415926535 \#I65535)
+%-         \ev \#I3
+%- (approximate 3.14F0 1L8)
+%-         \ev  3.14L0
+%- (approximate 3.1415926535F0 1L8)
+%-         \ev  3.14159L0
+%- \end{scheme}
+%- \end{entry}
+
+
+
+\begin{entry}{%
+\proto{make-rectangular}{ \vri{x} \vrii{x}}{手続き}
+\proto{make-polar}{ \vriii{x} \vriv{x}}{手続き}
+\proto{real-part}{ \vr{z}}{手続き}
+\proto{imag-part}{ \vr{z}}{手続き}
+\proto{magnitude}{ \vr{z}}{手続き}
+\proto{angle}{ \vr{z}}{手続き}}
+
+これらの手続きは，一般的な複素数をサポートするどの実装にも含まれる。
+\vri{x}, \vrii{x}, \vriii{x}, および \vriv{x} が実数であり，
+\vr{z} が複素数であって，次のようであると仮定するとき，
+ $$ \vr{z} = \vri{x} + \vrii{x}\hbox{$i$}
+ = \vriii{x} \cdot e^{{\displaystyle{\hbox{$i$}} \vriv{x}}}$$
+次が成り立つ。
+\begin{scheme}
+(make-rectangular \vri{x} \vrii{x}) \ev \vr{z}
+(make-polar \vriii{x} \vriv{x})     \ev \vr{z}
+(real-part \vr{z})                  \ev \vri{x}
+(imag-part \vr{z})                  \ev \vrii{x}
+(magnitude \vr{z})                  \ev $|\vriii{x}|$
+(angle \vr{z})                      \ev $x_{angle}$
+\end{scheme}
+ここで $-\pi < x_{angle} \le \pi$，ただし，
+ある整数 $n$ に対して $x_{angle} = \vriv{x} + 2\pi n$ とする。
+
+\begin{rationale}
+{\cf magnitude} は実数引数に対して \ide{abs} と同一である。
+しかし，{\cf abs} がすべての実装になければならない一方，
+{\cf magnitude} は一般的な複素数をサポートする実装にだけあればよい。
+\end{rationale}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{exact->inexact}{ \vr{z}}{手続き}
+\proto{inexact->exact}{ \vr{z}}{手続き}}
+
+{\cf exact\coerce{}inexact} は \vr{z} の不正確表現を返す。
+返される値は，引数に数値的に最も近い不正確数である。
+もしも正確引数にほどよく近い不正確数がなければ，
+実装制限の違反を報告してもよい。
+
+{\cf inexact\coerce{}exact} は \vr{z} の正確表現を返す。
+返される値は，引数に数値的に最も近い正確数である。
+もしも不正確引数にほどよく近い正確数がなければ，
+実装制限の違反を報告してもよい。
+
+%%R%% I moved this to the section on implementation restrictions.
+%For any implementation that supports \tupe{inexact} quantities,
+%there is a subset of the integers for which there are both \tupe{exact} and
+%\tupe{inexact} representations.  This subset must include the non-negative
+%integers up to a limit specified by the implementation.  The limit
+%must be big enough to represent all digits in reasonable radices, and
+%may correspond to some natural word size for the implementation.  For
+%such integers, these procedures implement the natural one-to-one
+%correspondence between the representations.
+
+これらの手続きは，正確整数と不正確整数のあいだの自然な一対一の対応を，
+ある実装依存の値域にわたって実装する。
+\ref{restrictions}節を見よ。
+
+\end{entry}
+
+\medskip
+
+\subsection{数値入出力}
+
+\begin{entry}{%
+\proto{number->string}{ z}{手続き}
+\rproto{number->string}{ z radix}{手続き}}
+
+\vr{radix} は正確整数 2, 8, 10, または 16 でなければならない。
+省略時，\vr{radix} は 10 と見なされる。
+手続き {\cf number\coerce{}string} は
+数 (\vr{number}) と基数 (\vr{radix}) を取って，
+その数のその基数での外部表現を，次式が真である文字列として返す。
+\begin{scheme}
+(let ((number \vr{number})
+      (radix \vr{radix}))
+  (eqv? number
+        (string->number (number->string number
+                                        radix)
+                        radix)))
+\end{scheme}
+もしこの式を真にする結果があり得なければエラーである。
+
+もし \vr{z} が不正確であり，基数が 10 であって，かつ上式が
+小数点付きの結果によって充足され得るならば，
+そのとき結果は小数点付きであり，上式を真にするために必要な最小個数の
+数字 (指数部と末尾のゼロを計算に入れないで) を使って
+表現される~\cite{howtoprint,howtoread}。
+それ以外，結果の書式は未規定である。
+
+{\cf number\coerce{}string} が返す結果は決して明示的な基数接頭辞を含まない。
+
+\begin{note}
+エラーが起こり得るのは，\vr{z} が複素数でないか，
+または有理数でない実部または虚部をもつ複素数であるときだけである。
+\end{note}
+
+\begin{rationale}
+もし \vr{z} が flonum を使って表現された不正確数であり，
+基数が 10 ならば，そのとき上式は通常，小数点付きの結果によって充足される。
+未規定の場合としては無限大，NaN, および非 flonum 表現が考えられている。
+\end{rationale}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string->number}{ string}{手続き}
+\rproto{string->number}{ string radix}{手続き}}
+
+%%R4%% I didn't include the (string->number string radix exactness)
+% case, since I haven't heard any resolution of the coding to be used
+% for the third argument.
+
+与えられた文字列 (\vr{string}) によって表される最大に精度の高い表現の数を返す。
+\vr{radix} は正確整数 2, 8, 10, または 16 でなければならない。
+\vr{radix} を与えるとそれがデフォルトの基数になるが，
+それよりも \vr{string} 内の明示的な基数 (たとえば {\tt "\#o177"}) が
+優先される。
+\vr{radix} の省略時，デフォルトの基数は 10 である。
+もし \vr{string} が構文的に妥当な数の表記でなければ，
+{\cf string->number} は \schfalse{} を返す。
+
+\begin{scheme}
+(string->number "100")        \ev  100
+(string->number "100" 16)     \ev  256
+(string->number "1e2")        \ev  100.0
+(string->number "15\#\#")       \ev  1500.0%
+\end{scheme}
+
+\begin{note}
+{\cf string->number} の定義域を実装は次のように制限してもよい。
+{\cf string->number} は，\vr{string} が明示的な基数接頭辞を含んでいた場合に
+対してつねに \schfalse{} を返すことが許されている。
+もしも実装がサポートする数がすべて実数ならば，{\cf string->number} は，
+\vr{string} が複素数に対する局座標記法または直交座標記法を使った場合に
+対してつねに \schfalse{} を返すことが許されている。
+もしもすべての数が整数ならば，{\cf string->number} は，分数記法が使われた場合に
+対してつねに \schfalse{} を返してよい。
+もしもすべての数が正確数ならば，{\cf string->number} は，
+指数部マーカまたは明示的な正確性接頭辞が使われた場合に
+対してつねに，あるいは {\tt \#} が数字の位置に現れたならば，
+\schfalse{} を返してよい。
+もしもすべての不正確数が整数ならば，{\cf string->number} は，
+小数点が使われた場合に
+対してつねに \schfalse{} を返してよい。
+\end{note}
+
+\end{entry}
+
+\section{他のデータ型}
+
+この節は Scheme の非数値データ型のいくつか---ブーリアン，ペア，リスト，
+シンボル，文字，文字列およびベクタ---についての演算を記述する。
+
+\subsection{ブーリアン}
+\label{booleansection}
+
+真と偽をあらわす標準的なブーリアン・オブジェクト
+は \schtrue{} と \schfalse と書かれる。\sharpindex{t}\sharpindex{f}
+しかし，実際に問題になるのは，
+Scheme の条件式 ({\cf if}, {\cf cond}, {\cf and}, {\cf or}, {\cf do}) が
+真\index{true}または偽\index{false}として扱うオブジェクトである。
+``真値''\index{true} (または単に``真'') という表現は
+条件式が真として扱ういかなるオブジェクトのことも意味し，
+``偽値''\index{false} (または``偽'') という表現は
+条件式が偽として扱ういかなるオブジェクトのことも意味する。
+
+\vest すべての標準的な Scheme 値のうちで，ただ \schfalse{} だけが
+条件式において偽と見なされる。
+\schfalse{} を除いて，すべての標準的な Scheme 値は---\schtrue，
+ペア，空リスト，シンボル，数，文字列，ベクタ，および手続きを含め---真と
+見なされる。
+
+%\begin{note}
+%In some implementations the empty list counts as false, contrary
+%to the above.
+%Nonetheless a few examples in this report assume that the
+%empty list counts as true, as in \cite{IEEEScheme}.
+%\end{note}
+
+% \begin{rationale}
+% For historical reasons some implementations regard \schfalse{} and the
+% empty list as the same object.  These implementations therefore cannot
+% make the empty list count as true in conditional expressions.
+% \end{rationale}
+
+\begin{note}
+Lisp の他の方言に慣れているプログラマは，Scheme が \schfalse{} と
+空リスト\index{empty list}をともにシンボル \ide{nil} から区別している
+ことに注意すべきである。
+\end{note}
+
+\vest ブーリアン定数はそれ自身へと評価されるから，プログラムの中で
+それらをクォートする必要はない。
+
+\begin{scheme}
+\schtrue         \ev  \schtrue
+\schfalse        \ev  \schfalse
+'\schfalse       \ev  \schfalse%
+\end{scheme}
+
+
+\begin{entry}{%
+\proto{not}{ obj}{ライブラリ手続き}}
+
+{\cf not} は \var{obj} が偽ならば \schtrue{} を返し，
+そうでなければ \schfalse{} を返す。
+
+\begin{scheme}
+(not \schtrue)   \ev  \schfalse
+(not 3)          \ev  \schfalse
+(not (list 3))   \ev  \schfalse
+(not \schfalse)  \ev  \schtrue
+(not '())        \ev  \schfalse
+(not (list))     \ev  \schfalse
+(not 'nil)       \ev  \schfalse%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{boolean?}{ obj}{ライブラリ手続き}}
+
+{\cf boolean?} は \var{obj} が \schtrue{} か \schfalse{} ならば \schtrue{} を
+返し，そうでなければ \schfalse{} を返す。
+
+\begin{scheme}
+(boolean? \schfalse)  \ev  \schtrue
+(boolean? 0)          \ev  \schfalse
+(boolean? '())        \ev  \schfalse%
+\end{scheme}
+
+\end{entry}
+
+ 
+\subsection{ペアとリスト}
+\label{listsection}
+
+{\em ペア} \defining{pair} (ときには{\em 点対} \defining{dotted pair} と
+呼ばれる) とは，(歴史的な理由から) car 部，cdr 部と呼ばれる二つのフィールドを
+もったレコード構造である。
+ペアは手続き {\cf cons} によって造られる。
+car 部と cdr 部は手続き {\cf car} と {\cf cdr} によってアクセスされる。
+car 部と cdr 部は手続き {\cf set-car!} と {\cf set-cdr!} によって代入される。
+
+ペアはまずリストを表現するために使われる。
+リストは，空リスト (the empty list)\index{empty list}，
+または cdr 部がリストであるようなペア，として再帰的に定義できる。
+より精確には，リストの集合は，下記を満たす最小の集合 \var{X} として定義される。
+
+\begin{itemize}
+\item (ただ一つの) 空リストは \var{X} にある。
+\item もし \var{list} が \var{X} にあるならば，
+      cdr 部が \var{list} を収めているどのペアもまた \var{X} にある。
+\end{itemize}
+
+一つのリストの一連のペアの各 car 部にあるオブジェクトは，
+そのリストの要素である。
+たとえば，２要素リストとは，car が第１要素であって cdr がペアであり，
+そしてそのペアの car が第２要素であって cdr が空リストであるようなペアである。
+リストの長さとは要素の個数であり，それはペアの個数と同じである。
+
+空リスト\mainindex{empty list}は，それ独自の型に属する一つの特殊なオブジェクト
+である (ペアではない)。空リストに要素はなく，その長さはゼロである。
+
+\begin{note}
+上記の定義は，すべてのリストが有限の長さをもち，空リストを終端とすることを，
+暗黙のうちに意味している。
+\end{note}
+
+Scheme のペアを表す最汎の記法 (外部表現) は，
+``点対'' 記法 dotted notation \hbox{\cf (\vari{c} .\ \varii{c})} である。
+ここで \vari{c} は car 部の値であり，\varii{c} は cdr 部の値である。
+たとえば {\cf (4 .\ 5)} は，car が 4 であり cdr が 5 であるペアである。
+{\cf (4 .\ 5)} はペアの外部表現であるが，
+ペアへと評価される式ではないことに注意せよ。
+
+リストに対しては，より能率的な記法が使える。リストの各要素をスペースで
+区切って丸カッコで囲むだけでよい。
+空リスト\index{empty list}は {\tt()} と書かれる。たとえば，
+
+\begin{scheme}
+(a b c d e)%
+\end{scheme}
+
+と
+
+\begin{scheme}
+(a . (b . (c . (d . (e . ())))))%
+\end{scheme}
+
+は，シンボルからなるあるリストを表す等価な記法である。
+
+ペアの連鎖であって，空リストで終わらないものは，
+{\em 非真正リスト} (\defining{improper list}\/) と呼ばれる。
+非真正リストはリストではないことに注意せよ。
+リスト記法と点対記法を組み合わせて，非真正リストを表現してよい:
+
+\begin{scheme}
+(a b c . d)%
+\end{scheme}
+
+は次と等価である。
+
+\begin{scheme}
+(a . (b . (c . d)))%
+\end{scheme}
+
+あるペアがリストかどうかは，何が cdr 部に格納されているかに依存する。
+\ide{set-cdr!} 手続きを使えば，あるオブジェクトがある時点ではリストであり，
+かつ次の時点ではそうでない，ということが可能である:
+
+\begin{scheme}
+(define x (list 'a 'b 'c))
+(define y x)
+y                       \ev  (a b c)
+(list? y)               \ev  \schtrue
+(set-cdr! x 4)          \ev  \unspecified
+x                       \ev  (a . 4)
+(eqv? x y)              \ev  \schtrue
+y                       \ev  (a . 4)
+(list? y)               \ev  \schfalse
+(set-cdr! x x)          \ev  \unspecified
+(list? x)               \ev  \schfalse%
+\end{scheme}
+
+%It is often convenient to speak of a homogeneous list of objects
+%of some particular data type, as for example \hbox{\cf (1 2 3)} is a list of
+%integers.  To be more precise, suppose \var{D} is some data type.  (Any
+%predicate defines a data type consisting of those objects of which the
+%predicate is true.)  Then
+%
+%\begin{itemize}
+%\item The empty list is a list of \var{D}.
+%\item If \var{list} is a list of \var{D}, then any pair whose cdr is
+%      \var{list} and whose car is an element of the data type \var{D} is also a
+%      list of \var{D}.
+%\item There are no other lists of \var{D}.
+%\end{itemize}
+
+リテラル式の中と，\ide{read} 手続きが読むオブジェクトの表現の中で，
+形式 \singlequote\hyper{データ}\schindex{'}\ 
+と \backquote\hyper{データ}\ 
+と {\tt,}\hyper{データ}\schindex{,}\ 
+と {\tt,@}\hyper{データ} はそれぞれ２要素リストを表しており，
+その第１要素はそれぞれシンボル \ide{quote}，\ide{quasiquote}，
+\hbox{\ide{unquote}}，\ide{unquote-splicing} である。
+各場合とも第２要素は \hyper{データ} である。
+この規約は，任意の Scheme プログラムをリストとして表現できるようにと，
+サポートされている。\todo{Can or need this be stated
+more carefully?} つまり，Scheme の文法に従えば，
+どの \meta{式} も \meta{データ} である (\ref{datum}節参照)。
+とりわけ，このことは，{\cf read} 手続きを使って Scheme プログラムを
+パースすることを可能にしている。\ref{externalreps}節を見よ。
+ 
+
+\begin{entry}{%
+\proto{pair?}{ obj}{手続き}}
+
+{\cf pair?} は，もし \var{obj} がペアならば \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+
+\begin{scheme}
+(pair? '(a . b))        \ev  \schtrue
+(pair? '(a b c))        \ev  \schtrue
+(pair? '())             \ev  \schfalse
+(pair? '\#(a b))         \ev  \schfalse%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{cons}{ \vari{obj} \varii{obj}}{手続き}}
+
+一つの新しく割り付けられたペアを返す。
+ペアの car は \vari{obj} であり，cdr は \varii{obj} である。
+このペアは，存在するどのオブジェクトからも ({\cf eqv?} の意味で) 異なって
+いることが保証されている。
+
+\begin{scheme}
+(cons 'a '())           \ev  (a)
+(cons '(a) '(b c d))    \ev  ((a) b c d)
+(cons "a" '(b c))       \ev  ("a" b c)
+(cons 'a 3)             \ev  (a . 3)
+(cons '(a b) 'c)        \ev  ((a b) . c)%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{car}{ pair}{手続き}}
+
+\nodomain{\var{Pair} must be a pair.}
+\var{pair} の car 部の内容を返す。
+空リストの car を取ることはエラーであることに注意せよ。\index{empty list}
+
+\begin{scheme}
+(car '(a b c))          \ev  a
+(car '((a) b c d))      \ev  (a)
+(car '(1 . 2))          \ev  1
+(car '())               \ev  \scherror%
+\end{scheme}
+ 
+\end{entry}
+
+
+\begin{entry}{%
+\proto{cdr}{ pair}{手続き}}
+
+\nodomain{\var{Pair} must be a pair.}
+\var{pair} の cdr 部の内容を返す。
+空リストの cdr を取ることはエラーであることに注意せよ。
+
+\begin{scheme}
+(cdr '((a) b c d))      \ev  (b c d)
+(cdr '(1 . 2))          \ev  2
+(cdr '())               \ev  \scherror%
+\end{scheme}
+ 
+\end{entry}
+
+
+\begin{entry}{%
+\proto{set-car!}{ pair obj}{手続き}}
+
+\nodomain{\var{Pair} must be a pair.}  
+\var{pair} の car 部に \var{obj} を格納する。
+{\cf set-car!} が返す値は未規定である。 % <!>
+%This procedure can be very confusing if used indiscriminately.
+
+\begin{scheme}
+(define (f) (list 'not-a-constant-list))
+(define (g) '(constant-list))
+(set-car! (f) 3)             \ev  \unspecified
+(set-car! (g) 3)             \ev  \scherror%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{set-cdr!}{ pair obj}{手続き}}
+
+\nodomain{\var{Pair} must be a pair.}
+\var{pair} の cdr 部に \var{obj} を格納する。
+{\cf set-cdr!} が返す値は未規定である。 % <!>
+%This procedure can be very confusing if used indiscriminately.
+
+\end{entry}
+
+\setbox0\hbox{\tt(cadr \var{pair})}
+\setbox1\hbox{ライブラリ手続き}
+
+
+\begin{entry}{%
+\proto{caar}{ pair}{ライブラリ手続き}
+\proto{cadr}{ pair}{ライブラリ手続き}
+\pproto{\hbox to 1\wd0 {\hfil$\vdots$\hfil}}{\hbox to 1\wd1 {\hfil$\vdots$\hfil}}
+\proto{cdddar}{ pair}{ライブラリ手続き}
+\proto{cddddr}{ pair}{ライブラリ手続き}}
+
+これらの手続きは {\cf car} と {\cf cdr} の合成である。
+ここで例えば {\cf caddr} は次のように定義できる。
+
+\begin{scheme}
+(define caddr (lambda (x) (car (cdr (cdr x))))){\rm.}%
+\end{scheme}
+
+深さ 4 までの任意の合成が用意されている。これらの手続きは全部で 28 個ある。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{null?}{ obj}{ライブラリ手続き}}
+
+もし \var{obj} が空リストならば\index{empty list} \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+
+% \begin{note}
+% In implementations in which the empty
+% list is the same as \schfalse{}, {\cf null?} will return \schtrue{}
+% if \var{obj} is \schfalse{}.
+% \end{note}
+ 
+\end{entry}
+
+\begin{entry}{%
+\proto{list?}{ obj}{ライブラリ手続き}}
+
+もし \var{obj} がリストならば \schtrue{} を返し，
+そうでなければ \schfalse{} を返す。
+定義により，すべてのリストは有限の長さをもち，空リストを終端とする。
+
+\begin{scheme}
+        (list? '(a b c))     \ev  \schtrue
+        (list? '())          \ev  \schtrue
+        (list? '(a . b))     \ev  \schfalse
+        (let ((x (list 'a)))
+          (set-cdr! x x)
+          (list? x))         \ev  \schfalse%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{list}{ \var{obj} \dotsfoo}{ライブラリ手続き}}
+
+その引数からなる，一つの新しく割り付けられたリストを返す。
+
+\begin{scheme}
+(list 'a (+ 3 4) 'c)            \ev  (a 7 c)
+(list)                          \ev  ()%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{length}{ list}{ライブラリ手続き}}
+
+\nodomain{\var{List} must be a list.}
+\var{list} の長さを返す。
+
+\begin{scheme}
+(length '(a b c))               \ev  3
+(length '(a (b) (c d e)))       \ev  3
+(length '())                    \ev  0%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{append}{ list \dotsfoo}{ライブラリ手続き}}
+
+\nodomain{All \var{list}s should be lists.}
+最初の \var{list} の要素に，ほかの各 \var{list} の要素を続けたもので
+構成されたリストを返す。
+
+\begin{scheme}
+(append '(x) '(y))              \ev  (x y)
+(append '(a) '(b c d))          \ev  (a b c d)
+(append '(a (b)) '((c)))        \ev  (a (b) (c))%
+\end{scheme}
+
+結果のリストはつねに新しく割り付けられるが，
+ただし最後の \var{list} 引数とは構造を共有する。
+最後の引数は，実のところ，どんなオブジェクトでもよい。
+もしも最後の引数が真正リストでなければ，結果は非真正リストである。
+\todo{This is pretty awkward.  I should get Bartley to fix this.}
+
+\begin{scheme}
+(append '(a b) '(c . d))        \ev  (a b c . d)
+(append '() 'a)                 \ev  a%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{reverse}{ list}{ライブラリ手続き}}
+
+\nodomain{\var{List} must be a list.}
+逆順にした \var{list} の要素で構成された，
+一つの新しく割り付けられたリストを返す。
+
+\begin{scheme}
+(reverse '(a b c))              \ev  (c b a)
+(reverse '(a (b c) d (e (f))))  \lev  ((e (f)) d (b c) a)%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{list-tail}{ list \vr{k}}{ライブラリ手続き}}
+
+\var{list} から最初の \vr{k} 要素を省いて得られる部分リストを返す。
+もしも \var{list} の要素数が \vr{k} より少なければエラーである。
+{\cf list-tail} は次のように定義できる。
+
+\begin{scheme}
+(define list-tail
+  (lambda (x k)
+    (if (zero? k)
+        x
+        (list-tail (cdr x) (- k 1)))))%
+\end{scheme} 
+\end{entry}
+
+
+\begin{entry}{%
+\proto{list-ref}{ list \vr{k}}{ライブラリ手続き}}
+
+\var{list} の第 \vr{k} 要素を返す\ 
+(これは {\tt(list-tail \var{list} \vr{k})} の car と同じである)。
+もしも \var{list} の要素数が \vr{k} より少なければエラーである。
+
+\begin{scheme}
+(list-ref '(a b c d) 2)                 \ev  c
+(list-ref '(a b c d)
+          (inexact->exact (round 1.8))) \lev  c%
+\end{scheme}
+\end{entry}
+
+
+%\begin{entry}{%
+%\proto{last-pair}{ list}{ライブラリ手続き}}
+%
+%Returns the last pair in the nonempty, possibly improper, list \var{list}.
+%{\cf Last-pair} could be defined by
+%
+%\begin{scheme}
+%(define last-pair
+%  (lambda (x)
+%    (if (pair? (cdr x))
+%        (last-pair (cdr x))
+%        x)))%
+%\end{scheme} 
+% 
+%\end{entry}
+
+
+\begin{entry}{%
+\proto{memq}{ obj list}{ライブラリ手続き}
+\proto{memv}{ obj list}{ライブラリ手続き}
+\proto{member}{ obj list}{ライブラリ手続き}}
+
+これらの手続きは，\var{list} の部分リストのうち，
+car が \var{obj} である最初のものを返す。
+ここで \var{list} の部分リストとは，\var{k} $<$ \var{list}の長さ に
+対して {\tt (list-tail \var{list} \var{k})} が返す非空リストである。
+もしも \var{obj} が \var{list} に出現しないならば，
+(空リストではなく) \schfalse{} が返される。
+{\cf memq} は {\cf eq?}\ を使って \var{obj} を \var{list} の各要素と
+比較するが，
+{\cf memv} は {\cf eqv?}\ を使い，{\cf member} は {\cf equal?}\ を使う。
+
+\begin{scheme}
+(memq 'a '(a b c))              \ev  (a b c)
+(memq 'b '(a b c))              \ev  (b c)
+(memq 'a '(b c d))              \ev  \schfalse
+(memq (list 'a) '(b (a) c))     \ev  \schfalse
+(member (list 'a)
+        '(b (a) c))             \ev  ((a) c)
+(memq 101 '(100 101 102))       \ev  \unspecified
+(memv 101 '(100 101 102))       \ev  (101 102)%
+\end{scheme} 
+ 
+\end{entry}
+
+
+\begin{entry}{%
+\proto{assq}{ obj alist}{ライブラリ手続き}
+\proto{assv}{ obj alist}{ライブラリ手続き}
+\proto{assoc}{ obj alist}{ライブラリ手続き}}
+
+\domain{\var{alist} (つまり，連想リスト ``association list'') は，
+ペアからなるリストでなければならない。}  これらの手続きは，
+\var{alist} の中のペアのうち，car 部が \var{obj} である最初のものを見つけて，
+そのペアを返す。もしも \var{alist} のどのペアも \var{obj} を car としない
+ならば，
+(空リストではなく) \schfalse{} が返される。
+{\cf assq} は {\cf eq?}\ を使って \var{obj} を \var{alist} の中の
+各ペアの car 部と比較するが，
+{\cf assv} は {\cf eqv?}\ を使い，{\cf assoc} は {\cf equal?}\ を使う。
+
+\begin{scheme}
+(define e '((a 1) (b 2) (c 3)))
+(assq 'a e)     \ev  (a 1)
+(assq 'b e)     \ev  (b 2)
+(assq 'd e)     \ev  \schfalse
+(assq (list 'a) '(((a)) ((b)) ((c))))
+                \ev  \schfalse
+(assoc (list 'a) '(((a)) ((b)) ((c))))   
+                           \ev  ((a))
+(assq 5 '((2 3) (5 7) (11 13)))    
+                           \ev  \unspecified
+(assv 5 '((2 3) (5 7) (11 13)))    
+                           \ev  (5 7)%
+\end{scheme}
+
+
+\begin{rationale}
+{\cf memq}, {\cf memv}, {\cf member}, {\cf assq}, {\cf assv}, 
+および {\cf assoc} は，通常は述語として使われるが，しかし，
+単なる \schtrue{} や \schfalse{} だけではない有用な値を返すから，
+名前に疑問符を付けない。
+\end{rationale}
+\end{entry}
+
+
+\subsection{シンボル}
+\label{symbolsection}
+
+シンボルとは，二つのシンボルが ({\cf eqv?} の意味で) 同一なのは
+名前が同じようにつづられるときかつそのときに限られるという事実に，
+その有用性がかかっているオブジェクトである。
+これはまさに，プログラムで識別子\index{identifier}を表現するために必要とされる
+性質であり，したがって Scheme の大多数の実装はシンボルを内部的にその目的の
+ために利用している。シンボルは他の多くの応用にも有用である。
+たとえば，列挙値を Pascal で利用するのと同じ用途に，シンボルを利用してもよい。
+
+\vest シンボルを書くための規則は，識別子を書くための規則と正確に同じである。
+\ref{syntaxsection}節と\ref{identifiersyntax}節を見よ。
+
+\vest どのシンボルであれ，リテラル式の一部として返されたか，
+または {\cf read} 手続きを使って読まれたシンボルを，
+{\cf write} 手続きを使って外に書いた場合，
+それは ({\cf eqv?} の意味で) 同一のシンボルとして再び読み込まれることが
+保証されている。
+ただし，{\cf string\coerce{}symbol} 手続きは，
+名前に特殊文字や非標準ケースの英字が含まれているので
+この write/read 不変性が必ずしも成り立たない，というシンボルを
+造ることができる。
+
+\begin{note}
+Scheme の実装によっては，すべてのシンボルに対する write/read 不変性を
+保証するため，``slashification'' として知られる機能をもつものがあるが，
+歴史的にいえば，
+この機能の最も重要な用途は文字列データ型の欠如に対する埋め合わせであった。
+
+\vest 実装によってはまた ``未インターンのシンボル'' をもつものがある。
+これは slashification 付きの実装においてさえも write/read 不変性をくつがえし，
+かつまた，二つのシンボルが同じなのは名前のつづりが同じときかつそのときに
+限られるという規則に例外をもたらす。
+\end{note}
+
+
+\begin{entry}{%
+\proto{symbol?}{ obj}{手続き}}
+
+もし \var{obj} がシンボルならば \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+
+\begin{scheme}
+(symbol? 'foo)          \ev  \schtrue
+(symbol? (car '(a b)))  \ev  \schtrue
+(symbol? "bar")         \ev  \schfalse
+(symbol? 'nil)          \ev  \schtrue
+(symbol? '())           \ev  \schfalse
+(symbol? \schfalse)     \ev  \schfalse%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{symbol->string}{ symbol}{手続き}}
+
+\var{symbol} の名前を一つの文字列として返す。
+もしもシンボルが，リテラル式 (\ref{literalsection}節) の値として，
+あるいは {\cf read} 手続きへの呼出しによって，返されたオブジェクトの一部だった
+ならば，かつその名前にアルファベット文字が含まれているならば，
+そのとき返される文字列は，実装の選択した標準ケースの文字を
+含んでいるだろう---大文字を選択する実装もあれば，
+小文字を選択する実装もあるだろう。
+もしもシンボルが {\cf string\coerce{}symbol} によって返されたものだったならば，
+返される文字列の文字のケースは，{\cf string\coerce{}symbol} へ渡された文字列の
+ケースと同じになる。
+\ide{string-set!} のような書換え手続きを，この手続きが返す文字列へ適用する
+ことはエラーである。
+
+以下の例は実装の標準ケースが小文字であることを仮定している:
+
+\begin{scheme}
+(symbol->string 'flying-fish)     
+                                  \ev  "flying-fish"
+(symbol->string 'Martin)          \ev  "martin"
+(symbol->string
+   (string->symbol "Malvina"))     
+                                  \ev  "Malvina"%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string->symbol}{ string}{手続き}}
+
+名前が \var{string} であるシンボルを返す。この手続きは，特殊文字や
+非標準ケースの英字を含んでいる名前をもったシンボルを造ることができるが，
+Scheme の実装によってはそのようなシンボルはそれ自身として read できないから，
+そういうシンボルを造ることは普通は悪いアイディアである。
+{\cf symbol\coerce{}string} を見よ。
+
+以下の例は実装の標準ケースが小文字であることを仮定している:
+
+\begin{scheme}
+(eq? 'mISSISSIppi 'mississippi)  \lev  \schtrue
+(string->symbol "mISSISSIppi")  \lev%
+  "mISSISSIppi" {\rm{}という名前のシンボル}
+(eq? 'bitBlt (string->symbol "bitBlt"))     \lev  \schfalse
+(eq? 'JollyWog
+     (string->symbol
+       (symbol->string 'JollyWog)))  \lev  \schtrue
+(string=? "K. Harper, M.D."
+          (symbol->string
+            (string->symbol "K. Harper, M.D.")))  \lev  \schtrue%
+\end{scheme}
+
+\end{entry}
+
+
+\subsection{文字}
+\label{charactersection}
+
+文字とは，英字や数字のような印字文字 (printed character) を
+表現するオブジェクトである。
+%There is no requirement that the data type of
+%characters be disjoint from other data types; implementations are
+%encouraged to have a separate character data type, but may choose to
+%represent characters as integers, strings, or some other type.
+文字は \sharpsign\backwhack\hyper{文字} または\  
+\sharpsign\backwhack\hyper{文字名} という記法を使って書かれる。
+たとえば:
+
+$$
+\begin{tabular}{ll}
+{\tt \#\backwhack{}a}&; 英小文字\\
+{\tt \#\backwhack{}A}&; 英大文字\\
+{\tt \#\backwhack{}(}&; 左丸カッコ\\
+{\tt \#\backwhack{} }&; スペース文字\\
+{\tt \#\backwhack{}space}&; スペースを書くための好ましい方法\\
+{\tt \#\backwhack{}newline}&; 改行文字\\
+\end{tabular}
+$$
+
+ケースは \sharpsign\backwhack\hyper{文字} では意味をもつが，
+\sharpsign\backwhack\hyper{文字名} では意味をもたない。
+もしも \sharpsign\backwhack\hyper{文字} の \hyper{文字} が
+アルファベットならば，\hyper{文字} の後に続く文字は，スペースやカッコなどの
+区切り文字でなければならない。
+この規則は，たとえば，文字の列 ``{\tt\sharpsign\backwhack space}'' が
+１個のスペース文字の表現であるとも取れるし，
+あるいは文字 ``{\tt\sharpsign\backwhack s}'' の表現の後に
+シンボル ``{\tt pace}'' の表現が続いたものとも取れる，
+というあいまいなケースを解決する。
+
+\todo{Fix}
+\sharpsign\backwhack{} 記法で書かれた文字は自己評価的である。
+すなわち，プログラムの中でそれらをクォートする必要はない。
+%The \sharpsign\backwhack{}
+%notation is not an essential part of Scheme, however.  Even implementations
+%that support the \sharpsign\backwhack{} notation for input do not have to
+%support it for output.
+
+\vest 文字について演算する手続きのいくつかは，
+大文字と小文字のケースの違いを無視する。
+ケースを無視する手続きは，
+その名前に \hbox{``{\tt -ci}''} (つまり ``case insensitive'') を
+埋め込んでいる。
+
+
+\begin{entry}{%
+\proto{char?}{ obj}{手続き}}
+
+もし \var{obj} が文字ならば \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{char=?}{ \vari{char} \varii{char}}{手続き}
+\proto{char<?}{ \vari{char} \varii{char}}{手続き}
+\proto{char>?}{ \vari{char} \varii{char}}{手続き}
+\proto{char<=?}{ \vari{char} \varii{char}}{手続き}
+\proto{char>=?}{ \vari{char} \varii{char}}{手続き}}
+
+\label{characterequality}
+\nodomain{Both \vari{char} and \varii{char} must be characters.}
+これらの手続きは文字の集合に全順序を課している。
+この順序のもとで保証されることは:
+
+\begin{itemize}
+\item 英大文字どうしはその順序どおりである。たとえば，{\cf 
+   (char<?\ \#\backwhack{}A \#\backwhack{}B)} は \schtrue を返す。
+\item 英小文字どうしはその順序どおりである。たとえば，{\cf 
+   (char<?\ \#\backwhack{}a \#\backwhack{}b)} は \schtrue を返す。
+\item 数字どうしはその順序どおりである。たとえば，{\cf 
+   (char<?\ \#\backwhack{}0 \#\backwhack{}9)} は \schtrue を返す。
+\item すべての数字は，すべての英大文字よりも前であるか，または後である。
+\item すべての数字は，すべての英小文字よりも前であるか，または後である。
+\end{itemize}
+
+実装は，これらの手続きを，それと対応する数値述語と同じく，
+２個以上の引数をとるように一般化してもよい。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{char-ci=?}{ \vari{char} \varii{char}}{ライブラリ手続き}
+\proto{char-ci<?}{ \vari{char} \varii{char}}{ライブラリ手続き}
+\proto{char-ci>?}{ \vari{char} \varii{char}}{ライブラリ手続き}
+\proto{char-ci<=?}{ \vari{char} \varii{char}}{ライブラリ手続き}
+\proto{char-ci>=?}{ \vari{char} \varii{char}}{ライブラリ手続き}}
+
+\nodomain{Both \vari{char} and \varii{char} must be characters.}
+これらの手続きは {\cf char=?}\ 等と同様だが，
+英大文字と英小文字を同じものとして扱う。たとえば，{\cf
+(char-ci=?\ \#\backwhack{}A \#\backwhack{}a)} は \schtrue を返す。
+実装は，これらの手続きを，それと対応する数値述語と同じく，
+２個以上の引数をとるように一般化してもよい。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{char-alphabetic?}{ char}{ライブラリ手続き}
+\proto{char-numeric?}{ char}{ライブラリ手続き}
+\proto{char-whitespace?}{ char}{ライブラリ手続き}
+\proto{char-upper-case?}{ letter}{ライブラリ手続き}
+\proto{char-lower-case?}{ letter}{ライブラリ手続き}}
+
+これらの手続きは，それぞれ，その引数がアルファベット文字，数値文字，空白文字，
+大文字，または小文字ならば \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+次の注釈は，ASCII 文字集合に固有であり，
+一つの指針としてだけ意図されている: アルファベット文字は大小あわせ 52 個の
+英字である。数値文字は 10 個の十進数字である。空白文字はスペース，
+タブ，改行，改頁，および復帰文字である。
+\end{entry}
+
+
+%%R4%%\begin{entry}{%
+%\proto{char-upper-case?}{ letter}{手続き}
+%\proto{char-lower-case?}{ letter}{手続き}}
+%
+%\domain{\var{Letter} must be an alphabetic character.}
+%These procedures return \schtrue{} if their arguments are upper case or
+%lower case characters, respectively, otherwise they return \schfalse.
+%\end{entry}
+
+
+\begin{entry}{%
+\proto{char->integer}{ char}{手続き}
+\proto{integer->char}{ \vr{n}}{手続き}}
+
+文字が与えられたとき，{\cf char\coerce{}integer} はその文字の
+一つの正確整数表現を返す。
+ある文字の {\cf char\coerce{}integer} による像 (image) である
+正確整数が与えられたとき，{\cf integer\coerce{}char} はその文字を返す。
+これらの手続きは，\ide{char<=?} 順序のもとにある文字の集合と，
+{\cf <=} 順序のもとにある整数のある部分集合との間に，
+順序保存的な同形写像を実装している。すなわち，もしも
+
+\begin{scheme}
+(char<=? \vr{a} \vr{b}) \evalsto \schtrue  {\rm{}かつ}  %
+(<= \vr{x} \vr{y}) \evalsto \schtrue%
+\end{scheme}
+
+\noindent であって，かつ \vr{x} と \vr{y} が {\cf integer\coerce{}char} の
+定義域にあるならば，そのとき
+
+\begin{scheme}
+(<= (char\coerce{}integer \vr{a})
+    (char\coerce{}integer \vr{b}))         \ev  \schtrue
+
+(char<=? (integer\coerce{}char \vr{x})
+         (integer\coerce{}char \vr{y}))     \ev  \schtrue%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{char-upcase}{ char}{ライブラリ手続き}
+\proto{char-downcase}{ char}{ライブラリ手続き}}
+
+\nodomain{\var{Char} must be a character.}
+これらの手続きは，{\cf (char-ci=? \var{char} \varii{char})} を満たす
+文字 \varii{char} を返す。
+さらに，もしも \var{char} がアルファベットならば，
+{\cf char-upcase} の結果は大文字であり，
+{\cf char-downcase}の結果は小文字である。
+
+\end{entry}
+
+
+\subsection{文字列}
+\label{stringsection}
+
+文字列 (string) とは，文字の列 (sequence of characters) である。
+%In some implementations of Scheme
+%they are immutable; other implementations provide destructive procedures
+%such as {\cf string-set!}\ that alter string objects.
+\vest 文字列は，二重引用符 ({\cf "}) で囲まれた文字の列として書かれる。
+二重引用符は，
+それを逆スラッシュ (\backwhack{}) でエスケープすることによってのみ
+文字列の内部に書ける。たとえば
+
+\begin{scheme}
+"The word \backwhack{}"recursion\backwhack{}" has many meanings."%
+\end{scheme}
+
+逆スラッシュは，それをもう一つの逆スラッシュでエスケープすることによってのみ
+文字列の内部に書ける。
+文字列の内部の逆スラッシュであって，その後ろに二重引用符も逆スラッシュも
+続かないものの効果を Scheme は規定しない。
+
+\vest 文字列は一つの行から次の行へと継続してもよいが，
+そのような文字列の正確な内容は未規定である。
+% this is
+%usually a bad idea because 
+%the exact effect may vary from one computer
+%system to another.
+
+\vest 文字列の{\em 長さ} ({\em length}\/) とは，文字列が含む文字の個数である。
+この個数は，文字列が造られるときに固定される正確 非負整数である。
+文字列の{\em 妥当な添字} (\defining{valid index}\/) は，
+文字列の長さより小さい正確非負整数である。
+文字列の最初の文字の添字は 0 であり，その次の文字の添字は 1 である等々である。
+
+\vest ``添字 \var{start} で始まり，添字 \var{end} で終わる \var{string} の
+文字'' というような言い回しでは，添字 \var{start} はその文字に含まれるが，
+添字 \var{end} は含まれないと理解される。
+したがってもしも \var{start} と \var{end} が同じ添字ならば
+空の部分文字列のことになり，
+もしも \var{start} がゼロであって \var{end} が \var{string} の長さならば
+文字列全体のことになる。
+
+\vest 文字列について演算する手続きのいくつかは，
+大文字と小文字のケースの違いを無視する。
+ケースを無視するバージョンは，
+その名前に \hbox{``{\tt -ci}''} (つまり ``case insensitive'') を
+埋め込んでいる。
+
+
+\begin{entry}{%
+\proto{string?}{ obj}{手続き}}
+
+もし \var{obj} が文字列ならば \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+\end{entry}
+
+
+\begin{entry}{%
+\proto{make-string}{ \vr{k}}{手続き}
+\rproto{make-string}{ \vr{k} char}{手続き}}
+
+%\domain{\vr{k} must be a non-negative integer, and \var{char} must be
+%a character.}  
+{\cf make-string} は，一つの新しく割り付けられた，長さ \vr{k} の文字列を返す。
+もしも \var{char} が与えられたならば文字列のすべての要素が \var{char} に
+初期化されるが，そうでなければ \var{string} の内容は未規定である。
+
+\end{entry}
+
+\begin{entry}{%
+\proto{string}{ char \dotsfoo}{ライブラリ手続き}}
+
+引数から構成された，一つの新しく割り付けられた文字列を返す。
+
+\end{entry}
+
+\begin{entry}{%
+\proto{string-length}{ string}{手続き}}
+
+与えられた \var{string} の中の文字の個数を返す。
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string-ref}{ string \vr{k}}{手続き}}
+
+\domain{\vr{k} は \var{string} の妥当な添字でなければならない。}
+{\cf string-ref} は \var{string} の，ゼロから数えて第 \vr{k} の文字を返す。
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string-set!}{ string k char}{手続き}}
+
+\domain{%\var{String} must be a string, 
+\vr{k} は \var{string} の妥当な添字でなければならない。}
+{\cf string-set!} は \var{string} の要素 \vr{k} に \var{char} を格納して，
+未規定の値を返す。  % <!>
+
+\begin{scheme}
+(define (f) (make-string 3 \sharpsign\backwhack{}*))
+(define (g) "***")
+(string-set! (f) 0 \sharpsign\backwhack{}?)  \ev  \unspecified
+(string-set! (g) 0 \sharpsign\backwhack{}?)  \ev  \scherror
+(string-set! (symbol->string 'immutable)
+             0
+             \sharpsign\backwhack{}?)  \ev  \scherror%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string=?}{ \vari{string} \varii{string}}{ライブラリ手続き}
+\proto{string-ci=?}{ \vari{string} \varii{string}}{ライブラリ手続き}}
+
+もしも二つの文字列が同じ長さであって同じ位置に同じ文字を含んでいる
+ならば \schtrue{} を返すが，そうでなければ \schfalse を返す。
+{\cf string-ci=?}\ は英大文字と英小文字をあたかも同じ文字であるかのように
+扱うが，{\cf string=?}\ は大文字と小文字を異なった文字として扱う。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string<?}{ \vari{string} \varii{string}}{ライブラリ手続き}
+\proto{string>?}{ \vari{string} \varii{string}}{ライブラリ手続き}
+\proto{string<=?}{ \vari{string} \varii{string}}{ライブラリ手続き}
+\proto{string>=?}{ \vari{string} \varii{string}}{ライブラリ手続き}
+\proto{string-ci<?}{ \vari{string} \varii{string}}{ライブラリ手続き}
+\proto{string-ci>?}{ \vari{string} \varii{string}}{ライブラリ手続き}
+\proto{string-ci<=?}{ \vari{string} \varii{string}}{ライブラリ手続き}
+\proto{string-ci>=?}{ \vari{string} \varii{string}}{ライブラリ手続き}}
+
+これらの手続きは，文字についての対応する順序付けの，
+文字列への辞書的な拡張である。
+たとえば，{\cf string<?}\ は，
+文字の順序付け {\cf char<?}\ によって帰納される辞書的な文字列の順序付けである。
+もしも二つの文字列が，長さの点で異なっているが，短い方の文字列の長さまでは同じ
+ならば，短い方の文字列が長い方の文字列よりも辞書的に小さいと見なされる。
+
+実装は，これらおよび {\cf string=?}\ と {\cf string-ci=?} の手続きを，
+それと対応する数値述語と同じく，２個以上の引数をとるように一般化してもよい。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{substring}{ string start end}{ライブラリ手続き}}
+
+\domain{\var{string} は文字列でなければならず，\var{start} と \var{end} は
+下記を満たす正確整数でなければならない。
+$$0 \leq \var{start} \leq \var{end} \leq \hbox{\tt(string-length \var{string})\rm.}$$}
+{\cf substring} は，\var{string} の，添字 \var{start} で始まり (境界を含む)，
+添字 \var{end} で終わる (境界を含まない) 文字から構成された，
+一つの新しく割り付けられた文字列を返す。
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string-append}{ \var{string} \dotsfoo}{ライブラリ手続き}}
+
+与えられた文字列の連結をその文字が構成している，
+一つの新しく割り付けられた文字列を返す。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string->list}{ string}{ライブラリ手続き}
+\proto{list->string}{ list}{ライブラリ手続き}}
+
+{\cf string\coerce{}list} は，与えられた文字列を構成している文字からなる，
+一つの新しく割り付けられたリストを返す。
+{\cf list\coerce{}string} は，リスト \var{list}---これは文字からなるリストで
+なければならない---の文字から構成された，
+一つの新しく割り付けられた文字列を返す。
+{\cf string\coerce{}list} と {\cf list\coerce{}string} は，
+{\cf equal?}\ に関する限りにおいて逆関数どうしである。
+%Implementations that provide
+%destructive operations on strings should ensure that the result of
+%{\cf list\coerce{}string} is newly allocated.
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string-copy}{ string}{ライブラリ手続き}}
+
+与えられた \var{string} の，一つの新しく割り付けられたコピーを返す。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{string-fill!}{ string char}{ライブラリ手続き}}
+
+与えられた \var{string} の各要素に \var{char} を格納して，
+未規定の値を返す。  % <!>
+
+\end{entry}
+
+
+\subsection{ベクタ}
+\label{vectorsection}
+
+ベクタとは，その要素が整数によって添字付けられる不均質な (訳注: つまり
+要素どうしが同じ型とは限らない) 構造である。
+ベクタは典型的には同じ長さのリストよりも少ない空間しか占めず，
+かつランダムに選んだ要素をアクセスするために要される平均時間は
+典型的にはベクタの方がリストよりも短い。
+
+\vest ベクタの{\em 長さ} ({\em length}\/) とは，ベクタが含む要素の個数である。
+この個数は，ベクタが造られるときに固定される非負整数である。
+ベクタの{\em 妥当な添字} ({\em valid index}\index{valid index}) は，
+ベクタの長さより小さい正確非負整数である。
+ベクタの最初の要素はゼロで添字付けられ，
+最後の要素の添字はベクタの長さより 1 だけ小さく添字付けられる。
+
+ベクタは記法 {\tt\#(\var{obj} \dotsfoo)} を使って書かれる。
+たとえば，長さが 3 であって，要素 0 に数ゼロを，要素 1 に
+リスト {\cf(2 2 2 2)} を，そして要素 2 に文字列 {\cf "Anna"} を
+含んでいるベクタは下記のように書ける:
+
+\begin{scheme}
+\#(0 (2 2 2 2) "Anna")%
+\end{scheme}
+
+これはベクタの外部表現であるが，ベクタへと評価される式ではないことに注意せよ。
+リスト定数と同じく，ベクタ定数もクォートしなければならない:
+
+\begin{scheme}
+'\#(0 (2 2 2 2) "Anna")  \lev  \#(0 (2 2 2 2) "Anna")%
+\end{scheme}
+
+\todo{Pitman sez: The visual similarity to lists is bound to be confusing
+to some.  Elaborate on the distinction.}
+
+
+\begin{entry}{%
+\proto{vector?}{ obj}{手続き}}
+ 
+もし \var{obj} がベクタならば \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+\end{entry}
+
+
+\begin{entry}{%
+\proto{make-vector}{ k}{手続き}
+\rproto{make-vector}{ k fill}{手続き}}
+
+\var{k} 個の要素からなる，一つの新しく割り付けられたベクタを返す。
+もしも第２引数が与えられたならば，各要素は \var{fill} に初期化される。
+そうでなければ各要素の初期内容は未規定である。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{vector}{ obj \dotsfoo}{ライブラリ手続き}}
+
+与えられた引数を要素として持つ，一つの新しく割り付けられたベクタを返す。
+{\cf list} に相当する。
+
+\begin{scheme}
+(vector 'a 'b 'c)               \ev  \#(a b c)%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{vector-length}{ vector}{手続き}}
+
+\var{vector} の中の要素の個数を正確整数として返す。
+\end{entry}
+
+
+\begin{entry}{%
+\proto{vector-ref}{ vector k}{手続き}}
+
+\domain{\vr{k} は \var{vector} の妥当な添字でなければならない。}
+{\cf vector-ref} は \var{vector} の要素 \vr{k} の内容を返す。
+
+\begin{scheme}
+(vector-ref '\#(1 1 2 3 5 8 13 21)
+            5)  \lev  8
+(vector-ref '\#(1 1 2 3 5 8 13 21)
+            (let ((i (round (* 2 (acos -1)))))
+              (if (inexact? i)
+                  (inexact->exact i)
+                  i))) \lev 13%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{vector-set!}{ vector k obj}{手続き}}
+
+\domain{\vr{k} は \var{vector} の妥当な添字でなければならない。}
+{\cf vector-set!} は \var{vector} の要素 \vr{k} に \var{obj} を格納する。
+{\cf vector-set!} の返す値は未規定である。 % <!>
+
+\begin{scheme}
+(let ((vec (vector 0 '(2 2 2 2) "Anna")))
+  (vector-set! vec 1 '("Sue" "Sue"))
+  vec)      \lev  \#(0 ("Sue" "Sue") "Anna")
+
+(vector-set! '\#(0 1 2) 1 "doe")  \lev  \scherror  ; 定数ベクタ%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{vector->list}{ vector}{ライブラリ手続き}
+\proto{list->vector}{ list}{ライブラリ手続き}}
+
+{\cf vector->list} は，\var{vector} の要素として含まれている
+オブジェクトからなる，一つの新しく割り付けられたリストを返す。
+{\cf list->vector} は，リスト \var{list} の要素へと初期化された，
+一つの新しく割り付けられたベクタを返す。
+
+\begin{scheme}
+(vector->list '\#(dah dah didah))  \lev  (dah dah didah)
+(list->vector '(dididit dah))   \lev  \#(dididit dah)%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{vector-fill!}{ vector fill}{ライブラリ手続き}}
+
+\var{vector} の各要素に \var{fill} を格納する。
+{\cf vector-fill!} の返す値は未規定である。 % <!>
+
+\end{entry}
+
+
+\section{制御機能}
+\label{proceduresection}
+ 
+% Intro flushed; not very a propos any more.
+% Procedures should be discussed somewhere, however.
+
+この章はプログラム実行の流れを特殊な方法で制御する様々なプリミティブ手続き
+を記述する。
+{\cf procedure?} 述語もここで記述される。
+
+\todo{{\tt Procedure?} doesn't belong in a section with the name
+``control features.''  What to do?}
+
+\begin{entry}{%
+\proto{procedure?}{ obj}{手続き}}
+
+もし \var{obj} が手続きならば \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+
+\begin{scheme}
+(procedure? car)            \ev  \schtrue
+(procedure? 'car)           \ev  \schfalse
+(procedure? (lambda (x) (* x x)))   
+                            \ev  \schtrue
+(procedure? '(lambda (x) (* x x)))  
+                            \ev  \schfalse
+(call-with-current-continuation procedure?)
+                            \ev  \schtrue%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{apply}{ proc \vari{arg} $\ldots$ args}{手続き}}
+
+\domain{\var{proc} は手続きでなければならず，
+\var{args} はリストでなければならない。}
+\var{proc} を，リスト {\cf(append (list \vari{arg} \dotsfoo) \var{args})} の
+各要素を各実引数として呼び出す。
+
+\begin{scheme}
+(apply + (list 3 4))              \ev  7
+
+(define compose
+  (lambda (f g)
+    (lambda args
+      (f (apply g args)))))
+
+((compose sqrt *) 12 75)              \ev  30%
+\end{scheme}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{map}{ proc \vari{list} \varii{list} \dotsfoo}{ライブラリ手続き}}
+
+\domain{各 \var{list} はリストでなければならず，
+\var{proc} は {\it list} の個数と同じだけの個数の引数をとって単一の
+値を返す手続きでなければならない。
+もしも複数の \var{list} が与えられたならば，それらはすべて同じ長さで
+なければならない。}
+{\cf map} は \var{proc} を各 \var{list} の要素に要素ごとに適用し，
+その結果を順序どおりに並べたリストを返す。
+\var{proc} が各 \var{list} の要素に適用される動的な順序は未規定である。
+
+\begin{scheme}
+(map cadr '((a b) (d e) (g h)))   \lev  (b e h)
+
+(map (lambda (n) (expt n n))
+     '(1 2 3 4 5))                \lev  (1 4 27 256 3125)
+
+(map + '(1 2 3) '(4 5 6))         \ev  (5 7 9)
+
+(let ((count 0))
+  (map (lambda (ignored)
+         (set! count (+ count 1))
+         count)
+       '(a b)))                 \ev  (1 2) \var{または} (2 1)
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{for-each}{ proc \vari{list} \varii{list} \dotsfoo}{ライブラリ手続き}}
+
+{\cf for-each} の引数は {\cf map} の引数と同様だが，
+{\cf for-each} は \var{proc} をその値を求めてではなくその副作用を求めて
+呼び出す。
+{\cf map} と異なり，{\cf for-each} は \var{proc} を各 \var{list} の要素に
+対して最初の要素から最後の要素へという順序で呼び出すことが保証されており，
+かつ {\cf for-each} が返す値は未規定である。
+
+\begin{scheme}
+(let ((v (make-vector 5)))
+  (for-each (lambda (i)
+              (vector-set! v i (* i i)))
+            '(0 1 2 3 4))
+  v)                                \ev  \#(0 1 4 9 16)%
+\end{scheme}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{force}{ promise}{ライブラリ手続き}}
+
+約束 \var{promise} の値
+の実現を強制 (force) する (\ref{delay}節 \ide{delay} 参照)。\index{promise}
+もしも約束に対してなんら値が計算されていなければ，
+一つの値が計算されて返される。
+約束の値は，もしそれがもう一度 force されたならば
+そのときは以前に計算された値を返せるように，
+キャッシュされる (つまり ``memoize'' される)。
+% without any recomputation.
+% [As pointed out by Marc Feeley, the "without any recomputation"
+% isn't necessarily true. --Will]
+
+\begin{scheme}
+(force (delay (+ 1 2)))   \ev  3
+(let ((p (delay (+ 1 2))))
+  (list (force p) (force p)))  
+                               \ev  (3 3)
+
+(define a-stream
+  (letrec ((next
+            (lambda (n)
+              (cons n (delay (next (+ n 1)))))))
+    (next 0)))
+(define head car)
+(define tail
+  (lambda (stream) (force (cdr stream))))
+
+(head (tail (tail a-stream)))  
+                               \ev  2%
+\end{scheme}
+
+{\cf force} と {\cf delay} は，
+関数型のスタイルで書かれたプログラムでの利用を主に意図している。
+下記の例は，必ずしも良いプログラミング・スタイルを例示しているわけではないが，
+一つの約束に対しては，たとえそれが何度 force されようとも，
+ただ一つの値だけが計算されるという性質を例示している。
+% the value of a promise is computed at most once.
+% [As pointed out by Marc Feeley, it may be computed more than once,
+% but as I observed we can at least insist that only one value be
+% used! -- Will]
+
+\begin{scheme}
+(define count 0)
+(define p
+  (delay (begin (set! count (+ count 1))
+                (if (> count x)
+                    count
+                    (force p)))))
+(define x 5)
+p                     \ev  {\em{}約束}
+(force p)             \ev  6
+p                     \ev  依然，{\em{}約束}
+(begin (set! x 10)
+       (force p))     \ev  6%
+\end{scheme}
+
+ここにあるのは，{\cf delay} と {\cf force} の，一つの可能な実装である。
+約束はここでは無引数の手続きとして実装され，
+{\cf force} は単にその引数を呼び出すだけである:
+
+\begin{scheme}
+(define force
+  (lambda (object)
+    (object)))%
+\end{scheme}
+
+我々は式
+
+\begin{scheme}
+(delay \hyper{expression})%
+\end{scheme}
+
+を次の手続き呼出しと同じ意味をもつものとして定義する:
+
+\begin{scheme}
+(make-promise (lambda () \hyper{expression}))\rm
+\end{scheme}
+
+すなわち，次のように定義する:
+
+\begin{scheme}
+(define-syntax delay
+  (syntax-rules ()
+    ((delay expression)
+     (make-promise (lambda () expression))))),%
+\end{scheme}
+
+ここで {\cf make-promise} は次のように定義される:
+
+% \begin{scheme}
+% (define make-promise
+%   (lambda (proc)
+%     (let ((already-run? \schfalse) (result \schfalse))
+%       (lambda ()
+%         (cond ((not already-run?)
+%                (set! result (proc))
+%                (set! already-run? \schtrue)))
+%         result))))%
+% \end{scheme}
+
+\begin{scheme}
+(define make-promise
+  (lambda (proc)
+    (let ((result-ready? \schfalse)
+          (result \schfalse))
+      (lambda ()
+        (if result-ready?
+            result
+            (let ((x (proc)))
+              (if result-ready?
+                  result
+                  (begin (set! result-ready? \schtrue)
+                         (set! result x)
+                         result))))))))%
+\end{scheme}
+
+\begin{rationale}
+上記の最後の例のように，約束はそれ自身の値を参照してもよい。
+そのような約束を force すると，最初の force の値が計算され終わる前に，
+その約束に対する別の force がひき起こされるかもしれない。
+このことが {\cf make-promise} の定義を複雑にしている。
+\end{rationale}
+
+{\cf delay} と {\cf force} のこの意味論への様々な拡張が，
+いくつかの実装でサポートされている:
+
+\begin{itemize}
+\item 約束ではないオブジェクトに対する {\cf force} の呼出しは，
+単にそのオブジェクトを返してよい。
+
+\item 約束をその force された値から操作的に区別する手段が全くないという
+ケースがあってもよい。つまり，次のような式は，
+実装に依存して，\schtrue{} と \schfalse{} のどちらに評価されてもよい:
+
+\begin{scheme}
+(eqv? (delay 1) 1)          \ev  \unspecified
+(pair? (delay (cons 1 2)))  \ev  \unspecified%
+\end{scheme}
+
+\item 実装によっては，{\cf cdr} や {\cf +} のようなプリミティブ手続き
+によって約束の値が force されるという ``implicit forcing'' (暗黙の強制) を
+実装するかもしれない:
+
+\begin{scheme}
+(+ (delay (* 3 7)) 13)  \ev  34%
+\end{scheme}
+\end{itemize}
+\end{entry}
+
+\begin{entry}{%
+\proto{call-with-current-continuation}{ proc}{手続き}}
+
+\label{continuations} \domain{\var{proc} は，
+１引数の手続きでなければならない。}
+手続き {\cf call-with-current-continuation} は，
+現在の継続 (下記の根拠を見よ) を
+``脱出手続き'' (escape procedure)\mainindex{escape procedure} として
+パッケージ化し，それを \var{proc} に引数として渡す。
+脱出手続きとは，もし後でこれを呼び出すと，
+その時たとえどんな継続が有効であっても捨て去り，
+そのかわりに脱出手続きが造られた時に有効だった継続を使うことに
+なる Scheme 手続きである。
+脱出手続きの呼出しは，\ide{dynamic-wind} を使って
+インストールされた \var{before} サンクと \var{after} サンクの起動を
+ひき起こすかもしれない。
+
+脱出手続きは，\callcc へのもともとの呼出しに対する継続と同じだけの個数の
+引数を受理する。
+{\cf call-with-values} 手続きが造った継続を除き，
+すべての継続は正確に１個の値を受け取る。
+{\tt call-with-values} が造ったのではない継続へ，
+ゼロ個または複数個の値を渡すことの効果は未規定である。
+
+\vest \var{proc} へ渡される脱出手続きは，Scheme の他のすべての
+手続きと同じように無期限の寿命をもつ。
+脱出手続きを変数やデータ構造の中に格納して，
+何回でも望むだけの回数呼び出してよい。
+
+\vest 下記の例は {\cf call-with-current-continuation} を使う最も平凡な
+方法だけを示している。
+もしも，実際の用法がすべて，これらの例と同じように単純だったならば，
+{\cf call-with-current-continuation} のような強力さを備えた手続きは
+なんら必要なかっただろう。
+
+\begin{scheme}
+(call-with-current-continuation
+  (lambda (exit)
+    (for-each (lambda (x)
+                (if (negative? x)
+                    (exit x)))
+              '(54 0 37 -3 245 19))
+    \schtrue))                        \ev  -3
+
+(define list-length
+  (lambda (obj)
+    (call-with-current-continuation
+      (lambda (return)
+        (letrec ((r
+                  (lambda (obj)
+                    (cond ((null? obj) 0)
+                          ((pair? obj)
+                           (+ (r (cdr obj)) 1))
+                          (else (return \schfalse))))))
+          (r obj))))))
+
+(list-length '(1 2 3 4))            \ev  4
+
+(list-length '(a b . c))            \ev  \schfalse%
+\end{scheme}
+
+\begin{rationale}
+
+\vest {\cf call-with-current-continuation} の平凡な用途は，
+ループまたは手続き本体からの構造化された非局所的脱出である。
+しかし実のところ，{\cf call-with-current-continuation} は広範囲の
+高度な制御構造を実装することにも極めて有用である。
+
+\vest 一つの Scheme 式が評価される時はいつでも，その式の結果を欲している
+一つの{\em 継続} (\defining{continuation}\/) が存在する。
+継続は，計算に対する (デフォルトの) 未来全体を表現する。
+たとえば，もしも式がトップ・レベルで評価されるならば，
+そのとき継続は結果を受け取り，それを画面に印字し，次の入力を催促し，
+それを評価し，等々を永遠に続けることだろう。
+たいていの場合，継続は，ユーザのコードが規定する動作を含んでいる。たとえば，
+結果を受け取り，あるローカル変数に格納されている値でそれを乗算し，
+7 を加算し，その答えをトップ・レベルの継続に与えて印字させる，
+という継続におけるようにである。
+通常，これらの遍在する継続は舞台裏に隠されており，
+プログラマはそれについてあまり考えない。
+しかし，まれにはプログラマが継続を陽に取り扱う必要があり得る。
+{\cf call-with-current-continuation} は，まさしく現在の継続のように
+振舞う手続きを造ることによって，
+そうすることを Scheme プログラマにとって可能にしている。
+
+\vest たいていのプログラミング言語は，
+{\tt exit} や \hbox{{\cf return}}，果ては {\tt goto} のような名前をもつ
+専用の脱出コンストラクトを１個以上採り入れている，
+しかし，1965 年，Peter Landin~\cite{Landin65} は，J 演算子と呼ばれる
+汎用の脱出演算子を発明した。
+John Reynolds~\cite{Reynolds72} は，より単純だが同等に強力な
+コンストラクトを 1972 年に記述した。
+Sussman と Steele が 1975 年版 Scheme 報告書に記述した {\cf catch} 特殊形式は，
+その名前こそ MacLisp にある汎用性の劣るコンストラクトに由来しているが，
+Reynolds のコンストラクトと正確に同じである。
+何人かの Scheme 実装者が，\ide{catch} コンストラクトの完全な強力さを，
+特殊な構文のコンストラクトによってではなく手続きによって用意できることに
+気付き，そしてその名前 {\cf call-with-current-continuation} が 1982 年に
+つくり出された。
+この名前は説明的だが，このような長い名前の利点については意見の相違があり，
+一部の人々は \ide{call/cc} という名前をかわりに使っている。
+\end{rationale}
+
+\end{entry}
+
+\begin{entry}{%
+\proto{values}{ obj $\ldots$}{手続き}}
+
+その継続に (どれだけの個数であれ) 引数をすべて引き渡す。
+\ide{call-with-values} 手続きが造った継続を除き，
+すべての継続は正確に１個の値を受け取る。
+{\tt values} は次のように定義され得る:
+\begin{scheme}
+(define (values . things)
+  (call-with-current-continuation 
+    (lambda (cont) (apply cont things))))
+\end{scheme}
+
+\end{entry}
+
+\begin{entry}{%
+\proto{call-with-values}{ producer consumer}{手続き}}
+
+\var{producer} 引数を無引数で呼び出し，そしてある継続を呼び出す。
+この継続は，(複数個の) 値が渡されると，それらの値を
+引数として \var{consumer} 手続きを呼び出す。
+\var{consumer} への呼出しに対する継続は，
+{\tt call-with-values} への呼出しの継続である。
+
+\begin{scheme}
+(call-with-values (lambda () (values 4 5))
+                  (lambda (a b) b))
+                                                   \ev  5
+
+(call-with-values * -)                             \ev  -1
+\end{scheme}
+
+\end{entry}
+
+\begin{entry}{%
+\proto{dynamic-wind}{ before thunk after}{手続き}}
+
+\var{thunk} を無引数で呼び出し，その呼出しの (１個または複数個の) 結果を返す。
+\var{before} と \var{after} は，これもまた無引数で，次の規則によって
+要求されるとおりに呼び出される (\ide{call-with-current-continuation} を使って
+とらえられた継続への呼出しというものがなければ，この三つの引数は
+それぞれ１回ずつ順に呼び出されることに注意せよ)。
+\var{before} は，
+いつであれ実行が \var{thunk} への呼出しの動的寿命に入る時に呼び出され，
+\var{after} は，いつであれその動的寿命が終わる時に呼び出される。
+手続き呼出しの動的寿命 (dynamic extent) とは，
+呼出しが開始された時から呼出しが戻る時までの期間である。
+Scheme では，{\cf call-with-current-continuation} があるため，
+呼出しの動的寿命は必ずしも単一の，連続した時間の期間ではない。
+それは次のように定義される:
+\begin{itemize}
+\item 呼び出された手続きの本体が始まる時，その動的寿命に入る。
+
+\item ({\cf call-with-current-continuation} を使って) 動的寿命の期間中に 
+とらえられた継続が，実行がその動的寿命の中にないときに
+起動されたならば，その時もまた，その動的寿命に入る。
+
+\item 呼び出された手続きが戻る時，その動的寿命は終わる。
+
+\item 動的寿命の期間外にとらえられた継続が，
+実行がその動的寿命の中にあるときに起動されたならば，
+その時もまた，その動的寿命は終わる。
+\end{itemize}
+
+もしも {\cf dynamic-wind} への二度目の呼出しが，
+\var{thunk} への呼出しの動的寿命の期間中に出現し，
+そしてこれら二つの {\cf dynamic-wind} の起動に由来する二つの \var{after} が
+どちらも呼び出されるように継続が起動されたならば，
+そのときは，{\cf dynamic-wind} への二度目の (内側の) 呼出しに
+対応する \var{after} の方が最初に呼び出される。
+
+もしも {\cf dynamic-wind} への二度目の呼出しが，
+\var{thunk} への呼出しの動的寿命の期間中に出現し，
+そしてこれら二つの {\cf dynamic-wind} の起動に由来する二つの \var{before} が
+どちらも呼び出されるように継続が起動されたならば，
+そのときは，{\cf dynamic-wind} への一度目の (外側の) 呼出しに
+対応する \var{before} の方が最初に呼び出される。
+
+もしも，ある継続の呼出しが，{\cf dynamic-wind} への一つの呼出しに
+由来する \var{before} と，もう一つの呼出しに由来する \var{after} の，
+二つの呼出しを要求するならば，
+そのときは，\var{after} の方が最初に呼び出される。
+
+とらえられた継続を使って，
+\var{before} または \var{after} への呼出しの動的寿命に入るまたは
+それを終えることの効果は，未規定である。
+
+\begin{scheme}
+(let ((path '())
+      (c \#f))
+  (let ((add (lambda (s)
+               (set! path (cons s path)))))
+    (dynamic-wind
+      (lambda () (add 'connect))
+      (lambda ()
+        (add (call-with-current-continuation
+               (lambda (c0)
+                 (set! c c0)
+                 'talk1))))
+      (lambda () (add 'disconnect)))
+    (if (< (length path) 4)
+        (c 'talk2)
+        (reverse path))))
+    \lev (connect talk1 disconnect
+               connect talk2 disconnect)
+\end{scheme}
+\end{entry}
+
+\section{\tt{Eval}}
+
+\begin{entry}{%
+\proto{eval}{ expression environment-specifier}{手続き}}
+
+\var{expression} を，指定された環境において評価し，その値を返す。
+\var{expression} は，データとして表現された一つの妥当な Scheme 式でなければ
+ならず，\var{environment-specifier} は，以下に記述する三つの手続きのうちの
+一つによって返された値でなければならない。
+実装は {\cf eval} を，第１引数として式以外のプログラム (定義) を許したり，
+環境として他の値を許すように拡張してもよいが，
+次の制約が伴う:  {\cf eval} には，
+{\cf null-environment} または {\cf scheme-report-environment} と
+結合した環境において，新しい束縛を造ることは許されていない。
+
+\begin{scheme}
+(eval '(* 7 3) (scheme-report-environment 5))
+                                                   \ev  21
+
+(let ((f (eval '(lambda (f x) (f x x))
+               (null-environment 5))))
+  (f + 10))
+                                                   \ev  20
+\end{scheme}
+
+\end{entry}
+
+\begin{entry}{%
+\proto{scheme-report-environment}{ version}{手続き}
+\proto{null-environment}{ version}{手続き}}
+
+\var{version} は，正確整数 {\cf \integerversion} でなければならない。
+この数は，Scheme 報告書のこの版 (the
+Revised$^\integerversion$ Report on Scheme) に対応している。
+{\cf scheme-report-environment} は，この報告書で
+定義されている すべての束縛---要求されているか，あるいは省略可能だが
+実装によってサポートされている---を
+除いて 空である環境の 指定子 (specifier) を返す。
+{\cf null-environment} は，
+この報告書で定義されているすべての構文キーワード---要求されているか，
+あるいは省略可能だが実装によってサポートされている---を
+除いて空である環境の指定子を返す。
+
+この報告書の過去の版にマッチする環境を指定するために
+他の値の \var{version} を使うこともできるが，そのサポートは要求されていない。
+もしも \var{version} が {\cf \integerversion} でもなく，実装によって
+サポートされている他の値でもなければ，実装はエラーを通知するだろう。
+
+{\cf scheme-report-environment} において束縛されている
+変数 (たとえば {\cf car}) へ，({\cf eval} を使って) 代入をすることの効果は
+未規定である。
+したがって，{\cf scheme-report-environment} によって指定される環境は，
+書換え不可能であってもよい。
+
+\end{entry}
+
+\begin{entry}{%
+\proto{interaction-environment}{}{省略可能手続き}}
+
+この手続きは，実装定義の束縛を含む環境---典型的にはこの報告書において
+リストされた環境の，あるスーパーセット---の指定子を返す。
+その意図は，ユーザが動的に打鍵した式を実装が評価するときの環境を，
+この手続きが返すことである。
+
+\end{entry}
+
+\section{入力と出力}
+
+\subsection{ポート}
+\label{portsection}
+
+ポート (port) は，入力 (input) と出力 (output) の装置を表現する。
+Scheme にとって，入力ポートとは文字をコマンドへ配送できる Scheme オブジェクト
+であり，出力ポートとは文字を受理できる Scheme オブジェクト
+である。\mainindex{port}
+
+\todo{Haase: Mention that there are alternatives to files?}
+
+\begin{entry}{%
+\proto{call-with-input-file}{ string proc}{ライブラリ手続き}
+\proto{call-with-output-file}{ string proc}{ライブラリ手続き}}
+
+\var{string} は，一つのファイルを指名する文字列であること。
+そして，\var{proc} は，１個の引数をとる手続きであること。
+{\cf call-with-input-file} では，ファイルが既存であること。
+一方，{\cf call-with-output-file} では，
+ファイルが既存だったときの効果は未規定である。
+これらの手続きは \var{proc} を１個の引数---指名されたファイルを
+入力または出力のために開くことによって得られたポート---とともに呼び出す。
+もしもポートを開くことができないならば，エラーが通知される。
+\var{proc} が戻るときには，ポートが自動的に閉じられ，
+そして \var{proc} がもたらした (１個または複数個の) 値が返される。
+もしも \var{proc} が戻らないならば，ポートは，
+それが read または write 演算に二度と再び使われないと証明できない限り，
+自動的に閉じられることはない。
+%Scheme
+%will not close the port unless it can prove that the port will never
+%again be used for a read or write operation.
+
+\begin{rationale}
+Scheme の脱出手続きは無期限の寿命をもつから，
+現在の継続から脱出した後でも，再びその中に戻ることができる。
+もしも実装が，
+現在の継続からのどの脱出においてポートを閉じることにしてもよかったとしたら，
+{\cf call-with-current-continuation} を，
+{\cf call-with-input-file} または {\cf call-with-output-file} と
+ともに使うポータブルなコードを書くことは，不可能になっただろう。
+\todo{Pitman wants more said here; maybe encourage users to call
+\var{close-foo-port}; maybe talk about process switches (?).}
+\end{rationale} 
+\end{entry}
+
+
+\begin{entry}{%
+\proto{input-port?}{ obj}{手続き}
+\proto{output-port?}{ obj}{手続き}}
+
+それぞれ，もし \var{obj} が入力ポートまたは出力ポートならば \schtrue{} を
+返し，そうでなければ \schfalse を返す。
+
+\todo{Won't necessarily return true after port is closed.}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{current-input-port}{}{手続き}
+\proto{current-output-port}{}{手続き}}
+ 
+現在のデフォルトの入力ポートまたは出力ポートを返す。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{with-input-from-file}{ string thunk}{省略可能手続き}
+\proto{with-output-to-file}{ string thunk}{省略可能手続き}}
+
+\var{string} は，一つのファイルを指名する文字列であること。
+そして，\var{thunk} は，引数をとらない手続きであること。
+{\cf with-input-from-file} では，ファイルが既存であること。
+一方，{\cf with-output-to-file} では，
+ファイルが既存だったときの効果は未規定である。
+入力または出力のためにファイルが開かれ，
+それに接続された入力ポートまたは出力ポートが，
+{\cf current-input-port} または {\cf current-output-port} に
+よって返される (かつ {\tt (read)}，{\tt (write \var{obj})} などで
+使われる) デフォルト値へと仕立てられ，
+そして \var{thunk} が無引数で呼び出される。
+\var{thunk} が戻るときには，ポートが閉じられて以前のデフォルトが回復される。
+{\cf with-input-from-file} と {\cf with-output-to-file} は，
+\var{thunk} がもたらした (１個または複数個の) 値を返す。
+もしも脱出手続きが，これらの手続きの継続から脱出するために使われるならば，
+これらの手続きの振舞は実装依存である。
+
+\todo{OK this with authors??}
+%current continuation changes in such a way
+%as to make it doubtful that the \var{thunk} will ever return.
+
+\todo{Freeman:
+Throughout this section I wanted to see ``the value of {\tt(current-input-port)}''
+instead of ``the value returned by \var{current-input-port}''.  (Same for
+\var{current-output-port}.)}
+
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{open-input-file}{ filename}{手続き}}
+ 
+既存のファイルを指名する文字列を取り，
+そして，そのファイルからの文字を配送できる入力ポートを返す。
+もしもファイルを開くことができないならば，エラーが通知される。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{open-output-file}{ filename}{手続き}}
+
+新造される出力ファイルを指名する文字列を取り，
+そして，その名前を付けられた一つの新しいファイルへと文字を書くことのできる
+出力ポートを返す。
+もしもファイルを開くことができないならば，エラーが通知される。
+もしも与えられた名前をしたファイルが既存ならば，その効果は未規定である。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{close-input-port}{ port}{手続き}
+\proto{close-output-port}{ port}{手続き}}
+
+\var{port} と結合したファイルを閉じて，
+\var{port} が文字を配送または受理できないようにする。\todo{But maybe a no-op
+on some ports, e.g. terminals or editor buffers.}
+これらのルーチンは，もしもファイルが既に閉じられているならば，
+なんの効果もない。返される値は未規定である。
+
+\todo{Ramsdell:  Some note is needed explaining why there are two
+different close procedures.}
+
+\todo{A port isn't necessarily still a port after it has been closed?}
+
+\end{entry}
+
+
+\subsection{入力}
+\label{inputsection}
+
+\noindent \hbox{ }  %???
+\vspace{-5ex}
+\todo{The input routines have some things in common, maybe explain here.}
+
+\begin{entry}{%
+\proto{read}{}{ライブラリ手続き}
+\rproto{read}{ port}{ライブラリ手続き}}
+
+{\cf read} は Scheme オブジェクトの外部表現をオブジェクトそれ自身へと変換する。
+つまり，{\cf read} は，非終端記号 \meta{データ} に対するパーサ
+である (\ref{datum}節と\ref{listsection}節を参照)。
+{\cf read} は，与えられた入力 \var{port} から次にパース可能なオブジェクトを
+返し，そしてそのオブジェクトの外部表現の終わりを過ぎて最初の文字を
+指すように \var{port} を更新する。
+
+\vest もしもオブジェクトの先頭になり得る文字が見つかる前に
+入力の中で end of file (ファイルの終わり) に出会ったならば，
+end of file オブジェクトが返される。 \todo{} ポートは開いたままであり，
+更に read しようと試みるとまた end of file オブジェクトが返されることになる。
+もしもオブジェクトの外部表現の先頭の後で end of file に出会ったが，
+その外部表現がまだ完了していないためパース可能でないならば，
+エラーが通知される。
+
+\var{port} 引数は省略してもよく，
+その場合は {\cf current-input-\linebreak[0]port} の返す値をデフォルトとする。
+閉じたポートから read することはエラーである。
+\end{entry}
+
+\begin{entry}{%
+\proto{read-char}{}{手続き}
+\rproto{read-char}{ port}{手続き}}
+
+入力 \var{port} から次に入手可能な文字を返し，
+そしてその次に来る文字を指すように \var{port} を更新する。
+もしも，もう文字が入手可能でないならば，end of file オブジェクトが返される。
+\var{port} は省略してもよく，
+その場合は {\cf current-input-port} の返す値をデフォルトとする。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{peek-char}{}{手続き}
+\rproto{peek-char}{ port}{手続き}}
+
+入力 \var{port} から次に入手可能な文字を返す。ただし，
+その次に来る文字を指すように \var{port} を更新することは{\em しない}。
+もしも，もう文字が入手可能でないならば，end of file オブジェクトが返される。
+\var{port} は省略してもよく，
+その場合は {\cf current-input-port} の返す値をデフォルトとする。
+
+\begin{note}
+{\cf peek-char} を呼び出すと，それと同じ \var{port} を引数
+とする {\cf read-char} への呼出しが返したはずの値と，同じ値が返される。
+唯一の違いは，
+次回その \var{port} で {\cf read-char} や {\cf peek-char} を呼び出すと，
+それに先行する {\cf peek-char} への呼出しが返した値が返される，
+ということである。
+とりわけ，対話的ポートでの {\cf peek-char} への呼出しは，
+そのポートでの {\cf read-char} への呼出しが入力待ちでハングする
+ことになるときはいつでもハングするだろう。
+\end{note}
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{eof-object?}{ obj}{手続き}}
+
+もし \var{obj} が end of file オブジェクトならば \schtrue{} を返し，
+そうでなければ \schfalse を返す。
+end of file オブジェクトの精確な集合は実装によって異なるだろうが，
+いずれにせよ，どの end of file オブジェクトも，
+{\cf read} を使って読むことのできるオブジェクトであることは決してない。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{char-ready?}{}{手続き}
+\rproto{char-ready?}{ port}{手続き}}
+
+もし入力 \var{port} で文字が準備できているならば \schtrue{} を返し，
+そうでなければ \schfalse{} を返す。
+もし {\cf char-ready} が \schtrue{} を返すならば，
+そのときその \var{port} での次回の {\cf read-char} 演算は
+ハングしないと保証されている。
+もし \var{port} が end of file にあるならば，
+そのとき {\cf char-ready?} は \schtrue を返す。
+\var{port} は省略してもよく，
+その場合は {\cf current-input-port} の返す値をデフォルトとする。
+
+\begin{rationale}
+{\cf char-ready?} は，プログラムが入力待ちで止まってしまうことなく
+対話的ポートから文字を受理できるようにするために存在する。
+なんであれそのようなポートに結合している入力エディタは，
+いったん {\cf char-ready?} によって存在を表明された文字が
+編集により消去され得ないことを，保証しなければならない。
+もし仮に {\cf char-ready?} が end of file で \schtrue{} を返すとしたならば，
+end of file にあるポートは，文字が準備できていない対話的ポートと
+見分けがつかなくなってしまったことだろう。
+\end{rationale}
+\end{entry}
+
+
+\subsection{出力}
+\label{outputsection}
+
+% We've got to put something here to fix the indentation!!
+\noindent \hbox{}
+\vspace{-5ex}
+
+\begin{entry}{%
+\proto{write}{ obj}{ライブラリ手続き}
+\rproto{write}{ obj port}{ライブラリ手続き}}
+
+\var{obj} の表記表現を，与えられた \var{port} に書く。
+この表記表現の中に現れる文字列は二重引用符に囲まれ，そして
+その文字列の内部では逆スラッシュと二重引用符は逆スラッシュでエスケープされる。
+文字オブジェクトは {\cf \#\backwhack} 記法を使って書かれる。
+{\cf write} は未規定の値を返す。
+\var{port} 引数は省略してもよく，
+その場合は {\cf current-output-port} の返す値をデフォルトとする。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{display}{ obj}{ライブラリ手続き}
+\rproto{display}{ obj port}{ライブラリ手続き}}
+
+\var{obj} の表現を，与えられた \var{port} に書く。
+この表記表現の中に現れる文字列は二重引用符に囲まれず，そして
+その文字列の内部ではどの文字もエスケープされない。
+文字オブジェクトはこの表現の中に
+あたかも {\cf write} ではなく {\cf write-char} で書かれたかのように現れる。
+{\cf display} は未規定の値を返す。
+\var{port} 引数は省略してもよく，
+その場合は {\cf current-output-port} の返す値をデフォルトとする。
+
+\begin{rationale}
+{\cf write} は機械可読な出力を生成するためにあり，
+{\cf display} は人間可読な出力を生成するためにある。
+シンボルの中に ``slashification'' を許す実装は，
+シンボルの中にある奇妙な文字を slashify することを，
+おそらく {\cf write} には望むが {\cf display} には望まないだろう。
+\end{rationale}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{newline}{}{ライブラリ手続き}
+\rproto{newline}{ port}{ライブラリ手続き}}
+
+end of line を \var{port} に書く。正確なところ，
+これがどのようになされるのかはオペレーティング・システムごとに異なる。
+未規定の値を返す。
+\var{port} 引数は省略してもよく，
+その場合は {\cf current-output-port} の返す値をデフォルトとする。
+
+\end{entry}
+
+
+\begin{entry}{%
+\proto{write-char}{ char}{手続き}
+\rproto{write-char}{ char port}{手続き}}
+
+文字 \var{char} (文字の外部表現ではなく文字それ自体) を，
+与えられた \var{port} に書き，未規定の値を返す。
+\var{port} 引数は省略してもよく，
+その場合は {\cf current-output-port} の返す値をデフォルトとする。
+
+\end{entry}
+
+
+\subsection{システム・インタフェース}
+
+システム・インタフェースの問題は一般にこの報告書の範囲を越えている。
+しかし，下記の演算はここに記述するだけの重要性がある。
+
+
+\begin{entry}{%
+\proto{load}{ filename}{省略可能手続き}}
+
+\todo{Fix}
+
+%\domain{\var{Filename} should be a string naming an existing file
+%containing Scheme source code.} The {\cf load} procedure reads
+\var{filename} は Scheme ソース・コードを内容とする既存のファイルを
+指名する文字列であること。
+{\cf load} 手続きはそのファイルから式と定義を読んで逐次的に評価する。
+式の結果が印字されるかどうかは未規定である。
+{\cf load} 手続きは {\cf current-input-port} と {\cf current-output-port} の
+どちらの返す値にも影響をおよぼさない。
+{\cf load} は未規定の値を返す。
+
+\begin{rationale}
+ポータビリティのため，
+{\cf load} はソース・ファイルについて演算しなければならない。
+他の種類のファイルについての {\cf load} 演算は必然的に実装間で異なる。
+\end{rationale}
+\end{entry}
+
+
+\begin{entry}{%
+\proto{transcript-on}{ filename}{省略可能手続き}\nopagebreak{}
+\proto{transcript-off}{}{省略可能手続き}}
+
+\domain{\var{filename} は造られる出力ファイルを指名する文字列でなければ
+ならない。}
+{\cf transcript-on} の効果は，指名されたファイルを出力用に開くこと，
+そしてユーザと Scheme システムとで交わされるそれ以降の
+対話の写し (transcript) がそのファイルに書かれるようにすることである。
+写しは {\cf transcript-off} を呼び出すことによって終わる。
+この呼出しは写しのファイルを閉じる。
+いつでもたった一つの写しだけが進行中にできるが，
+実装はこの制限を緩和してもよい。
+これらの手続きの返す値は未規定である。
+
+%\begin{note}
+%These procedures are redundant in some systems, but
+%systems that need them should provide them.
+%\end{note}
+\end{entry}

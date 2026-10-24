@@ -1,0 +1,438 @@
+[a24982b46a] {gc-hardware
+L2cache = 524288
+[a2498b3586] gc-hardware}
+[a2498bc546] {gc-hardware
+memtotal = 7981957120.000000
+[a2498d1d2e] gc-hardware}
+[a24996cd06] {jit-tracing
+JIT starting (x86)
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 22 ; loop
+23: argument
+24: frame 38
+26: refer-global 1 ; -
+28: argument
+29: refer 0 0
+32: argument
+33: constant 1 ; 1
+35: argument
+36: apply 2
+38: argument
+39: shift 2 2
+42: apply 1
+4: frame 15
+compiled new loop
+[a249d50012] {jit-log-opt-loop
+# Loop 1 (4: frame 15) : loop with 367 ops
+[i0, i1, p2, p3, p4]
++936: label(i0, i1, p2, p3, p4, descr=TargetToken(129109552447520))
+debug_merge_point(0, 0, '4: frame 15')
++957: p5 = getfield_gc_r(p4, descr=<FieldP RPython_3imp.vm.VM.inst_stack 24>)
++968: i6 = getfield_gc_i(p5, descr=<FieldS list.length 8>)
++972: i7 = int_ge(i1, i6)
++979: guard_false(i7, descr=<Guard0x756ca9034020>) [i0, p2, p3, p4, i1, i6]
++985: i9 = int_lt(i1, 0)
++993: guard_false(i9, descr=<Guard0x756ca90302c0>) [i0, p2, p3, p4, i1, i6]
++999: p10 = getfield_gc_r(p5, descr=<FieldP list.items 16>)
++1003: p11 = new_with_vtable(descr=<SizeDescr 32>)
++1041: setfield_gc(p11, p3, descr=<FieldP RPython_3imp.value.W_Frame.inst_closure 8 pure>)
++1052: setfield_gc(p11, i0, descr=<FieldS RPython_3imp.value.W_Frame.inst_fp 16 pure>)
++1063: setfield_gc(p11, 15, descr=<FieldS RPython_3imp.value.W_Frame.inst_ret 24 pure>)
++1088: setarrayitem_gc(p10, i1, p11, descr=<ArrayP 8>)
++1093: i14 = int_add(i1, 1)
+debug_merge_point(0, 0, '6: refer-global 11 ; zero?')
++1097: p15 = getfield_gc_r(p4, descr=<FieldP RPython_3imp.vm.VM.inst_globals_w 16>)
++1101: p17 = getarrayitem_gc_r(p15, 11, descr=<ArrayP 8>)
++1119: i19 = instance_ptr_eq(p17, ConstPtr(ptr18))
+guard_false(i19, descr=<Guard0x756ca9034068>) [i19, i0, i14, p17, p3, p4]
+debug_merge_point(0, 0, '8: argument')
++1140: i20 = int_ge(i14, i6)
++1143: guard_false(i20, descr=<Guard0x756ca90302f0>) [i19, i0, i14, p17, p3, p4]
++1159: setarrayitem_gc(p10, i14, p17, descr=<ArrayP 8>)
++1164: i22 = int_add(i1, 2)
+debug_merge_point(0, 0, '9: refer 0 0')
++1168: i24 = int_lt(i0, 0)
++1172: guard_false(i24, descr=<Guard0x756ca90340b0>) [i0, i22, p5, p3, p4]
++1178: p25 = getarrayitem_gc_r(p10, i0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '12: argument')
++1183: i26 = int_ge(i22, i6)
++1186: guard_false(i26, descr=<Guard0x756ca9030320>) [i0, i22, p5, p3, p4]
++1202: setarrayitem_gc(p10, i22, p25, descr=<ArrayP 8>)
++1207: i28 = int_add(i1, 3)
+debug_merge_point(0, 0, '13: apply 1')
++1211: i30 = int_sub(i28, 1)
++1211: i32 = int_sub(i30, 1)
++1211: p33 = getarrayitem_gc_r(p10, i32, descr=<ArrayP 8>)
++1216: guard_nonnull_class(p33, ConstClass(W_Primitive), descr=<Guard0x756ca90340f8>) [i28, p25, p33, p4, p3]
++1235: i35 = getfield_gc_i(p33, descr=<FieldS RPython_3imp.value.W_Primitive.inst_pid 24 pure>)
++1239: i37 = int_eq(i35, 21)
++1243: guard_false(i37, descr=<Guard0x756ca9030350>) [i28, p25, p33, p4, p3]
++1249: i38 = getfield_gc_i(p33, descr=<FieldS RPython_3imp.value.W_Primitive.inst_arity 8 pure>)
++1253: i40 = int_ne(i38, 1)
++1257: guard_false(i40, descr=<Guard0x756ca9030380>) [i28, p25, p33, p4, p3]
++1263: i42 = int_eq(i35, 20)
++1267: guard_false(i42, descr=<Guard0x756ca90303b0>) [i28, p25, p33, p4, p3]
++1273: p43 = getarrayitem_gc_r(p10, i30, descr=<ArrayP 8>)
++1278: guard_value(i35, 11, descr=<Guard0x756ca90303e0>) [i28, p25, p33, p4, p3]
++1288: guard_nonnull_class(p43, ConstClass(W_Int), descr=<Guard0x756ca9034140>) [i28, p25, p33, p4, p3]
++1307: i46 = getfield_gc_i(p43, descr=<FieldS RPython_3imp.value.W_Int.inst_value 8 pure>)
++1311: i47 = int_is_zero(i46)
++1314: guard_false(i47, descr=<Guard0x756ca9030410>) [i28, p25, p33, p4, p3]
++1320: i49 = int_sub(i28, 2)
++1324: i51 = int_sub(i49, 1)
++1328: p52 = getarrayitem_gc_r(p10, i51, descr=<ArrayP 8>)
++1340: i53 = getfield_gc_i(p52, descr=<FieldS RPython_3imp.value.W_Frame.inst_ret 24 pure>)
++1344: i54 = getfield_gc_i(p52, descr=<FieldS RPython_3imp.value.W_Frame.inst_fp 16 pure>)
++1355: p55 = getfield_gc_r(p52, descr=<FieldP RPython_3imp.value.W_Frame.inst_closure 8 pure>)
++1366: i57 = int_lt(i53, 13)
++1370: guard_false(i57, descr=<Guard0x756ca9030440>) [i28, p25, p33, p4, p3]
++1376: guard_value(i53, 15, descr=<Guard0x756ca9030470>) [i28, p25, p33, p4, p3]
+debug_merge_point(0, 0, '15: test 21')
+debug_merge_point(0, 0, '21: refer-global 22 ; loop')
++1386: p60 = getarrayitem_gc_r(p15, 22, descr=<ArrayP 8>)
++1394: i62 = instance_ptr_eq(p60, ConstPtr(ptr61))
++1397: guard_false(i62, descr=<Guard0x756ca90304a0>) [i28, p25, p33, p4, p3]
+debug_merge_point(0, 0, '23: argument')
++1403: i63 = int_ge(i51, i6)
++1406: guard_false(i63, descr=<Guard0x756ca90304d0>) [i28, p25, p33, p4, p3]
++1422: setarrayitem_gc(p10, i51, p60, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '24: frame 38')
++1427: i64 = int_ge(i49, i6)
++1430: guard_false(i64, descr=<Guard0x756ca9034188>) [i54, p60, p55, p4, i49, i6]
++1436: p65 = new_with_vtable(descr=<SizeDescr 32>)
++1447: setfield_gc(p65, p55, descr=<FieldP RPython_3imp.value.W_Frame.inst_closure 8 pure>)
++1451: setfield_gc(p65, i54, descr=<FieldS RPython_3imp.value.W_Frame.inst_fp 16 pure>)
++1455: setfield_gc(p65, 38, descr=<FieldS RPython_3imp.value.W_Frame.inst_ret 24 pure>)
++1473: setarrayitem_gc(p10, i49, p65, descr=<ArrayP 8>)
++1478: i68 = int_add(i49, 1)
+debug_merge_point(0, 0, '26: refer-global 1 ; -')
++1482: p70 = getarrayitem_gc_r(p15, 1, descr=<ArrayP 8>)
++1493: i72 = instance_ptr_eq(p70, ConstPtr(ptr71))
+guard_false(i72, descr=<Guard0x756ca90341d0>) [i72, i54, i68, p70, p55, p4]
+debug_merge_point(0, 0, '28: argument')
++1514: i73 = int_ge(i68, i6)
++1517: guard_false(i73, descr=<Guard0x756ca9030500>) [i72, i54, i68, p70, p55, p4]
++1533: setarrayitem_gc(p10, i68, p70, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '29: refer 0 0')
++1538: i75 = int_lt(i54, 0)
++1542: guard_false(i75, descr=<Guard0x756ca9034218>) [i54, i28, p5, p55, p4]
++1548: p76 = getarrayitem_gc_r(p10, i54, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '32: argument')
++1553: i77 = int_ge(i28, i6)
++1556: guard_false(i77, descr=<Guard0x756ca9030530>) [i54, i28, p5, p55, p4]
++1572: setarrayitem_gc(p10, i28, p76, descr=<ArrayP 8>)
++1577: i79 = int_add(i1, 4)
+debug_merge_point(0, 0, '33: constant 1 ; 1')
+debug_merge_point(0, 0, '35: argument')
++1581: i80 = int_ge(i79, i6)
++1584: guard_false(i80, descr=<Guard0x756ca9034260>) [i54, p55, p4, i79, i6]
++1607: setarrayitem_gc(p10, i79, ConstPtr(ptr81), descr=<ArrayP 8>)
++1612: i83 = int_add(i1, 5)
+debug_merge_point(0, 0, '36: apply 2')
++1616: i85 = int_sub(i83, 2)
++1616: i87 = int_sub(i85, 1)
++1616: p88 = getarrayitem_gc_r(p10, i87, descr=<ArrayP 8>)
++1621: guard_nonnull_class(p88, ConstClass(W_Primitive), descr=<Guard0x756ca90342a8>) [i83, p88, p4, p55]
++1640: i90 = getfield_gc_i(p88, descr=<FieldS RPython_3imp.value.W_Primitive.inst_pid 24 pure>)
++1644: i92 = int_eq(i90, 21)
++1648: guard_false(i92, descr=<Guard0x756ca9030560>) [i83, p88, p4, p55]
++1654: i93 = getfield_gc_i(p88, descr=<FieldS RPython_3imp.value.W_Primitive.inst_arity 8 pure>)
++1658: i95 = int_ne(i93, 2)
++1662: guard_false(i95, descr=<Guard0x756ca9030590>) [i83, p88, p4, p55]
++1668: i97 = int_eq(i90, 20)
++1672: guard_false(i97, descr=<Guard0x756ca90305c0>) [i83, p88, p4, p55]
++1678: p98 = getarrayitem_gc_r(p10, i85, descr=<ArrayP 8>)
++1683: i100 = int_eq(i90, 11)
++1687: guard_false(i100, descr=<Guard0x756ca90305f0>) [i83, p88, p4, p55]
++1693: i102 = int_eq(i90, 12)
++1697: guard_false(i102, descr=<Guard0x756ca9030620>) [i83, p88, p4, p55]
++1703: i104 = int_eq(i90, 15)
++1707: guard_false(i104, descr=<Guard0x756ca9030650>) [i83, p88, p4, p55]
++1713: i106 = int_eq(i90, 16)
++1717: guard_false(i106, descr=<Guard0x756ca9030680>) [i83, p88, p4, p55]
++1723: i108 = int_eq(i90, 17)
++1727: guard_false(i108, descr=<Guard0x756ca90306b0>) [i83, p88, p4, p55]
++1733: i110 = int_eq(i90, 18)
++1737: guard_false(i110, descr=<Guard0x756ca90306e0>) [i83, p88, p4, p55]
++1743: i112 = int_eq(i90, 19)
++1747: guard_false(i112, descr=<Guard0x756ca9030710>) [i83, p88, p4, p55]
++1753: i114 = int_add(i85, 1)
++1753: p115 = getarrayitem_gc_r(p10, i114, descr=<ArrayP 8>)
++1758: i117 = int_eq(i90, 13)
++1762: guard_false(i117, descr=<Guard0x756ca9030740>) [i83, p88, p4, p55]
++1768: i119 = int_eq(i90, 14)
++1772: guard_false(i119, descr=<Guard0x756ca9030770>) [i83, p88, p4, p55]
++1778: i121 = int_le(i90, 5)
++1782: guard_true(i121, descr=<Guard0x756ca90307a0>) [i83, p88, p4, p55]
++1788: guard_nonnull_class(p98, ConstClass(W_Int), descr=<Guard0x756ca90342f0>) [i83, p88, p4, p55]
++1806: i123 = getfield_gc_i(p98, descr=<FieldS RPython_3imp.value.W_Int.inst_value 8 pure>)
++1810: guard_nonnull_class(p115, ConstClass(W_Int), descr=<Guard0x756ca9034338>) [i83, p88, p4, p55]
++1828: i125 = getfield_gc_i(p115, descr=<FieldS RPython_3imp.value.W_Int.inst_value 8 pure>)
++1832: guard_value(i90, 1, descr=<Guard0x756ca90307d0>) [i83, p88, p4, p55]
++1842: i127 = int_sub_ovf(i123, i125)
++1845: guard_no_overflow(descr=<Guard0x756ca9030800>) [i83, p88, p4, p55]
++1851: i129 = int_sub(i83, 3)
++1855: i131 = int_sub(i129, 1)
++1859: p132 = getarrayitem_gc_r(p10, i131, descr=<ArrayP 8>)
++1864: i133 = getfield_gc_i(p132, descr=<FieldS RPython_3imp.value.W_Frame.inst_ret 24 pure>)
++1868: i134 = getfield_gc_i(p132, descr=<FieldS RPython_3imp.value.W_Frame.inst_fp 16 pure>)
++1879: p135 = getfield_gc_r(p132, descr=<FieldP RPython_3imp.value.W_Frame.inst_closure 8 pure>)
++1890: i137 = int_lt(i133, 36)
++1894: guard_false(i137, descr=<Guard0x756ca9030830>) [i83, p88, p4, p55]
++1900: guard_value(i133, 38, descr=<Guard0x756ca9030860>) [i83, p88, p4, p55]
+debug_merge_point(0, 0, '38: argument')
++1910: i139 = int_ge(i131, i6)
++1913: guard_false(i139, descr=<Guard0x756ca9030890>) [i83, p88, p4, p55]
++1919: p140 = new_with_vtable(descr=<SizeDescr 16>)
++1930: setfield_gc(p140, i127, descr=<FieldS RPython_3imp.value.W_Int.inst_value 8 pure>)
++1944: setarrayitem_gc(p10, i131, p140, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '39: shift 2 2')
++1949: i142 = int_sub(i129, 2)
++1953: p143 = getarrayitem_gc_r(p10, i142, descr=<ArrayP 8>)
++1958: i145 = int_sub(i142, 2)
++1962: i147 = int_lt(i145, 0)
++1966: guard_false(i147, descr=<Guard0x756ca9034380>) [i134, i129, i145, p140, p135, p4, p5, p143]
++1982: setarrayitem_gc(p10, i145, p143, descr=<ArrayP 8>)
++1986: i149 = int_add(i142, 1)
++1986: p150 = getarrayitem_gc_r(p10, i149, descr=<ArrayP 8>)
++1991: i152 = int_sub(i129, 2)
++1995: i154 = int_sub(i152, 2)
++1999: i156 = int_add(i154, 1)
++2013: setarrayitem_gc(p10, i156, p150, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '42: apply 1')
++2018: i158 = int_sub(i152, 1)
++2022: i160 = int_sub(i158, 1)
++2022: p161 = getarrayitem_gc_r(p10, i160, descr=<ArrayP 8>)
++2026: guard_nonnull_class(p161, ConstClass(W_Closure), descr=<Guard0x756ca90343c8>) [i152, p140, p161, p4, p135]
++2045: i163 = getfield_gc_i(p161, descr=<FieldS RPython_3imp.value.W_Closure.inst_nparams 24 pure>)
++2049: i165 = int_ne(i163, 1)
++2053: guard_false(i165, descr=<Guard0x756ca90308c0>) [i152, p140, p161, p4, p135]
++2059: i166 = getfield_gc_i(p161, descr=<FieldS RPython_3imp.value.W_Closure.inst_body 8 pure>)
++2063: i168 = int_lt(i166, 42)
++2067: guard_true(i168, descr=<Guard0x756ca90308f0>) [i152, p140, p161, p4, p135]
++2073: guard_value(i166, 4, descr=<Guard0x756ca9030920>) [i152, p140, p161, p4, p135]
+debug_merge_point(0, 0, '4: frame 15')
++2083: label(i158, i152, p140, p161, p4, p5, i6, p10, p15, descr=TargetToken(129109552447584))
+debug_merge_point(0, 0, '4: frame 15')
++2109: i170 = int_ge(i152, i6)
++2112: guard_false(i170, descr=<Guard0x756ca9034410>) [i158, p140, p161, p4, i152, i6]
++2118: p171 = new_with_vtable(descr=<SizeDescr 32>)
++2156: setfield_gc(p171, p161, descr=<FieldP RPython_3imp.value.W_Frame.inst_closure 8 pure>)
++2160: setfield_gc(p171, i158, descr=<FieldS RPython_3imp.value.W_Frame.inst_fp 16 pure>)
++2164: setfield_gc(p171, 15, descr=<FieldS RPython_3imp.value.W_Frame.inst_ret 24 pure>)
++2182: setarrayitem_gc(p10, i152, p171, descr=<ArrayP 8>)
++2187: i174 = int_add(i152, 1)
+debug_merge_point(0, 0, '6: refer-global 11 ; zero?')
++2191: p176 = getarrayitem_gc_r(p15, 11, descr=<ArrayP 8>)
++2209: i178 = instance_ptr_eq(p176, ConstPtr(ptr177))
+guard_false(i178, descr=<Guard0x756ca9034458>) [i178, i158, i174, p176, p161, p4]
+debug_merge_point(0, 0, '8: argument')
++2230: i179 = int_ge(i174, i6)
++2233: guard_false(i179, descr=<Guard0x756ca9030950>) [i178, i158, i174, p176, p161, p4]
++2249: setarrayitem_gc(p10, i174, p176, descr=<ArrayP 8>)
++2254: i181 = int_add(i152, 2)
+debug_merge_point(0, 0, '9: refer 0 0')
++2258: p182 = getarrayitem_gc_r(p10, i158, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '12: argument')
++2263: i183 = int_ge(i181, i6)
++2266: guard_false(i183, descr=<Guard0x756ca90344a0>) [i158, p182, p161, p4, i181, i6]
++2282: setarrayitem_gc(p10, i181, p182, descr=<ArrayP 8>)
++2287: i185 = int_add(i152, 3)
+debug_merge_point(0, 0, '13: apply 1')
++2291: i187 = int_sub(i185, 1)
++2291: i189 = int_sub(i187, 1)
++2291: p190 = getarrayitem_gc_r(p10, i189, descr=<ArrayP 8>)
++2296: guard_nonnull_class(p190, ConstClass(W_Primitive), descr=<Guard0x756ca90344e8>) [i185, p182, p190, p4, p161]
++2315: i192 = getfield_gc_i(p190, descr=<FieldS RPython_3imp.value.W_Primitive.inst_pid 24 pure>)
++2319: i194 = int_eq(i192, 21)
++2323: guard_false(i194, descr=<Guard0x756ca9030980>) [i185, p182, p190, p4, p161]
++2329: i195 = getfield_gc_i(p190, descr=<FieldS RPython_3imp.value.W_Primitive.inst_arity 8 pure>)
++2333: i197 = int_ne(i195, 1)
++2337: guard_false(i197, descr=<Guard0x756ca90309b0>) [i185, p182, p190, p4, p161]
++2343: i199 = int_eq(i192, 20)
++2347: guard_false(i199, descr=<Guard0x756ca90309e0>) [i185, p182, p190, p4, p161]
++2353: p200 = getarrayitem_gc_r(p10, i187, descr=<ArrayP 8>)
++2358: guard_value(i192, 11, descr=<Guard0x756ca9030a10>) [i185, p182, p190, p4, p161]
++2368: guard_nonnull_class(p200, ConstClass(W_Int), descr=<Guard0x756ca9034530>) [i185, p182, p190, p4, p161]
++2387: i203 = getfield_gc_i(p200, descr=<FieldS RPython_3imp.value.W_Int.inst_value 8 pure>)
++2391: i204 = int_is_zero(i203)
++2394: guard_false(i204, descr=<Guard0x756ca9030a40>) [i185, p182, p190, p4, p161]
++2400: i206 = int_sub(i185, 2)
++2404: i208 = int_sub(i206, 1)
++2408: p209 = getarrayitem_gc_r(p10, i208, descr=<ArrayP 8>)
++2413: i210 = getfield_gc_i(p209, descr=<FieldS RPython_3imp.value.W_Frame.inst_ret 24 pure>)
++2424: i211 = getfield_gc_i(p209, descr=<FieldS RPython_3imp.value.W_Frame.inst_fp 16 pure>)
++2435: p212 = getfield_gc_r(p209, descr=<FieldP RPython_3imp.value.W_Frame.inst_closure 8 pure>)
++2446: i214 = int_lt(i210, 13)
++2450: guard_false(i214, descr=<Guard0x756ca9030a70>) [i185, p182, p190, p4, p161]
++2456: guard_value(i210, 15, descr=<Guard0x756ca9030aa0>) [i185, p182, p190, p4, p161]
+debug_merge_point(0, 0, '15: test 21')
+debug_merge_point(0, 0, '21: refer-global 22 ; loop')
++2466: p217 = getarrayitem_gc_r(p15, 22, descr=<ArrayP 8>)
++2474: i219 = instance_ptr_eq(p217, ConstPtr(ptr218))
++2477: guard_false(i219, descr=<Guard0x756ca9030ad0>) [i185, p182, p190, p4, p161]
+debug_merge_point(0, 0, '23: argument')
++2483: i220 = int_ge(i208, i6)
++2486: guard_false(i220, descr=<Guard0x756ca9030b00>) [i185, p182, p190, p4, p161]
++2502: setarrayitem_gc(p10, i208, p217, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '24: frame 38')
++2507: i221 = int_ge(i206, i6)
++2510: guard_false(i221, descr=<Guard0x756ca9034578>) [i211, p217, p212, p4, i206, i6]
++2516: p222 = new_with_vtable(descr=<SizeDescr 32>)
++2527: setfield_gc(p222, p212, descr=<FieldP RPython_3imp.value.W_Frame.inst_closure 8 pure>)
++2531: setfield_gc(p222, i211, descr=<FieldS RPython_3imp.value.W_Frame.inst_fp 16 pure>)
++2535: setfield_gc(p222, 38, descr=<FieldS RPython_3imp.value.W_Frame.inst_ret 24 pure>)
++2553: setarrayitem_gc(p10, i206, p222, descr=<ArrayP 8>)
++2558: i225 = int_add(i206, 1)
+debug_merge_point(0, 0, '26: refer-global 1 ; -')
++2562: p227 = getarrayitem_gc_r(p15, 1, descr=<ArrayP 8>)
++2572: i229 = instance_ptr_eq(p227, ConstPtr(ptr228))
+guard_false(i229, descr=<Guard0x756ca90345c0>) [i229, i211, i225, p227, p212, p4]
+debug_merge_point(0, 0, '28: argument')
++2593: i230 = int_ge(i225, i6)
++2596: guard_false(i230, descr=<Guard0x756ca9030b30>) [i229, i211, i225, p227, p212, p4]
++2612: setarrayitem_gc(p10, i225, p227, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '29: refer 0 0')
++2617: i232 = int_lt(i211, 0)
++2621: guard_false(i232, descr=<Guard0x756ca9034608>) [i211, i185, p5, p212, p4]
++2627: p233 = getarrayitem_gc_r(p10, i211, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '32: argument')
++2632: i234 = int_ge(i185, i6)
++2635: guard_false(i234, descr=<Guard0x756ca9030b60>) [i211, i185, p5, p212, p4]
++2651: setarrayitem_gc(p10, i185, p233, descr=<ArrayP 8>)
++2656: i236 = int_add(i152, 4)
+debug_merge_point(0, 0, '33: constant 1 ; 1')
+debug_merge_point(0, 0, '35: argument')
++2660: i237 = int_ge(i236, i6)
++2663: guard_false(i237, descr=<Guard0x756ca9034650>) [i211, p212, p4, i236, i6]
++2686: setarrayitem_gc(p10, i236, ConstPtr(ptr238), descr=<ArrayP 8>)
++2691: i240 = int_add(i152, 5)
+debug_merge_point(0, 0, '36: apply 2')
++2695: i242 = int_sub(i240, 2)
++2695: i244 = int_sub(i242, 1)
++2695: p245 = getarrayitem_gc_r(p10, i244, descr=<ArrayP 8>)
++2700: guard_nonnull_class(p245, ConstClass(W_Primitive), descr=<Guard0x756ca9034698>) [i240, p245, p4, p212]
++2719: i247 = getfield_gc_i(p245, descr=<FieldS RPython_3imp.value.W_Primitive.inst_pid 24 pure>)
++2723: i249 = int_eq(i247, 21)
++2727: guard_false(i249, descr=<Guard0x756ca9030b90>) [i240, p245, p4, p212]
++2733: i250 = getfield_gc_i(p245, descr=<FieldS RPython_3imp.value.W_Primitive.inst_arity 8 pure>)
++2737: i252 = int_ne(i250, 2)
++2741: guard_false(i252, descr=<Guard0x756ca9030bc0>) [i240, p245, p4, p212]
++2747: i254 = int_eq(i247, 20)
++2751: guard_false(i254, descr=<Guard0x756ca9030bf0>) [i240, p245, p4, p212]
++2757: p255 = getarrayitem_gc_r(p10, i242, descr=<ArrayP 8>)
++2762: i257 = int_eq(i247, 11)
++2766: guard_false(i257, descr=<Guard0x756ca9030c20>) [i240, p245, p4, p212]
++2772: i259 = int_eq(i247, 12)
++2776: guard_false(i259, descr=<Guard0x756ca9030c50>) [i240, p245, p4, p212]
++2782: i261 = int_eq(i247, 15)
++2786: guard_false(i261, descr=<Guard0x756ca9030c80>) [i240, p245, p4, p212]
++2792: i263 = int_eq(i247, 16)
++2796: guard_false(i263, descr=<Guard0x756ca9030cb0>) [i240, p245, p4, p212]
++2802: i265 = int_eq(i247, 17)
++2806: guard_false(i265, descr=<Guard0x756ca9030ce0>) [i240, p245, p4, p212]
++2812: i267 = int_eq(i247, 18)
++2816: guard_false(i267, descr=<Guard0x756ca9030d10>) [i240, p245, p4, p212]
++2822: i269 = int_eq(i247, 19)
++2826: guard_false(i269, descr=<Guard0x756ca9030d40>) [i240, p245, p4, p212]
++2832: i271 = int_add(i242, 1)
++2832: p272 = getarrayitem_gc_r(p10, i271, descr=<ArrayP 8>)
++2837: i274 = int_eq(i247, 13)
++2841: guard_false(i274, descr=<Guard0x756ca9030d70>) [i240, p245, p4, p212]
++2847: i276 = int_eq(i247, 14)
++2851: guard_false(i276, descr=<Guard0x756ca9030da0>) [i240, p245, p4, p212]
++2857: i278 = int_le(i247, 5)
++2861: guard_true(i278, descr=<Guard0x756ca9030dd0>) [i240, p245, p4, p212]
++2867: guard_nonnull_class(p255, ConstClass(W_Int), descr=<Guard0x756ca90346e0>) [i240, p245, p4, p212]
++2885: i280 = getfield_gc_i(p255, descr=<FieldS RPython_3imp.value.W_Int.inst_value 8 pure>)
++2889: guard_nonnull_class(p272, ConstClass(W_Int), descr=<Guard0x756ca9034728>) [i240, p245, p4, p212]
++2908: i282 = getfield_gc_i(p272, descr=<FieldS RPython_3imp.value.W_Int.inst_value 8 pure>)
++2912: guard_value(i247, 1, descr=<Guard0x756ca9030e00>) [i240, p245, p4, p212]
++2922: i284 = int_sub_ovf(i280, i282)
++2925: guard_no_overflow(descr=<Guard0x756ca9030e30>) [i240, p245, p4, p212]
++2931: i286 = int_sub(i240, 3)
++2935: i288 = int_sub(i286, 1)
++2939: p289 = getarrayitem_gc_r(p10, i288, descr=<ArrayP 8>)
++2944: i290 = getfield_gc_i(p289, descr=<FieldS RPython_3imp.value.W_Frame.inst_ret 24 pure>)
++2948: i291 = getfield_gc_i(p289, descr=<FieldS RPython_3imp.value.W_Frame.inst_fp 16 pure>)
++2948: p292 = getfield_gc_r(p289, descr=<FieldP RPython_3imp.value.W_Frame.inst_closure 8 pure>)
++2959: i294 = int_lt(i290, 36)
++2963: guard_false(i294, descr=<Guard0x756ca9030e60>) [i240, p245, p4, p212]
++2969: guard_value(i290, 38, descr=<Guard0x756ca9030e90>) [i240, p245, p4, p212]
+debug_merge_point(0, 0, '38: argument')
++2979: i296 = int_ge(i288, i6)
++2982: guard_false(i296, descr=<Guard0x756ca9030ec0>) [i240, p245, p4, p212]
++2988: p297 = new_with_vtable(descr=<SizeDescr 16>)
++2999: setfield_gc(p297, i284, descr=<FieldS RPython_3imp.value.W_Int.inst_value 8 pure>)
++3013: setarrayitem_gc(p10, i288, p297, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '39: shift 2 2')
++3018: i299 = int_sub(i286, 2)
++3022: p300 = getarrayitem_gc_r(p10, i299, descr=<ArrayP 8>)
++3027: i302 = int_sub(i299, 2)
++3041: setarrayitem_gc(p10, i302, p300, descr=<ArrayP 8>)
++3045: i304 = int_add(i299, 1)
++3045: p305 = getarrayitem_gc_r(p10, i304, descr=<ArrayP 8>)
++3050: i307 = int_sub(i286, 2)
++3054: i309 = int_sub(i307, 2)
++3058: i311 = int_add(i309, 1)
++3072: setarrayitem_gc(p10, i311, p305, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '42: apply 1')
++3077: i313 = int_sub(i307, 1)
++3081: i315 = int_sub(i313, 1)
++3081: p316 = getarrayitem_gc_r(p10, i315, descr=<ArrayP 8>)
++3085: guard_nonnull_class(p316, ConstClass(W_Closure), descr=<Guard0x756ca9034770>) [i307, p297, p316, p4, p292]
++3104: i318 = getfield_gc_i(p316, descr=<FieldS RPython_3imp.value.W_Closure.inst_nparams 24 pure>)
++3108: i320 = int_ne(i318, 1)
++3112: guard_false(i320, descr=<Guard0x756ca9030ef0>) [i307, p297, p316, p4, p292]
++3118: i321 = getfield_gc_i(p316, descr=<FieldS RPython_3imp.value.W_Closure.inst_body 8 pure>)
++3122: i323 = int_lt(i321, 42)
++3126: guard_true(i323, descr=<Guard0x756ca9030f20>) [i307, p297, p316, p4, p292]
++3132: guard_value(i321, 4, descr=<Guard0x756ca9030f50>) [i307, p297, p316, p4, p292]
+debug_merge_point(0, 0, '4: frame 15')
++3142: i325 = arraylen_gc(p10, descr=<ArrayP 8>)
++3142: i326 = arraylen_gc(p15, descr=<ArrayP 8>)
++3142: jump(i313, i307, p297, p316, p4, p5, i6, p10, p15, descr=TargetToken(129109552447584))
++3168: --end of the loop--
+[a249e571ea] jit-log-opt-loop}
+[a249e5aeee] jit-tracing}
+[a25732651a] {jit-summary
+Tracing:      	1	0.001587
+Backend:      	1	0.000878
+TOTAL:      		0.113110
+ops:             	245
+heapcached ops:  	71
+recorded ops:    	150
+  calls:         	0
+guards:          	75
+opt ops:         	377
+opt guards:      	107
+opt guards shared:	74
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	4
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[a25732d662] jit-summary}
+[a257338f9e] {jit-backend-counts
+entry 1:1
+TargetToken(129109552447520):1
+TargetToken(129109552447584):9998959
+[a257339b2e] jit-backend-counts}

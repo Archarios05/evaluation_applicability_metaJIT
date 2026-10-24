@@ -1,0 +1,97 @@
+% First page
+
+\thispagestyle{empty}
+
+% \todo{"another" report?}
+
+\topnewpage[{
+\begin{center}   {\huge\bf
+	Revised{\Huge$^{\mathbf{5}}$} Report on the Algorithmic Language \\
+			      \vskip 3pt
+				Scheme}
+	\vskip 1ex
+	[アルゴリズム言語 Scheme 報告書 五訂版]
+\vskip 1ex
+$$
+\begin{tabular}{l@{\extracolsep{.5in}}lll}
+\multicolumn{4}{c}{R\authorsc{ICHARD} K\authorsc{ELSEY},
+ W\authorsc{ILLIAM} C\authorsc{LINGER, AND}
+ J\authorsc{ONATHAN} R\authorsc{EES}
+ ({\itshape Editors\/})} \\
+H. A\authorsc{BELSON}     &
+R. K. D\authorsc{YBVIG}   &
+C. T. H\authorsc{AYNES}   &
+G. J. R\authorsc{OZAS}    \\
+N. I. A\authorsc{DAMS IV} &
+D. P. F\authorsc{RIEDMAN} &
+E. K\authorsc{OHLBECKER}  &
+G. L. S\authorsc{TEELE} J\authorsc{R}. \\
+D. H. B\authorsc{ARTLEY}  &
+R. H\authorsc{ALSTEAD}    &
+D. O\authorsc{XLEY}	     &
+G. J. S\authorsc{USSMAN}  \\
+G. B\authorsc{ROOKS}	     &
+C. H\authorsc{ANSON}	     &
+K. M. P\authorsc{ITMAN}   &
+M. W\authorsc{AND}	     \\
+\end{tabular}
+$$
+\vskip 2ex
+% {\it Dedicated to the Memory of ALGOL 60}
+{\it Robert Hieb のみたまにささぐ} % [For the macros in R5RS -RK]
+\vskip 2.6ex
+\end{center}
+}]
+
+
+\chapter*{要約}
+
+本報告書はプログラミング言語 Scheme を定義する一つの記述を与える。
+Scheme は Lisp プログラミング言語のうちの，静的スコープをもち，
+かつ真正に末尾再帰的である一方言であり，Guy Lewis Steele~Jr.\ と Gerald
+Jay~Sussman によって発明された。
+Scheme は並外れて明快で単純な意味論をもち，かつ式をつくる方法の
+種類がごく少数になるように設計された。
+命令型，関数型，およびメッセージ渡しの各スタイルを含む広範囲の
+プログラミング・パラダイムが Scheme によって手軽に表現できる。
+
+\vest 序章は本言語と本報告書の歴史を簡潔に述べる。
+
+\vest 最初の三つの章は本言語の基本的なアイディアを提示するとともに，
+本言語を記述するため，および本言語でプログラムを書くために用いられる
+記法上の規約を記述する。
+
+\vest 第\ref{expressionchapter}章と第\ref{programchapter}章は
+式，プログラム，および定義の構文と意味を記述する。
+
+\vest 第\ref{builtinchapter}章は Scheme の組込み手続きを記述する。
+これには本言語のデータ操作と入出力プリミティブのすべてが含まれる。
+
+\vest 第\ref{formalchapter}章は拡張 BNF で書かれた Scheme の形式的構文を，
+形式的な表示的意味論とともに定める。
+本言語の使用の一例が，この形式的な構文と意味論の後に続く。
+
+\vest 本報告書の最後は参考文献一覧とアルファベット順の索引である。
+
+\todo{expand the summary so that it fills up the column.}
+
+%\vfill
+%\begin{center}
+%{\large \bf
+%*** DRAFT*** \\
+%%August 31, 1989
+%\today
+%}\end{center}
+
+\vfill
+\eject
+
+\chapter*{目次}
+\addvspace{3.5pt}                  % don't shrink this gap
+\renewcommand{\tocshrink}{-3.5pt}  % value determined experimentally
+{\footnotesize
+\tableofcontents
+}
+
+\vfill
+\eject

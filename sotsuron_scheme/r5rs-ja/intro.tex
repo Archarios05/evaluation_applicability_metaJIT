@@ -1,0 +1,154 @@
+\clearextrapart{はじめに}
+
+\label{historysection}
+
+プログラミング言語の設計は，機能の上に機能を積み重ねることによってではなく，
+余分な機能が必要であるように思わせている弱点と制限を取り除くことによって
+なされるべきである。
+式をつくるための規則が少数しかなくても，その組み合わせ方法に全く制限が
+なければ，今日使われている主要なプログラミング・パラダイムのほとんどを
+サポートするのに十分なだけの柔軟性を備えた実用的で効率的なプログラミング言語
+を満足につくり上げられることを，Scheme は実証している。
+
+%Scheme has influenced the evolution of Lisp.
+Scheme は，λ計算におけるようなファースト・クラスの手続きを具体化した初めての
+プログラミング言語の一つであった。そしてそれによって，
+動的に型付けされる言語での静的スコープ規則とブロック構造の有用性を証明した。
+Scheme は，手続きをλ式とシンボルから区別し，
+すべての変数に対し単一の字句的環境を使用し，
+手続き呼出しの演算子の位置をオペランドの位置と同じように評価する
+初めての主要な Lisp 方言であった。
+全面的に手続き呼出しによって繰返しを表現することで，Scheme は，末尾再帰の
+手続き呼出しが本質的には引数を渡す goto であるという事実を強調した。
+Scheme は，ファースト・クラスの脱出手続きを採用した
+初めての広く使われたプログラミング言語であった。
+この脱出手続きから，すべての既知の逐次的制御構造が合成できる。
+後の版の Scheme は，正確数と不正確数の概念を導入した。
+これは Common Lisp の総称的算術演算の拡張である。
+最近になって Scheme は，保健的マクロ (hygienic macro) % \footnote{
+% 訳注： hygienic について。
+%健康の女神 Hygeia と共通の語源をもつこの語は「衛生的」と訳されることが多いが，
+%ここではマクロ展開時の名前の衝突を自動的に回避することによって
+%展開の\underline{健}全さを\underline{保}つことを言い表すために
+%使われているから「保健的」とした。}
+をサポートした初めてのプログラミング言語になった。保健的マクロは，
+ブロック構造をもった言語の構文を矛盾なく信頼性をもって拡張することを
+可能にする。
+% A few
+%of these innovations have recently been incorporated into Common Lisp, while
+%others remain to be adopted.
+
+\todo{Ramsdell:
+I would like to make a few comments on presentation.  The most
+important comment is about section organization.  Newspaper writers
+spend most of their time writing the first three paragraphs of any
+article.  This part of the article is often the only part read by
+readers, and is important in enticing readers to continue.  In the
+same way, The first page is most likely to be the only page read by
+many SIGPLAN readers.  If I had my choice of what I would ask them to
+read, it would be the material in section 1.1, the Semantics section
+that notes that scheme is lexically scoped, tail recursive, weakly
+typed, ... etc.  I would expand on the discussion on continuations,
+as they represent one important difference between Scheme and other
+languages.  The introduction, with its history of scheme, its history
+of scheme reports and meetings, and acknowledgements giving names of
+people that the reader will not likely know, is not that one page I
+would like all to read.  I suggest moving the history to the back of
+the report, and use the first couple of pages to convince the reader
+that the language documented in this report is worth studying.
+}
+
+\subsection*{背景}
+
+\vest Scheme の最初の記述は 1975 年に書かれた\cite{Scheme75}。
+改訂報告書は 1978 年に現れた\cite{Scheme78}。
+改訂報告書は，MIT の実装が革新的なコンパイラ\cite{Rabbit}をサポートするために
+改良されたことに合わせて，その言語の進化を記述した。
+1981 年と 1982 年には三つの個別のプロジェクトが MIT，Yale および Indiana 大学
+で講座に Scheme 類を用いるために始まった\cite{Rees82,MITScheme,Scheme311}。
+Scheme を用いた計算機科学入門の教科書が 1984 年に出版された\cite{SICP}。
+
+%\vest As might be expected of a language used primarily for education and
+%research, Scheme has always evolved rapidly.  This was no problem when
+%Scheme was used only within MIT, but 
+\vest Scheme が広まるにつれ，ローカルな方言が分かれはじめ，学生や研究者が
+他のサイトで書かれたコードの理解にしばしば困難をおぼえるまでになってきた。
+そこで，Scheme のより良い，より広く受け入れられる標準に向けて作業するため，
+Scheme の主要な実装の代表者 15 人が 1984 年 10 月に会合した。
+%Participating in this workshop were Hal Abelson, Norman Adams, David
+%Bartley, Gary Brooks, William Clinger, Daniel Friedman, Robert Halstead,
+%Chris Hanson, Christopher Haynes, Eugene Kohlbecker, Don Oxley, Jonathan Rees,
+%Guillermo Rozas, Gerald Jay Sussman, and Mitchell Wand.  Kent Pitman
+%made valuable contributions to the agenda for the workshop but was
+%unable to attend the sessions.
+%
+%Subsequent electronic mail discussions and committee work completed the
+%definition of the language.
+%Gerry Sussman drafted the section on numbers, Chris Hanson drafted the
+%sections on characters and strings, and Gary Brooks and William Clinger
+%drafted the sections on input and output.
+%William Clinger recorded the decisions of the workshop and
+%compiled the pieces into a coherent document.
+%The ``Revised revised report on Scheme''~\cite{RRRS}
+その報告書\cite{RRRS}は 1985 年の夏に MIT と Indiana 大学で出版された。
+さらに 1986 年の春\cite{R3RS}と，
+%, again accomplished
+%almost entirely by electronic mail, resulted in the present report.
+1988 年の春\cite{R4RS}に改訂が行われた。
+本報告書は 1992 年 6 月の Xerox PARC での会合で合意された
+追加的な改訂を反映している。
+
+%\vest The number 3 in the title is part of the title, not a reference to
+%a footnote.  The word ``revised'' is raised to the third power because
+%the report is a revision of a report that was already twice revised.
+
+\todo{Write an editors' note?}
+
+
+\medskip
+
+我々は，この報告書を Scheme コミュニティ全体に属するものとしようと思う。
+そのため我々は，これの全部または一部を無料で複写することを許可する。
+とりわけ我々は，Scheme の実装者がこの報告書をマニュアルその他の文書のための
+出発点として，必要に応じて改変しつつ，利用することを奨励する。
+\begin{quote} 
+原文: 
+We intend this report to belong to the entire Scheme community, and so
+we grant permission to copy it in whole or in part without fee.  In
+particular, we encourage implementors of Scheme to use this report as
+a starting point for manuals and other documentation, modifying it as
+necessary.
+\end{quote}
+
+
+
+\subsection*{謝辞}
+
+次の人々の協力に感謝します:  Alan Bawden, Michael Blair,
+George Carrette, Andy Cromarty, Pavel Curtis, Jeff Dalton, Olivier Danvy,
+Ken Dickey, Bruce Duba, Marc Feeley,
+Andy Freeman, Richard Gabriel, Yekta G\"ursel, Ken Haase, Robert Hieb,
+Paul Hudak, Morry Katz, Chris Lindblad, Mark Meyer, Jim Miller, Jim Philbin,
+John Ramsdell, Mike Shaff, Jonathan Shapiro, Julie Sussman,
+Perry Wagle, Daniel Weise, Henry Wu, Ozan Yigit。
+我々は Scheme 311 version 4 参照マニュアルから文章を使用する許可をいただいた
+ことに対して Carol Fessenden, Daniel Friedman, Christopher Haynes に
+感謝します。
+{\em TI Scheme Language Reference Manual}~\cite{TImanual85}から文章を使用する
+許可をいただいたことに対して Texas Instruments, Inc.~に感謝します。
+我々は MIT Scheme\cite{MITScheme},
+T\cite{Rees84}, Scheme 84\cite{Scheme84},Common Lisp\cite{CLtL},
+Algol 60\cite{Naur63} の各マニュアルからの影響を喜んで認めます。
+
+\vest 我々はまたこの報告書を \TeX で組むために払った多大な努力に
+対して Betty Dexter に，そして彼女の苦労の元となったそのプログラムを
+設計したことに対して Donald Knuth に感謝します。
+
+\vest Massachusetts Institute of Technology 人工知能研究所，
+Indiana 大学 計算機科学科，Oregon 大学 計算機及び情報科学科，
+NEC Research Institute は，この報告書の準備をサポートしました。
+MIT の作業に対するサポートの一部は
+国防省 Advanced Research Projects Agency によって
+海軍研究局 契約 N00014-80-C-0505 のもとで与えられました。
+Indiana 大学に対するサポートは NFS グラント NCS 83-04567，NCS 83-03325 に
+よって与えられました。

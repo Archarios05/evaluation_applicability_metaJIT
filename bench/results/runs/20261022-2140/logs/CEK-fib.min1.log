@@ -1,0 +1,177 @@
+[9f7e3c5ef2] {gc-hardware
+L2cache = 524288
+[9f7e45b84e] gc-hardware}
+[9f7e46c18a] {gc-hardware
+memtotal = 7981957120.000000
+[9f7e480982] gc-hardware}
+[9f7e82b24e] {jit-tracing
+JIT starting (x86)
+if
+app/2
+prim(<)
+var(n)
+const(2)
+var(n)
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new loop
+[9f7ebcf666] jit-tracing}
+[9f7ed8e402] {jit-tracing
+app/2
+prim(+)
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(1)
+if
+compiled new bridge
+[9f7ee6c8a6] jit-tracing}
+[9f7ef7374a] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f7effeeee] jit-tracing}
+[9f7f05f3ca] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f7f10c39a] jit-tracing}
+[9f7f11f102] {jit-tracing
+app/2
+prim(+)
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(1)
+if
+compiled new bridge
+[9f7f19140a] jit-tracing}
+[9f7f1b53aa] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new entry bridge
+[9f7f21837e] jit-tracing}
+[9f7f24deb6] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f7f33389e] jit-tracing}
+[9f7f3a4f4e] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f7f412c7e] jit-tracing}
+[9f7f52bbba] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f7f609c9e] jit-tracing}
+[9f7f7e0446] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f7f85449a] jit-tracing}
+[9f7fe7d43e] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f7ffc1f52] jit-tracing}
+[9f80c578b6] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f80cfbef2] jit-tracing}
+[9f835fcc02] {jit-tracing
+app/1
+global(fib)
+app/2
+prim(-)
+var(n)
+const(2)
+if
+compiled new bridge
+[9f8378b19a] jit-tracing}
+[9f859721fa] {jit-summary
+Tracing:      	13	0.004191
+Backend:      	13	0.002364
+TOTAL:      		0.059667
+ops:             	3848
+heapcached ops:  	751
+recorded ops:    	3274
+  calls:         	199
+guards:          	947
+opt ops:         	1201
+opt guards:      	365
+opt guards shared:	307
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	19
+nvholes:         	4
+nvreused:        	1
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	2
+Total # of bridges:	11
+Freed # of loops:	0
+Freed # of bridges:	0
+[9f85978672] jit-summary}

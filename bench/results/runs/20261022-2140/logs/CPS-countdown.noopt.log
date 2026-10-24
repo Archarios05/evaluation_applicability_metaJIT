@@ -1,0 +1,200 @@
+[306700504] {jit-tracing
+JIT starting (x86)
+if
+if
+[306e0e080] {jit-log-noopt
+# Traced loop or bridge with 119 ops
+[p0, p1]
+debug_merge_point(0, 0, 'if')
+p2 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p2, ConstPtr(ptr3), descr=<FieldP cont.IfCont.inst_conseq 16 pure>)
+setfield_gc(p2, ConstPtr(ptr4), descr=<FieldP cont.IfCont.inst_alt 8 pure>)
+setfield_gc(p2, p0, descr=<FieldP cont.IfCont.inst_env 32 pure>)
+setfield_gc(p2, p1, descr=<FieldP cont.IfCont.inst_cont 24 pure>)
+p6 = new_array_clear(0, descr=<ArrayP 8>)
+p7 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p7, ConstPtr(ptr8), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p7, p6, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p7, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p7, p2, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p10 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p10, 0, ConstPtr(ptr12), descr=<ArrayP 8>)
+p14 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p6, p14, 0, 0, 0, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p10, p14, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p23 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p23, ConstPtr(ptr24), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p23, p14, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p23, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p23, p2, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p25 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
+p27 = getarrayitem_gc_r(p25, 0, descr=<ArrayP 8>)
+p29 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p29, 0, p27, descr=<ArrayP 8>)
+p32 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p14, p32, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p29, p32, 0, 1, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p42 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p32, p42, 1, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+guard_class(p27, ConstClass(IntVal))
+i48 = getfield_gc_i(p27, descr=<FieldS classes.IntVal.inst_value 8 pure>)
+i49 = int_is_zero(i48)
+guard_false(i49)
+p51 = new_array_clear(0, descr=<ArrayP 8>)
+p52 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p52, ConstPtr(ptr53), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p52, p51, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p52, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p52, p1, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p55 = getfield_gc_r(ConstPtr(ptr54), descr=<FieldP env.GlobalCell.inst_value 16>)
+i57 = instance_ptr_eq(p55, ConstPtr(ptr56))
+guard_false(i57)
+p59 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p59, 0, p55, descr=<ArrayP 8>)
+p62 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p51, p62, 0, 0, 0, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p59, p62, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p71 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p71, ConstPtr(ptr72), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p71, p62, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p71, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p71, p1, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p74 = new_array_clear(0, descr=<ArrayP 8>)
+p75 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p75, ConstPtr(ptr76), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p75, p74, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p75, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p75, p71, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p78 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p78, 0, ConstPtr(ptr80), descr=<ArrayP 8>)
+p82 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p74, p82, 0, 0, 0, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p78, p82, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p91 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p91, ConstPtr(ptr92), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p91, p82, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p91, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p91, p71, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p94 = getarrayitem_gc_r(p25, 0, descr=<ArrayP 8>)
+p96 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p96, 0, p94, descr=<ArrayP 8>)
+p99 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p82, p99, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p96, p99, 0, 1, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p108 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p108, ConstPtr(ptr109), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p108, p99, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p108, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p108, p71, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p111 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p111, 0, ConstPtr(ptr113), descr=<ArrayP 8>)
+p115 = new_array_clear(3, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p99, p115, 0, 0, 2, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p111, p115, 0, 2, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p125 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p115, p125, 1, 0, 2, descr=<Callv 0 rriii EF=2 OS=1>)
+guard_class(p94, ConstClass(IntVal))
+i131 = getfield_gc_i(p94, descr=<FieldS classes.IntVal.inst_value 8 pure>)
+i133 = int_sub_ovf(i131, 1)
+guard_no_overflow()
+p134 = new_with_vtable(descr=<SizeDescr 16>)
+setfield_gc(p134, i133, descr=<FieldS classes.IntVal.inst_value 8 pure>)
+p136 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p136, 0, p134, descr=<ArrayP 8>)
+p139 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p62, p139, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p136, p139, 0, 1, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p149 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p139, p149, 1, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+guard_class(p55, 99529635342672)
+p155 = getfield_gc_r(p55, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
+i156 = getfield_gc_i(p155, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
+i158 = int_ne(1, i156)
+guard_false(i158)
+p159 = getfield_gc_r(p155, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
+p160 = getfield_gc_r(p55, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
+p161 = new_with_vtable(descr=<SizeDescr 24>)
+setfield_gc(p161, p149, descr=<FieldP env.Frame.inst_vals 16>)
+setfield_gc(p161, p160, descr=<FieldP env.Frame.inst_parent 8 pure>)
+p162 = new_with_vtable(descr=<SizeDescr 32>)
+setfield_gc(p162, p159, descr=<FieldP classes.ApplyProcBounce.inst_body 8>)
+setfield_gc(p162, p161, descr=<FieldP classes.ApplyProcBounce.inst_env 24>)
+setfield_gc(p162, p1, descr=<FieldP classes.ApplyProcBounce.inst_cont 16>)
+guard_value(p159, ConstPtr(ptr163))
+debug_merge_point(0, 0, 'if')
+guard_future_condition()
+jump(p161, p1, descr=<Loop-1>)
+[306f85710] jit-log-noopt}
+compiled new loop
+[307a51b44] {jit-log-opt-loop
+# Loop 1 (if) : loop with 31 ops
+[p0, p1]
++248: label(p0, p1, descr=TargetToken(135897590194208))
+debug_merge_point(0, 0, 'if')
++269: p2 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
++280: p4 = getarrayitem_gc_r(p2, 0, descr=<ArrayP 8>)
++284: guard_class(p4, ConstClass(IntVal), descr=<Guard0x7b991f96a0b0>) [p4, p0, p1]
++296: i6 = getfield_gc_i(p4, descr=<FieldS classes.IntVal.inst_value 8 pure>)
++300: i7 = int_is_zero(i6)
++303: guard_false(i7, descr=<Guard0x7b991f9663b0>) [p4, p0, p1]
++316: p9 = getfield_gc_r(ConstPtr(ptr8), descr=<FieldP env.GlobalCell.inst_value 16>)
++327: i11 = instance_ptr_eq(p9, ConstPtr(ptr10))
++330: guard_false(i11, descr=<Guard0x7b991f9663e0>) [p4, p0, p1]
++336: i13 = int_sub_ovf(i6, 1)
++340: guard_no_overflow(descr=<Guard0x7b991f966410>) [p4, p0, p1]
++346: guard_class(p9, 99529635342672, descr=<Guard0x7b991f966440>) [p4, p0, p1]
++358: p15 = getfield_gc_r(p9, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++362: i16 = getfield_gc_i(p15, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++366: i18 = int_ne(1, i16)
++370: guard_false(i18, descr=<Guard0x7b991f966470>) [p4, p0, p1]
++376: p19 = getfield_gc_r(p15, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++380: p20 = getfield_gc_r(p9, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++391: guard_value(p19, ConstPtr(ptr21), descr=<Guard0x7b991f9664a0>) [p4, p0, p1]
+debug_merge_point(0, 0, 'if')
++400: p22 = same_as_r(p20)
++403: label(p20, i13, p1, p9, p15, p22, descr=TargetToken(135897590194272))
+debug_merge_point(0, 0, 'if')
++445: i23 = int_is_zero(i13)
++448: guard_false(i23, descr=<Guard0x7b991f96a0f8>) [i13, p20, p1]
++454: i25 = int_sub_ovf(i13, 1)
++461: guard_no_overflow(descr=<Guard0x7b991f9664d0>) [i13, p20, p1]
+debug_merge_point(0, 0, 'if')
++467: jump(p22, i25, p1, p9, p15, p22, descr=TargetToken(135897590194272))
++496: --end of the loop--
+[307acbc78] jit-log-opt-loop}
+[307ae748c] jit-tracing}
+[308e66d3c] {jit-summary
+Tracing:      	1	0.007896
+Backend:      	1	0.001377
+TOTAL:      		0.019515
+ops:             	189
+heapcached ops:  	69
+recorded ops:    	107
+  calls:         	17
+guards:          	9
+opt ops:         	28
+opt guards:      	9
+opt guards shared:	7
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	5
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[308e7d2f8] jit-summary}
+[308e8def0] {jit-backend-counts
+entry 1:1
+TargetToken(135897590194208):1
+TargetToken(135897590194272):9998960
+[308e8ee40] jit-backend-counts}

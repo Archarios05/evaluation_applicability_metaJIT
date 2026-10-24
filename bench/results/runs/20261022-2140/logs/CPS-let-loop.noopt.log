@@ -1,0 +1,308 @@
+[30c508ea8] {jit-tracing
+JIT starting (x86)
+if
+app/2
+if
+[30c60183c] {jit-log-noopt
+# Traced loop or bridge with 208 ops
+[p0, p1]
+debug_merge_point(0, 0, 'if')
+p2 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p2, ConstPtr(ptr3), descr=<FieldP cont.IfCont.inst_conseq 16 pure>)
+setfield_gc(p2, ConstPtr(ptr4), descr=<FieldP cont.IfCont.inst_alt 8 pure>)
+setfield_gc(p2, p0, descr=<FieldP cont.IfCont.inst_env 32 pure>)
+setfield_gc(p2, p1, descr=<FieldP cont.IfCont.inst_cont 24 pure>)
+p6 = new_array_clear(0, descr=<ArrayP 8>)
+p7 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p7, ConstPtr(ptr8), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p7, p6, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p7, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p7, p2, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p10 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p10, 0, ConstPtr(ptr12), descr=<ArrayP 8>)
+p14 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p6, p14, 0, 0, 0, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p10, p14, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p23 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p23, ConstPtr(ptr24), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p23, p14, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p23, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p23, p2, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p25 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
+p27 = getarrayitem_gc_r(p25, 0, descr=<ArrayP 8>)
+p29 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p29, 0, p27, descr=<ArrayP 8>)
+p32 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p14, p32, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p29, p32, 0, 1, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p42 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p32, p42, 1, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+guard_class(p27, ConstClass(IntVal))
+i48 = getfield_gc_i(p27, descr=<FieldS classes.IntVal.inst_value 8 pure>)
+i49 = int_is_zero(i48)
+guard_false(i49)
+p51 = new_array_clear(0, descr=<ArrayP 8>)
+p52 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p52, ConstPtr(ptr53), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p52, p51, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p52, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p52, p1, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p54 = new_with_vtable(descr=<SizeDescr 24>)
+setfield_gc(p54, ConstPtr(ptr55), descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
+setfield_gc(p54, p0, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
+p57 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p57, 0, p54, descr=<ArrayP 8>)
+p60 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p51, p60, 0, 0, 0, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p57, p60, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p69 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p69, ConstPtr(ptr70), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p69, p60, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p69, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p69, p1, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p72 = new_array_clear(0, descr=<ArrayP 8>)
+p73 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p73, ConstPtr(ptr74), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p73, p72, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p73, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p73, p69, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p76 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p76, 0, ConstPtr(ptr78), descr=<ArrayP 8>)
+p80 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p72, p80, 0, 0, 0, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p76, p80, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p89 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p89, ConstPtr(ptr90), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p89, p80, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p89, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p89, p69, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p92 = getarrayitem_gc_r(p25, 0, descr=<ArrayP 8>)
+p94 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p94, 0, p92, descr=<ArrayP 8>)
+p97 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p80, p97, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p94, p97, 0, 1, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p106 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p106, ConstPtr(ptr107), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p106, p97, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p106, p0, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p106, p69, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p109 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p109, 0, ConstPtr(ptr111), descr=<ArrayP 8>)
+p113 = new_array_clear(3, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p97, p113, 0, 0, 2, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p109, p113, 0, 2, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p123 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p113, p123, 1, 0, 2, descr=<Callv 0 rriii EF=2 OS=1>)
+guard_class(p92, ConstClass(IntVal))
+i129 = getfield_gc_i(p92, descr=<FieldS classes.IntVal.inst_value 8 pure>)
+i131 = int_sub_ovf(i129, 1)
+guard_no_overflow()
+p132 = new_with_vtable(descr=<SizeDescr 16>)
+setfield_gc(p132, i131, descr=<FieldS classes.IntVal.inst_value 8 pure>)
+p134 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p134, 0, p132, descr=<ArrayP 8>)
+p137 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p60, p137, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p134, p137, 0, 1, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p147 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p137, p147, 1, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p152 = new_with_vtable(descr=<SizeDescr 24>)
+setfield_gc(p152, p147, descr=<FieldP env.Frame.inst_vals 16>)
+setfield_gc(p152, p0, descr=<FieldP env.Frame.inst_parent 8 pure>)
+p153 = new_with_vtable(descr=<SizeDescr 32>)
+setfield_gc(p153, ConstPtr(ptr154), descr=<FieldP classes.ApplyProcBounce.inst_body 8>)
+setfield_gc(p153, p152, descr=<FieldP classes.ApplyProcBounce.inst_env 24>)
+setfield_gc(p153, p1, descr=<FieldP classes.ApplyProcBounce.inst_cont 16>)
+debug_merge_point(0, 0, 'app/2')
+guard_future_condition()
+p156 = new_array_clear(0, descr=<ArrayP 8>)
+p157 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p157, ConstPtr(ptr158), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p157, p156, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p157, p152, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p157, p1, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p159 = getfield_gc_r(p152, descr=<FieldP env.Frame.inst_parent 8 pure>)
+p160 = getfield_gc_r(p159, descr=<FieldP env.Frame.inst_parent 8 pure>)
+p161 = getfield_gc_r(p160, descr=<FieldP env.Frame.inst_vals 16>)
+p163 = getarrayitem_gc_r(p161, 0, descr=<ArrayP 8>)
+p165 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p165, 0, p163, descr=<ArrayP 8>)
+p168 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p156, p168, 0, 0, 0, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p165, p168, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p177 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p177, ConstPtr(ptr178), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p177, p168, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p177, p152, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p177, p1, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p179 = getfield_gc_r(p152, descr=<FieldP env.Frame.inst_vals 16>)
+p181 = getarrayitem_gc_r(p179, 0, descr=<ArrayP 8>)
+p183 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p183, 0, p181, descr=<ArrayP 8>)
+p186 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p168, p186, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p183, p186, 0, 1, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p195 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p195, ConstPtr(ptr196), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p195, p186, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p195, p152, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p195, p1, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p198 = new_array_clear(0, descr=<ArrayP 8>)
+p199 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p199, ConstPtr(ptr200), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p199, p198, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p199, p152, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p199, p195, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p202 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p202, 0, ConstPtr(ptr204), descr=<ArrayP 8>)
+p206 = new_array_clear(1, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p198, p206, 0, 0, 0, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p202, p206, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p215 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p215, ConstPtr(ptr216), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p215, p206, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p215, p152, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p215, p195, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p217 = getfield_gc_r(p159, descr=<FieldP env.Frame.inst_vals 16>)
+p219 = getarrayitem_gc_r(p217, 1, descr=<ArrayP 8>)
+p221 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p221, 0, p219, descr=<ArrayP 8>)
+p224 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p206, p224, 0, 0, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p221, p224, 0, 1, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p233 = new_with_vtable(descr=<SizeDescr 40>)
+setfield_gc(p233, ConstPtr(ptr234), descr=<FieldP cont.AppCont.inst_app 8 pure>)
+setfield_gc(p233, p224, descr=<FieldP cont.AppCont.inst_vals 32 pure>)
+setfield_gc(p233, p152, descr=<FieldP cont.AppCont.inst_env 24 pure>)
+setfield_gc(p233, p195, descr=<FieldP cont.AppCont.inst_cont 16 pure>)
+p236 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p236, 0, ConstPtr(ptr238), descr=<ArrayP 8>)
+p240 = new_array_clear(3, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p224, p240, 0, 0, 2, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p236, p240, 0, 2, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p250 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p240, p250, 1, 0, 2, descr=<Callv 0 rriii EF=2 OS=1>)
+guard_class(p219, ConstClass(IntVal))
+i256 = getfield_gc_i(p219, descr=<FieldS classes.IntVal.inst_value 8 pure>)
+i258 = int_add_ovf(i256, 1)
+guard_no_overflow()
+p259 = new_with_vtable(descr=<SizeDescr 16>)
+setfield_gc(p259, i258, descr=<FieldS classes.IntVal.inst_value 8 pure>)
+p261 = new_array_clear(1, descr=<ArrayP 8>)
+setarrayitem_gc(p261, 0, p259, descr=<ArrayP 8>)
+p264 = new_array_clear(3, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p186, p264, 0, 0, 2, descr=<Callv 0 rriii EF=2 OS=1>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p261, p264, 0, 2, 1, descr=<Callv 0 rriii EF=2 OS=1>)
+p274 = new_array_clear(2, descr=<ArrayP 8>)
+call_n(ConstClass(ll_arraycopy__arrayPtr_arrayPtr_Signed_Signed_Signed), p264, p274, 1, 0, 2, descr=<Callv 0 rriii EF=2 OS=1>)
+guard_class(p163, 107042145769808)
+p280 = getfield_gc_r(p163, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
+i281 = getfield_gc_i(p280, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
+i283 = int_ne(2, i281)
+guard_false(i283)
+p284 = getfield_gc_r(p280, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
+p285 = getfield_gc_r(p163, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
+p286 = new_with_vtable(descr=<SizeDescr 24>)
+setfield_gc(p286, p274, descr=<FieldP env.Frame.inst_vals 16>)
+setfield_gc(p286, p285, descr=<FieldP env.Frame.inst_parent 8 pure>)
+p287 = new_with_vtable(descr=<SizeDescr 32>)
+setfield_gc(p287, p284, descr=<FieldP classes.ApplyProcBounce.inst_body 8>)
+setfield_gc(p287, p286, descr=<FieldP classes.ApplyProcBounce.inst_env 24>)
+setfield_gc(p287, p1, descr=<FieldP classes.ApplyProcBounce.inst_cont 16>)
+guard_value(p284, ConstPtr(ptr288))
+debug_merge_point(0, 0, 'if')
+guard_future_condition()
+jump(p286, p1, descr=<Loop-1>)
+[30c744a50] jit-log-noopt}
+compiled new loop
+[30c8d4d34] {jit-log-opt-loop
+# Loop 1 (if) : loop with 49 ops
+[p0, p1]
++280: label(p0, p1, descr=TargetToken(136490978041888))
+debug_merge_point(0, 0, 'if')
++301: p2 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
++312: p4 = getarrayitem_gc_r(p2, 0, descr=<ArrayP 8>)
++316: guard_class(p4, ConstClass(IntVal), descr=<Guard0x7c234842a0b0>) [p4, p0, p1]
++328: i6 = getfield_gc_i(p4, descr=<FieldS classes.IntVal.inst_value 8 pure>)
++332: i7 = int_is_zero(i6)
++335: guard_false(i7, descr=<Guard0x7c2348426470>) [p4, p0, p1]
++341: i9 = int_sub_ovf(i6, 1)
++345: guard_no_overflow(descr=<Guard0x7c23484264a0>) [p4, p0, p1]
+debug_merge_point(0, 0, 'app/2')
++351: p10 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_parent 8 pure>)
++355: p11 = getfield_gc_r(p10, descr=<FieldP env.Frame.inst_vals 16>)
++359: p13 = getarrayitem_gc_r(p11, 0, descr=<ArrayP 8>)
++363: p15 = getarrayitem_gc_r(p2, 1, descr=<ArrayP 8>)
++367: guard_class(p15, ConstClass(IntVal), descr=<Guard0x7c23484264d0>) [p4, p0, p1]
++379: i17 = getfield_gc_i(p15, descr=<FieldS classes.IntVal.inst_value 8 pure>)
++383: i19 = int_add_ovf(i17, 1)
++387: guard_no_overflow(descr=<Guard0x7c2348426500>) [p4, p0, p1]
++393: guard_class(p13, 107042145769808, descr=<Guard0x7c2348426530>) [p4, p0, p1]
++405: p21 = getfield_gc_r(p13, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++409: i22 = getfield_gc_i(p21, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++413: i24 = int_ne(2, i22)
++417: guard_false(i24, descr=<Guard0x7c2348426560>) [p4, p0, p1]
++423: p25 = getfield_gc_r(p21, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++427: p26 = getfield_gc_r(p13, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++438: guard_value(p25, ConstPtr(ptr27), descr=<Guard0x7c2348426590>) [p4, p0, p1]
+debug_merge_point(0, 0, 'if')
++447: label(p26, i9, i19, p1, descr=TargetToken(136490978041952))
+debug_merge_point(0, 0, 'if')
++461: i28 = int_is_zero(i9)
++464: guard_false(i28, descr=<Guard0x7c234842a0f8>) [i9, i19, p26, p1]
++470: i30 = int_sub_ovf(i9, 1)
++477: guard_no_overflow(descr=<Guard0x7c23484265c0>) [i9, i19, p26, p1]
+debug_merge_point(0, 0, 'app/2')
++483: p31 = getfield_gc_r(p26, descr=<FieldP env.Frame.inst_vals 16>)
++487: p33 = getarrayitem_gc_r(p31, 0, descr=<ArrayP 8>)
++491: i35 = int_add_ovf(i19, 1)
++498: guard_no_overflow(descr=<Guard0x7c23484265f0>) [i9, i19, p26, p1]
++504: guard_class(p33, 107042145769808, descr=<Guard0x7c2348426620>) [i9, i19, p26, p1]
++516: p37 = getfield_gc_r(p33, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++520: i38 = getfield_gc_i(p37, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++524: i40 = int_ne(2, i38)
++528: guard_false(i40, descr=<Guard0x7c2348426650>) [i9, i19, p26, p1]
++534: p41 = getfield_gc_r(p37, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++538: p42 = getfield_gc_r(p33, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++549: guard_value(p41, ConstPtr(ptr43), descr=<Guard0x7c2348426680>) [i9, i19, p26, p1]
+debug_merge_point(0, 0, 'if')
++558: jump(p42, i30, i35, p1, descr=TargetToken(136490978041952))
++576: --end of the loop--
+[30c908d3c] jit-log-opt-loop}
+[30c917ee0] jit-tracing}
+[312567efc] {jit-summary
+Tracing:      	1	0.001577
+Backend:      	1	0.000348
+TOTAL:      		0.050414
+ops:             	350
+heapcached ops:  	127
+recorded ops:    	193
+  calls:         	31
+guards:          	11
+opt ops:         	47
+opt guards:      	14
+opt guards shared:	12
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	6
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[312575e58] jit-summary}
+[312586e88] {jit-backend-counts
+entry 1:1
+TargetToken(136490978041888):1
+TargetToken(136490978041952):9998960
+[312587f18] jit-backend-counts}

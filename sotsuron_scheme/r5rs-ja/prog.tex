@@ -1,0 +1,194 @@
+\chapter{プログラム構造}
+\label{programchapter}
+
+\section{プログラム}
+
+Scheme プログラムは式，定義，および構文定義の列からなる。
+式は \ref{expressionchapter} 章で記述している。
+定義と構文定義は本章の残りで論ずる。
+
+プログラムは典型的にはファイルに格納されるか，
+または実行中の Scheme システムに対話的に入力されるが，
+他のパラダイムも可能である。
+しかし，ユーザ・インタフェースの問題はこの報告書の範囲外である。
+(実際，Scheme はたとえ機械上の実装がなくても計算方法を表現する記法として
+依然有用だろう)。
+
+プログラムのトップ・レベルに出現する定義と構文定義は，宣言的に解釈され得る。
+それらは束縛をトップ・レベル環境の中に造らせるか，
+または既存のトップ=レベル束縛の値を改変する。
+プログラムのトップ・レベルに出現する式は，命令的に解釈される。
+それらは，プログラムが起動またはロードされたときに順に実行され，
+そして典型的にはなんらかの種類の初期化を行う。
+
+プログラムのトップ・レベルでは {\tt(begin \hyperi{形式} \dotsfoo)} は，
+その \ide{begin} の本体をつくる式，定義，および構文定義からなる列と等価である。
+
+\todo{Cromarty, etc.: disclaimer about top level?}
+
+\section{定義}
+\label{defines}
+
+定義は，式が許される文脈の，全部ではなく一部において妥当である。
+定義は，\hyper{プログラム} のトップ・レベルと \hyper{本体} の
+先頭でだけ妥当である。
+\mainindex{definition}
+
+定義は次の形式の一つをとること。\mainschindex{define}
+
+\begin{itemize}
+
+\item{\tt(define \hyper{変数} \hyper{式})}
+
+\item{\tt(define (\hyper{変数} \hyper{仮引数部}) \hyper{本体})}
+
+\hyper{仮引数部} は，０個以上の変数からなる列か，または１個以上の
+変数からなる列に対しスペースで区切られたピリオドともう１個の変数を続けたもの
+であること (λ式の場合と同様である)。
+この形式は次と等価である。
+\begin{scheme}
+(define \hyper{変数}
+  (lambda (\hyper{仮引数部}) \hyper{本体}))\rm.%
+\end{scheme}
+
+\item{\tt(define (\hyper{変数} .\ \hyper{仮引数}) \hyper{本体})}
+
+\hyper{仮引数} は単一の変数であること。
+この形式は次と等価である。
+\begin{scheme}
+(define \hyper{変数}
+  (lambda \hyper{仮引数} \hyper{本体}))\rm.%
+\end{scheme}
+
+\end{itemize}
+
+\subsection{トップ・レベル定義}
+
+プログラムのトップ・レベルでは，定義
+\begin{scheme}
+(define \hyper{変数} \hyper{式})%
+\end{scheme}
+は，もし \hyper{変数} が束縛されているならば，本質的に代入式
+\begin{scheme}
+(\ide{set!}\ \hyper{変数} \hyper{式})%
+\end{scheme}
+と同じ効果をもつ。
+しかし，もし \hyper{変数} が未束縛ならば，
+この定義は代入を実行する前にまず \hyper{変数} を新しい場所に束縛する。
+しかるに {\cf set!}\ を未束縛\index{unbound}の変数に対して実行すると
+エラーになるだろう。
+
+\begin{scheme}
+(define add3
+  (lambda (x) (+ x 3)))
+(add3 3)                            \ev  6
+(define first car)
+(first '(1 2))                      \ev  1%
+\end{scheme}
+
+Scheme の実装によっては，初期環境として，可能なあらゆる変数が
+なんらかの場所に束縛されており，そしてその場所の大多数が未定義値を入れている，
+という環境を使う。
+このような実装ではトップ・レベル定義は代入と全く等価である。
+
+\todo{Rozas: equal time for opposition semantics?}
+
+
+\subsection{内部定義}
+\label{internaldefines}
+
+定義は \hyper{本体} (つまり \ide{lambda}, \ide{let}, \ide{let*}, 
+\ide{letrec} \ide{let-syntax}, \ide{letrec-syntax} の各式の本体，または
+適切な形式の定義の本体) の先頭に出現してもよい。
+このような定義を，上述のトップ・レベル定義に対抗して
+{\em 内部定義} ({\em internal definition}) \mainindex{internal definition}
+という。
+内部定義で定義される変数は \hyper{本体} にローカルである。
+つまり，\hyper{変数} は代入されるのではなく束縛されるのであり，
+その束縛の領域は \hyper{本体} 全体である。たとえば，
+
+\begin{scheme}
+(let ((x 5))
+  (define foo (lambda (y) (bar x y)))
+  (define bar (lambda (a b) (+ (* a b) a)))
+  (foo (+ x 3)))                \ev  45%
+\end{scheme}
+
+内部定義をもつ \hyper{本体} はつねにそれと完全に等価な {\cf letrec} 式に
+変換できる。たとえば，上の例の {\cf let} 式は次と等価である。
+
+\begin{scheme}
+(let ((x 5))
+  (letrec ((foo (lambda (y) (bar x y)))
+           (bar (lambda (a b) (+ (* a b) a))))
+    (foo (+ x 3))))%
+\end{scheme}
+
+等価な {\cf letrec} 式がそうであるように，
+\hyper{本体} の中の各内部定義のそれぞれの \hyper{式} は，
+そこで定義されるどの \hyper{変数} の値の代入も参照もすることなく評価可能で
+なければならない。
+
+どこに内部定義が出現しようとも {\tt(begin \hyperi{定義} \dotsfoo)} は，
+その \ide{begin} の本体をつくる定義からなる列と等価である。
+
+\section{構文定義}
+
+構文定義は \hyper{プログラム} のトップ・レベルでだけ妥当である。
+\mainindex{syntax definition}
+構文定義は次の形式をとる。\mainschindex{define-syntax}
+
+{\tt(define-syntax \hyper{キーワード} \hyper{変換子仕様})}
+
+\hyper{キーワード} は識別子であり，
+そして \hyper{変換子仕様} は \ide{syntax-rules} のインスタンスであること。
+\hyper{キーワード} を，仕様が規定する変換子へと束縛することによって，
+トップ・レベル構文環境が拡張される。
+
+{\cf define-syntax} には，内部定義に相当するものはない。
+
+%[Rationale flushed because it may or may not be true and isn't the
+% real rationale anyway. -RK]
+%\begin{rationale}
+%As discussed below, the syntax and scope rules for syntax definitions
+%can give rise to syntactic ambiguities when syntactic keywords are
+%shadowed.
+%Further ambiguities would arise if {\cf define-syntax}
+%were permitted at the beginning of a \meta{body}, with scope
+%rules analogous to those for internal definitions.
+%\end{rationale}
+
+% It is an error for a program to contain more than one top-level
+% \meta{definition} or \meta{syntax definition} of any identifier.
+%
+% [I flushed this because it isn't an error for a program to
+% contain more than one top-level definition of an identifier,
+% and I didn't want to introduce any gratuitous incompatibilities
+% with the existing Scheme language. -- Will]
+
+定義や構文定義を許す任意の文脈においてマクロは定義や構文定義へと展開し得るが，
+ただし，定義や構文定義が構文キーワードを隠蔽することは，
+もしも，隠蔽する定義を収める形式のグループの中のどれかの形式が実際に定義
+であるかどうかを決定するために，あるいは，内部定義についていえば，
+そのグループとそのグループに続く式との境界を決定するために，
+隠蔽される構文キーワードの意味が必要であるならば，エラーである。
+たとえば，下記はそれぞれエラーである。
+
+\begin{scheme}
+(define define 3)
+
+(begin (define begin list))
+
+(let-syntax
+  ((foo (syntax-rules ()
+          ((foo (proc args ...) body ...)
+           (define proc
+             (lambda (args ...)
+               body ...))))))
+  (let ((x 3))
+    (foo (plus x y) (+ x y))
+    (define foo x)
+    (plus foo x)))
+\end{scheme}
+
+

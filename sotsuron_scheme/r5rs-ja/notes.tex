@@ -1,0 +1,120 @@
+\extrapart{注}
+
+
+\todo{Perhaps this section should be made to disappear.
+Can these remarks be moved somewhere else?}
+
+\subsection*{言語変化}
+\label{differences}
+
+この節は ``Revised$^4$ report''~\cite{R4RS} が出版されて以来 Scheme に
+なされて来た変更点を列挙する。
+
+\begin{itemize}
+
+\item 本報告書は今や Scheme に対する IEEE 規格\cite{IEEEScheme}の
+スーパーセットである:  本報告書に合致する実装はその規格にもまた合致する
+ことになる。このことは下記の変更を要求した。
+\begin{itemize}
+
+\item 空リストは今や真とみなされることが要求される。
+
+\item 機能が本質的 (essential) か非本質的 (inessential) かという分類は
+なくなった。
+今や組込み手続きの種類は原始的，ライブラリ，および省略可能の三種類である。
+省略可能手続きは {\cf load}，
+{\cf with-input-from-file}，{\cf with-output-\linebreak[0]to-file}，
+{\cf transcript-\linebreak[0]on}，{\cf transcript-\linebreak[0]off}，
+および {\cf interaction-\linebreak[0]environment}，
+そして三引数以上の {\cf -} と {\cf /} である。
+これらのどれも IEEE 規格にはない。
+
+\item プログラムが組込み手続きを再定義してもよい。
+そうすることによって他の組込み手続きの振舞が変わることはない。
+\end{itemize}
+
+\item {\em ポート}が，分離的な型のリストに加えられた。
+
+\item マクロの付録はなくなった。
+高水準マクロは今や報告書の本体の一部である。
+派生式に対する書換え規則はマクロ定義で置き換えられた。
+予約識別子は存在しない。
+
+\item {\cf syntax-rules} は今やベクタ・パターンを許す。
+
+\item 多重個の値の戻し (多値戻し，multiple-value return)，{\cf eval}，
+および {\cf dynamic-wind} が加えられた。
+
+\item 真正に末尾再帰的な方式で実装されることが要求される呼出しが，明示的に
+定義された。
+
+\item `{\cf @}' を識別子の中に使ってよい。
+`{\cf \verb"|"}' は将来あり得る拡張のために予約された。
+
+\end{itemize}
+
+%%R4%%
+%\subsection*{Keywords as variable names}
+%
+%Some implementations allow arbitrary syntactic
+%keywords \index{keyword}\index{syntactic keyword}to be used as variable
+%names, instead of reserving them, as this report would have
+%it.\index{variable} But this creates ambiguities in the interpretation
+%of expressions: for example, in the following, it's not clear whether
+%the expression {\tt (if 1 2 3)} should be treated as a procedure call or
+%as a conditional.
+%
+%\begin{scheme}
+%(define if list)
+%(if 1 2 3)    \ev  2 {\em{}or} (1 2 3)%
+%\end{scheme}
+%
+%These ambiguities are usually resolved in some consistent way within any
+%given implementation, but no particular treatment stands out as being
+%clearly superior to any other, so these situations were excluded for the
+%purposes of this report.
+
+%%R4%%
+%\subsection*{Macros}
+%
+%Scheme does not have any standard facility for defining new kinds of
+%expressions.\index{macros}
+%
+%\vest The ability to alter the syntax of the language creates
+%numerous problems.  All current implementations of Scheme have macro
+%facilities that solve those problems to one degree or another, but the
+%solutions are quite different and it isn't clear at this time which
+%solution is best, or indeed whether any of the solutions are truly
+%adequate.  Rather than standardize, we are encouraging implementations
+%to continue to experiment with different solutions.
+%
+%\vest The main problems with traditional macros are: They must be
+%defined to the system before any code using them is loaded; this is a
+%common source of obscure bugs.  They are usually global; macros can be
+%made to follow lexical scope rules \todo{flushed: ``as in Common
+%Lisp's {\tt macrolet}''; OK?}, but many people find the resulting scope rules
+%confusing.  Unless they are written very carefully, macros are
+%vulnerable to inadvertent capture of free variables; to get around this,
+%for example, macros may have to generate code in which procedure values
+%appear as quoted constants.  There is a similar problem with syntactic
+%keywords if the keywords of special forms are not reserved.  If keywords
+%are reserved, then either macros introduce new reserved words,
+%invalidating old code, or else special forms defined by the programmer
+%do not have the same status as special forms defined by the system.
+%
+%\todo{Refer to Pitman's special forms paper.}
+%\todo{Pitman sez: Discuss importance of having a small number of special forms
+%so that programs can inspect each other.}
+
+\todo{Move cwcc history back here? --- Andy Cromarty is concerned about
+confusion over who the audience is.}
+
+\todo{Cromarty:
+23. NOTES, p.35ff.: This material should stay somehow.  We need to
+    make it clear that R$^3$ Scheme is not being touted as Yet Another
+    Ultimate Solution To The Programming Language Problem, but rather
+    as a snapshot of a *process* of good design, for which not all
+    answers have yet been found.  We also ought to use the opportunity
+    for publicity afforded us by SIGPLAN to advertise some of the thorny
+    unsolved problems that need further research, and encourage
+    language designers to work on them.}

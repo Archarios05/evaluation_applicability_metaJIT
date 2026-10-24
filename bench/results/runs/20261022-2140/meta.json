@@ -1,0 +1,28 @@
+{
+ "id": "20261022-2140",
+ "date": "2026-10-22 21:40",
+ "note": "旧形式から取り込み (noopt は 10/23 に追加採取)",
+ "runs": 10,
+ "warm_runs": 5,
+ "impls": [
+  "CEK",
+  "CPS",
+  "3imp"
+ ],
+ "examples": [
+  "countdown",
+  "let-loop",
+  "fib",
+  "sum"
+ ],
+ "binaries": null,
+ "log_sections": {
+  "full": "gc-hardware,jit-backend-counts,jit-log-opt-bridge,jit-log-opt-loop,jit-summary,jit-tracing",
+  "min": "gc-hardware,jit-summary,jit-tracing",
+  "noopt": "jit-backend-counts,jit-log-noopt,jit-log-opt-bridge,jit-log-opt-loop,jit-summary,jit-tracing"
+ },
+ "imported": {
+  "from": "C:\\B4\\research\\eval_applicability_metaJIT\\bench\\results",
+  "at": "2026-10-23 14:47"
+ }
+}

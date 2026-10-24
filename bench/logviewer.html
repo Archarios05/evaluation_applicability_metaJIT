@@ -1,0 +1,437 @@
+<!doctype html>
+<!-- logtool.py html が /*__DATA__*/null をログの解析結果で置き換えて書き出すテンプレート -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JIT ログビューア</title>
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --fg: #1c1c1e; --muted: #6e6e73; --line: #e2e2de;
+  --accent: #2f5bd3; --accent-bg: #e8eefc; --hit: #fff1a8; --sel: #eef2fb;
+  --c-guard: #b5401a; --c-alloc: #7b3fb2; --c-mem: #1d6a96; --c-call: #2c7a30;
+  --c-arith: #1c1c1e; --c-control: #5a5a5f; --c-other: #8a5a00; --c-dmp: #9a9aa0;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, "Noto Sans Mono", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161618; --panel: #1f1f22; --fg: #e8e8ea; --muted: #9a9aa2; --line: #333338;
+    --accent: #8fb0ff; --accent-bg: #26304a; --hit: #5a4d10; --sel: #262b38;
+    --c-guard: #ff9a72; --c-alloc: #cfa2ff; --c-mem: #7cc4f0; --c-call: #8fd694;
+    --c-arith: #e8e8ea; --c-control: #b0b0b8; --c-other: #e6c06a; --c-dmp: #6e6e76;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161618; --panel: #1f1f22; --fg: #e8e8ea; --muted: #9a9aa2; --line: #333338;
+  --accent: #8fb0ff; --accent-bg: #26304a; --hit: #5a4d10; --sel: #262b38;
+  --c-guard: #ff9a72; --c-alloc: #cfa2ff; --c-mem: #7cc4f0; --c-call: #8fd694;
+  --c-arith: #e8e8ea; --c-control: #b0b0b8; --c-other: #e6c06a; --c-dmp: #6e6e76;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", sans-serif; }
+header { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 8px 16px; }
+header h1 { font-size: 15px; margin: 0; font-weight: 600; }
+header label { color: var(--muted); font-size: 12px; display: flex; gap: 6px; align-items: center; }
+nav { display: flex; gap: 4px; margin-left: auto; }
+nav button, .seg button { border: 1px solid var(--line); background: var(--panel); color: var(--fg);
+  padding: 4px 10px; border-radius: 6px; cursor: pointer; font: inherit; font-size: 13px; }
+nav button.on, .seg button.on { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+select, input[type=search] { font: inherit; font-size: 13px; padding: 3px 6px; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--panel); color: var(--fg); max-width: 100%; }
+main { padding: 16px; max-width: 1600px; margin: 0 auto; }
+h2 { font-size: 16px; margin: 20px 0 8px; }
+h3 { font-size: 14px; margin: 16px 0 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--mono); font-size: 12.5px; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 13px; }
+th, td { padding: 4px 10px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+th { font-weight: 600; color: var(--muted); font-size: 12px; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr.click { cursor: pointer; }
+tr.click:hover td { background: var(--sel); }
+tr.on td { background: var(--accent-bg); }
+dl.kv { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; margin: 0; font-size: 13px; }
+dl.kv dt { color: var(--muted); }
+dl.kv dd { margin: 0; overflow-wrap: anywhere; }
+.layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 16px; align-items: start; }
+aside { position: sticky; top: 64px; max-height: calc(100vh - 80px); overflow: auto; }
+aside .grp { margin-bottom: 8px; }
+aside .grp b { font-size: 12px; display: block; color: var(--muted); font-weight: 600; }
+.chip { display: inline-block; font-size: 12px; padding: 1px 7px; margin: 2px 2px 0 0; border-radius: 10px;
+  border: 1px solid var(--line); cursor: pointer; background: var(--panel); color: var(--fg); }
+.chip.on { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin: 8px 0; font-size: 13px; }
+.seg { display: inline-flex; gap: 2px; }
+.code { font-family: var(--mono); font-size: 12.5px; line-height: 1.45; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 6px; overflow: auto; max-height: 75vh; padding: 4px 0; }
+.ln { white-space: pre; padding: 0 10px 0 0; }
+.ln .no { display: inline-block; width: 4.5em; text-align: right; padding-right: 10px; color: var(--c-dmp); user-select: none; }
+.ln.hit { background: var(--hit); }
+.ln a { color: var(--accent); margin-left: 12px; cursor: pointer; text-decoration: underline; }
+.c-guard { color: var(--c-guard); } .c-alloc { color: var(--c-alloc); } .c-mem { color: var(--c-mem); }
+.c-call { color: var(--c-call); } .c-arith { color: var(--c-arith); } .c-control { color: var(--c-control); font-weight: 600; }
+.c-other { color: var(--c-other); } .c-dmp { color: var(--c-dmp); } .c-meta { color: var(--muted); }
+.legend span { margin-right: 10px; font-size: 12px; }
+.bar { display: inline-block; height: 9px; background: var(--accent); opacity: .55; border-radius: 2px; vertical-align: middle; }
+.cols { display: grid; gap: 12px; overflow-x: auto; }
+.cols > div { min-width: 0; }
+a.lnk { color: var(--accent); cursor: pointer; }
+.empty { color: var(--muted); padding: 24px; text-align: center; }
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  aside { position: static; max-height: none; }
+  nav { margin-left: 0; }
+  main { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>JIT ログビューア</h1>
+  <label>計測回 <select id="run"></select></label>
+  <label>比較対象 <select id="cmprun"></select></label>
+  <nav id="tabs">
+    <button data-tab="overview">概要</button>
+    <button data-tab="logs">ログ</button>
+    <button data-tab="compare">実装比較</button>
+  </nav>
+</header>
+<main id="app"></main>
+<script id="data" type="application/json">/*__DATA__*/null</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("data").textContent) || {runs: [], metric_defs: [], cats: []};
+const CAT = Object.fromEntries(D.cats.map(c => [c.key, c.label]));
+const MEM = ["getfield", "setfield", "getarrayitem", "setarrayitem", "getinteriorfield", "setinteriorfield",
+  "arraylen", "strlen", "strgetitem", "strsetitem", "unicode", "raw_load", "raw_store", "gc_load", "gc_store",
+  "copystrcontent", "copyunicodecontent", "zero_array"];
+const ARITH = ["int_", "uint_", "float_", "cast_", "ptr_", "instance_ptr_", "same_as", "nursery_ptr_increment"];
+const OPRE = /^(?:\+\d+: )?(?:[a-z]\d+ = )?([a-z_][a-z_0-9]*)\(/;
+
+const S = {tab: "overview", run: 0, cmp: -1, log: null, t: null, v: "opt", dmp: true, q: "", ex: null, kind: "full", sel: {}};
+try { const p = JSON.parse(localStorage.getItem("logviewer") || "{}"); if (typeof p.dmp === "boolean") S.dmp = p.dmp; } catch (e) {}
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+function fmtv(v, f) {
+  if (v === null || v === undefined) return "—";
+  const m = /%\.(\d)f/.exec(f || "");
+  if (m) return Number(v).toFixed(+m[1]);
+  return typeof v === "number" ? String(Math.round(v)) : String(v);
+}
+const ms = s => (s * 1e3).toFixed(2);
+function size(n) { for (const u of ["B", "K", "M"]) { if (n < 1024 || u === "M") return u === "B" ? n + "B" : n.toFixed(1) + u; n /= 1024; } }
+function category(op) {
+  if (op.startsWith("guard_")) return "guard";
+  if (op.startsWith("new")) return "alloc";
+  if (MEM.some(p => op.startsWith(p))) return "mem";
+  if (op.startsWith("call") || op.startsWith("cond_call")) return "call";
+  if (op === "label" || op === "jump" || op === "finish") return "control";
+  if (ARITH.some(p => op.startsWith(p))) return "arith";
+  return "other";
+}
+function lineClass(l) {
+  const m = OPRE.exec(l);
+  if (!m) return "meta";
+  return m[1] === "debug_merge_point" ? "dmp" : category(m[1]);
+}
+function opHist(lines) {
+  const h = {};
+  for (const l of lines) {
+    const m = OPRE.exec(l);
+    if (!m || ["debug_merge_point", "label", "jump"].includes(m[1])) continue;
+    h[m[1]] = (h[m[1]] || 0) + 1;
+  }
+  return h;
+}
+
+const run = () => D.runs[S.run];
+const logByName = (r, name) => r && r.logs.find(l => l.name === name);
+const curLog = () => logByName(run(), S.log);
+const kindsOrder = k => k === "full" ? 0 : k === "noopt" ? 1 : 2;
+function traceTitle(t) { return t.loopno ? `Loop ${t.loopno} (${t.name})` : t.name; }
+function hotTrace(l) { return l && l.hot ? l.hot[0] : (l && l.traces.length ? 1 : null); }
+
+// ---------------------------------------------------------------- 状態と URL
+function save() {
+  const p = new URLSearchParams();
+  p.set("tab", S.tab);
+  if (run()) p.set("run", run().id);
+  if (S.cmp >= 0) p.set("cmp", D.runs[S.cmp].id);
+  if (S.log) p.set("log", S.log);
+  if (S.t) p.set("t", S.t);
+  if (S.v !== "opt") p.set("v", S.v);
+  if (S.ex) p.set("ex", S.ex);
+  if (S.kind !== "full") p.set("kind", S.kind);
+  history.replaceState(null, "", "#" + p.toString());
+  try { localStorage.setItem("logviewer", JSON.stringify({dmp: S.dmp})); } catch (e) {}
+}
+function load() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  const ri = id => D.runs.findIndex(r => r.id === id);
+  if (p.get("tab")) S.tab = p.get("tab");
+  if (p.get("run") && ri(p.get("run")) >= 0) S.run = ri(p.get("run"));
+  if (p.get("cmp") && ri(p.get("cmp")) >= 0) S.cmp = ri(p.get("cmp"));
+  S.log = p.get("log") || null;
+  S.t = p.get("t") ? +p.get("t") : null;
+  S.v = p.get("v") || "opt";
+  S.ex = p.get("ex") || null;
+  S.kind = p.get("kind") || "full";
+}
+function set(o) { Object.assign(S, o); save(); render(); }
+
+// ---------------------------------------------------------------- 概要
+function renderOverview() {
+  const r = run();
+  const m = r.meta || {};
+  let h = `<div class="card"><dl class="kv">`;
+  const kv = (k, v, mono) => {
+    if (v !== undefined && v !== null && v !== "") h += `<dt>${esc(k)}</dt><dd${mono ? ' class="mono"' : ""}>${esc(v)}</dd>`;
+  };
+  kv("ID", r.id); kv("日時", m.date); kv("メモ", m.note);
+  kv("実行回数", m.runs); kv("ウォームアップ計測回数", m.warm_runs);
+  kv("CPU", m.cpu); kv("ホスト", m.host);
+  for (const [k, v] of Object.entries(m.pypylog || {})) kv("PYPYLOG " + k, v, true);
+  for (const [k, v] of Object.entries(m.log_sections || {})) kv("ログのセクション " + k, v, true);
+  for (const [k, v] of Object.entries(m.binaries || {})) kv("binary " + k, v ? v.slice(0, 16) : "—", true);
+  if (m.noopt_date) kv("noopt 採取日時", m.noopt_date);
+  if (m.imported) kv("取り込み元", m.imported.from + " (" + m.imported.at + ")");
+  kv("ログ数", r.logs.length);
+  h += `</dl></div>`;
+
+  const mt = r.metrics, cm = S.cmp >= 0 ? D.runs[S.cmp].metrics : null;
+  if (!mt) {
+    h += `<div class="card empty">summary.json がないため指標の表はありません</div>`;
+  } else {
+    if (cm) h += `<p class="muted">各セルは「${esc(r.id)} → ${esc(D.runs[S.cmp].id)} (比較対象 ÷ 計測回)」</p>`;
+    for (const ex of mt.examples) {
+      h += `<h2>${esc(ex)}</h2><div class="card scroll"><table><tr><th>指標</th>` +
+        mt.impls.map(i => `<th class="num">${esc(i)}</th>`).join("") + `</tr>`;
+      for (const md of D.metric_defs) {
+        h += `<tr><td>${esc(md.label)}</td>`;
+        for (const im of mt.impls) {
+          const a = (mt.values[im + "/" + ex] || {})[md.key];
+          let cell = fmtv(a, md.fmt);
+          if (cm) {
+            const b = (cm.values[im + "/" + ex] || {})[md.key];
+            cell += ` → ${fmtv(b, md.fmt)}` + (a && b !== null && b !== undefined ? ` <span class="muted">×${(b / a).toFixed(3)}</span>` : "");
+          }
+          h += `<td class="num">${cell}</td>`;
+        }
+        h += `</tr>`;
+      }
+      h += `</table></div>`;
+    }
+  }
+  h += `<h2>ログ</h2><div class="card scroll">${logMatrix(r)}</div>`;
+  return h;
+}
+function logMatrix(r) {
+  const groups = {};
+  for (const l of r.logs) (groups[l.impl + "-" + l.ex] = groups[l.impl + "-" + l.ex] || []).push(l);
+  let h = `<table><tr><th>実装-例題</th><th>ログ</th></tr>`;
+  for (const [g, ls] of Object.entries(groups)) {
+    h += `<tr><td>${esc(g)}</td><td>` + ls.map(l => `<span class="chip" data-log="${esc(l.name)}">${esc(l.kind)}</span>`).join("") + `</td></tr>`;
+  }
+  return h + `</table>`;
+}
+
+// ---------------------------------------------------------------- ログ
+function renderLogs() {
+  const r = run();
+  if (!curLog() && r.logs.length) {
+    const l = r.logs.find(x => x.kind === "full") || r.logs[0];
+    S.log = l.name; S.t = hotTrace(l); save();
+  }
+  const groups = {};
+  for (const l of r.logs) (groups[l.impl + "-" + l.ex] = groups[l.impl + "-" + l.ex] || []).push(l);
+  let side = `<aside class="card">`;
+  for (const [g, ls] of Object.entries(groups)) {
+    side += `<div class="grp"><b>${esc(g)}</b>` +
+      ls.sort((a, b) => kindsOrder(a.kind) - kindsOrder(b.kind) || a.kind.localeCompare(b.kind))
+        .map(l => `<span class="chip${l.name === S.log ? " on" : ""}" data-log="${esc(l.name)}">${esc(l.kind)}</span>`).join("") + `</div>`;
+  }
+  side += `</aside>`;
+  const l = curLog();
+  return `<div class="layout">${side}<section>${l ? logDetail(l) : `<div class="empty">ログがありません</div>`}</section></div>`;
+}
+function logDetail(l) {
+  const k = l.traces.map(t => t.kind);
+  const cnt = x => k.filter(y => y === x).length;
+  let h = `<div class="card"><h2 style="margin-top:0">${esc(l.name)}</h2><dl class="kv">` +
+    `<dt>サイズ</dt><dd>${size(l.size)}</dd>` +
+    `<dt>トレース</dt><dd>${l.traces.length} 本 (ループ ${cnt("loop")} / ブリッジ ${cnt("bridge")} / entry bridge ${cnt("entry bridge")} / abort ${cnt("abort")})</dd>` +
+    `<dt>jit-summary までの時間</dt><dd>${fmtv(l.total, "%.4f")} s</dd></dl>`;
+  h += `<details><summary>セクション別の回数と時間</summary><table><tr><th>セクション</th><th class="num">回数</th><th class="num">合計 ms</th></tr>` +
+    Object.entries(l.sections).map(([n, [c, s]]) => `<tr><td class="mono">${esc(n)}</td><td class="num">${c}</td><td class="num">${ms(s)}</td></tr>`).join("") + `</table></details>`;
+  if (Object.keys(l.summary).length)
+    h += `<details><summary>jit-summary</summary><table>` +
+      Object.entries(l.summary).map(([a, b]) => `<tr><td class="mono">${esc(a)}</td><td class="num mono">${esc(b.join("  "))}</td></tr>`).join("") + `</table></details>`;
+  const bc = l.counts;
+  if (Object.keys(bc.token).length + Object.keys(bc.bridge).length + Object.keys(bc.entry).length)
+    h += `<details><summary>jit-backend-counts</summary><table><tr><th>種類</th><th>キー</th><th class="num">回数</th></tr>` +
+      ["entry", "token", "bridge"].flatMap(kk => Object.entries(bc[kk]).map(([a, b]) => `<tr><td>${kk}</td><td class="mono">${esc(a)}</td><td class="num">${b}</td></tr>`)).join("") + `</table></details>`;
+  h += `</div>`;
+
+  h += `<div class="card scroll"><table><tr><th>#</th><th>種類</th><th>名前</th><th class="num">開始 ms</th><th class="num">時間 ms</th>` +
+    `<th class="num">記録 ops</th><th class="num">最適化 ops</th><th class="num">guards</th><th class="num">steps</th><th class="num">周回数</th><th class="num">entry</th><th>親</th></tr>`;
+  for (const t of l.traces) {
+    const hot = l.hot && l.hot[0] === t.n;
+    h += `<tr class="click${t.n === S.t ? " on" : ""}" data-t="${t.n}"><td>#${t.n}${hot ? " ★" : ""}</td><td>${esc(t.kind)}</td>` +
+      `<td class="mono">${esc(traceTitle(t))}</td><td class="num">${ms(t.start)}</td><td class="num">${ms(t.dur)}</td>` +
+      `<td class="num">${fmtv(t.noopt_ops)}</td><td class="num">${t.opt.length ? fmtv(t.ops) : "—"}</td>` +
+      `<td class="num">${t.opt.length ? fmtv(t.guards) : "—"}</td><td class="num">${fmtv(t.steps)}</td>` +
+      `<td class="num">${fmtv(t.iters)}</td><td class="num">${fmtv(t.entries)}</td>` +
+      `<td>${t.parent ? "#" + t.parent[0] : ""}</td></tr>`;
+  }
+  h += `</table><p class="muted" style="margin:6px 0 0;font-size:12px">★ = 最も多く回った label を含むトレース。ops は debug_merge_point / label / jump を除く。steps = debug_merge_point の数</p></div>`;
+  const t = l.traces.find(x => x.n === S.t);
+  if (t) h += `<div class="card">${toolbar()}${traceInfo(l, t)}${traceBody(l, t, true)}</div>`;
+  return h;
+}
+function toolbar() {
+  const views = [["opt", "最適化後"], ["noopt", "最適化前"], ["path", "経路"], ["ops", "op 内訳"]];
+  return `<div class="toolbar"><span class="seg">` +
+    views.map(([k, n]) => `<button class="${S.v === k ? "on" : ""}" data-v="${k}">${n}</button>`).join("") + `</span>` +
+    `<label><input type="checkbox" id="dmp" ${S.dmp ? "checked" : ""}> debug_merge_point を隠す</label>` +
+    `<input type="search" id="q" placeholder="強調する文字列" value="${esc(S.q)}">` +
+    `<span class="legend">` + D.cats.map(c => `<span class="c-${c.key}">■ ${esc(c.label)}</span>`).join("") + `<span class="c-dmp">■ merge point</span></span></div>`;
+}
+function traceInfo(l, t) {
+  let h = `<h3 style="margin-top:4px">#${t.n} ${esc(t.kind)} <span class="mono">${esc(traceTitle(t))}</span></h3><div class="muted" style="font-size:13px">`;
+  h += `開始 ${ms(t.start)} ms, 時間 ${ms(t.dur)} ms`;
+  if (t.parent) {
+    const p = l.traces[t.parent[0] - 1];
+    h += ` / 親: <a class="lnk" data-t="${p.n}">#${p.n} ${esc(traceTitle(p))}</a> の ${t.parent[1]} 行目`;
+  }
+  const kids = Object.entries(t.links);
+  if (kids.length) h += ` / ブリッジ: ` + kids.map(([i, n]) => `<a class="lnk" data-t="${n}">#${n}</a>`).join(", ");
+  h += `</div>`;
+  if (t.segs.length) {
+    h += `<div class="scroll"><table style="margin-top:6px"><tr><th>区間</th><th class="num">行</th><th class="num">ops</th><th class="num">guards</th><th class="num">steps</th><th class="num">周回数</th>` +
+      D.cats.map(c => `<th class="num">${esc(c.label)}</th>`).join("") + `</tr>` +
+      t.segs.map(s => `<tr><td class="mono">${s.token ? "TargetToken(" + esc(s.token) + ")" : "(label 前)"}</td><td class="num">${s.line}</td><td class="num">${s.ops}</td><td class="num">${s.guards}</td><td class="num">${s.steps}</td><td class="num">${fmtv(s.iters)}</td>` +
+        D.cats.map(c => `<td class="num">${s.cats[c.key]}</td>`).join("") + `</tr>`).join("") + `</table></div>`;
+  }
+  return h;
+}
+function traceBody(l, t, withLinks) {
+  if (S.v === "path") return codeBlock(t.path, {}, l, true);
+  if (S.v === "ops") return opsTable(t);
+  const lines = S.v === "noopt" ? t.noopt : t.opt;
+  if (!lines.length) return `<div class="empty">このログには${S.v === "noopt" ? "最適化前" : "最適化後"}のトレース本文がありません${t.path.length ? " (「経路」は見られます)" : ""}</div>`;
+  return codeBlock(lines, S.v === "opt" && withLinks ? t.links : {}, l);
+}
+function codeBlock(lines, links, l, plain) {
+  const q = S.q;
+  let h = `<div class="code">`;
+  lines.forEach((ln, i) => {
+    const c = plain ? "arith" : lineClass(ln);
+    if (S.dmp && c === "dmp") return;
+    let a = "";
+    if (links[i]) {
+      const b = l.traces[links[i] - 1];
+      a = `<a data-t="${b.n}">→ #${b.n} (${fmtv(b.iters)} 回)</a>`;
+    }
+    h += `<div class="ln c-${c}${q && ln.includes(q) ? " hit" : ""}"><span class="no">${i}</span>${esc(ln)}${a}</div>`;
+  });
+  return h + `</div>`;
+}
+function opsTable(t) {
+  const lines = t.opt.length ? t.opt : t.noopt;
+  const opt = opHist(t.opt), noopt = opHist(t.noopt);
+  const names = [...new Set([...Object.keys(opt), ...Object.keys(noopt)])]
+    .sort((a, b) => (opt[b] || 0) - (opt[a] || 0) || (noopt[b] || 0) - (noopt[a] || 0));
+  if (!lines.length) return `<div class="empty">トレース本文がありません</div>`;
+  const max = Math.max(1, ...names.map(n => Math.max(opt[n] || 0, noopt[n] || 0)));
+  const cats = (h) => { const o = {}; for (const [n, k] of Object.entries(h)) o[category(n)] = (o[category(n)] || 0) + k; return o; };
+  const co = cats(opt), cn = cats(noopt);
+  let h = `<div class="scroll"><table><tr><th>分類</th><th class="num">最適化前</th><th class="num">最適化後</th></tr>` +
+    D.cats.map(c => `<tr><td class="c-${c.key}">${esc(c.label)}</td><td class="num">${cn[c.key] || 0}</td><td class="num">${co[c.key] || 0}</td></tr>`).join("") + `</table></div>`;
+  h += `<div class="scroll"><table style="margin-top:10px"><tr><th>op</th><th>分類</th><th class="num">最適化前</th><th class="num">最適化後</th><th></th></tr>`;
+  for (const n of names) {
+    h += `<tr><td class="mono c-${category(n)}">${esc(n)}</td><td>${esc(CAT[category(n)])}</td><td class="num">${noopt[n] || 0}</td><td class="num">${opt[n] || 0}</td>` +
+      `<td><span class="bar" style="width:${Math.round(160 * (opt[n] || 0) / max)}px"></span></td></tr>`;
+  }
+  return h + `</table></div>`;
+}
+
+// ---------------------------------------------------------------- 実装比較
+function renderCompare() {
+  const r = run();
+  const exs = [...new Set(r.logs.map(l => l.ex))];
+  const kinds = [...new Set(r.logs.map(l => l.kind))].sort((a, b) => kindsOrder(a) - kindsOrder(b) || a.localeCompare(b));
+  if (!S.ex || !exs.includes(S.ex)) S.ex = exs[0];
+  if (!kinds.includes(S.kind)) S.kind = kinds[0];
+  const logs = r.logs.filter(l => l.ex === S.ex && l.kind === S.kind);
+  let h = `<div class="toolbar"><label>例題 <select id="ex">` + exs.map(e => `<option${e === S.ex ? " selected" : ""}>${esc(e)}</option>`).join("") +
+    `</select></label><label>ログ <select id="kind">` + kinds.map(k => `<option${k === S.kind ? " selected" : ""}>${esc(k)}</option>`).join("") + `</select></label></div>`;
+  h += toolbar();
+  if (!logs.length) return h + `<div class="empty">該当するログがありません</div>`;
+  h += `<div class="cols" style="grid-template-columns:repeat(${logs.length}, minmax(340px, 1fr))">`;
+  for (const l of logs) {
+    const key = l.name;
+    let n = S.sel[key];
+    if (!l.traces.some(t => t.n === n)) n = hotTrace(l);
+    const t = l.traces.find(x => x.n === n);
+    h += `<div><h3>${esc(l.impl)}</h3><select data-sel="${esc(key)}" style="width:100%">` +
+      l.traces.map(x => `<option value="${x.n}"${x.n === n ? " selected" : ""}>#${x.n}${l.hot && l.hot[0] === x.n ? " ★" : ""} ${esc(x.kind)} ${esc(traceTitle(x))} (ops ${fmtv(x.ops)})</option>`).join("") + `</select>`;
+    if (t) h += traceInfo(l, t) + traceBody(l, t, false);
+    else h += `<div class="empty">トレースがありません</div>`;
+    h += `</div>`;
+  }
+  return h + `</div>`;
+}
+
+// ---------------------------------------------------------------- 描画とイベント
+function render() {
+  const app = document.getElementById("app");
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === S.tab));
+  if (!D.runs.length) { app.innerHTML = `<div class="empty">データがありません</div>`; return; }
+  const focus = document.activeElement && document.activeElement.id === "q";
+  app.innerHTML = S.tab === "logs" ? renderLogs() : S.tab === "compare" ? renderCompare() : renderOverview();
+  if (focus) { const q = document.getElementById("q"); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
+}
+function init() {
+  load();
+  const rs = document.getElementById("run"), cs = document.getElementById("cmprun");
+  rs.innerHTML = D.runs.map((r, i) => `<option value="${i}">${esc(r.id)}${r.meta && r.meta.note ? " — " + esc(r.meta.note) : ""}</option>`).join("");
+  cs.innerHTML = `<option value="-1">なし</option>` + D.runs.map((r, i) => `<option value="${i}">${esc(r.id)}</option>`).join("");
+  rs.value = S.run; cs.value = S.cmp;
+  if (D.runs.length < 2) cs.parentElement.style.display = "none";
+  rs.onchange = () => set({run: +rs.value, log: null, t: null});
+  cs.onchange = () => set({cmp: +cs.value});
+  document.getElementById("tabs").onclick = e => { const b = e.target.closest("button"); if (b) set({tab: b.dataset.tab}); };
+  document.getElementById("app").addEventListener("click", e => {
+    const el = e.target.closest("[data-log],[data-t],[data-v]");
+    if (!el) return;
+    if (el.dataset.log) {
+      const l = logByName(run(), el.dataset.log);
+      set({tab: "logs", log: l.name, t: hotTrace(l)});
+    } else if (el.dataset.t) {
+      const col = el.closest(".cols > div");
+      if (col) {
+        const sel = col.querySelector("select[data-sel]");
+        S.sel[sel.dataset.sel] = +el.dataset.t; save(); render();
+      } else set({t: +el.dataset.t});
+    } else if (el.dataset.v) set({v: el.dataset.v});
+  });
+  document.getElementById("app").addEventListener("change", e => {
+    const el = e.target;
+    if (el.id === "dmp") set({dmp: el.checked});
+    else if (el.id === "ex") set({ex: el.value});
+    else if (el.id === "kind") set({kind: el.value});
+    else if (el.dataset.sel) { S.sel[el.dataset.sel] = +el.value; render(); }
+  });
+  document.getElementById("app").addEventListener("input", e => {
+    if (e.target.id === "q") { S.q = e.target.value; render(); }
+  });
+  render();
+}
+init();
+</script>
+</body>
+</html>

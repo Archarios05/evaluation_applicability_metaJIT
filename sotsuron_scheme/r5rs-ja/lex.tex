@@ -1,0 +1,162 @@
+% Lexical structure
+
+%%\vfill\eject
+\chapter{字句規約}
+
+この節は Scheme プログラムを書くときに使われる字句的な規約のいくつかを
+非形式的に説明する。
+Scheme の形式的な構文については\ref{BNF}節を見よ。
+
+\vest 英字の大文字と小文字は，文字定数と文字列定数の中を除いて，決して
+区別されない。
+たとえば {\cf Foo} は {\cf FOO} と同じ識別子であり，
+{\tt\#x1AB} は {\tt\#X1ab} と同じ数である。
+
+\section{識別子}
+\label{syntaxsection}
+
+他のプログラミング言語で許される大多数の
+識別子\mainindex{identifier}は Scheme にも受理される。
+識別子をつくる詳細な規則は Scheme の実装によって異なるが，
+英字と数字と ``拡張アルファベット文字'' からなる列であって，
+数の先頭になり得ない文字で始まるものは，どの実装でも識別子である。
+さらに \ide{+} と \ide{-} と \ide{...} も識別子である。
+下記は識別子の例である。
+
+\begin{scheme}
+lambda                   q
+list->vector             soup
+{+}                        V17a
+<=?                      a34kTMNs
+the-word-recursion-has-many-meanings%
+\end{scheme}
+
+拡張アルファベット文字は，識別子の中であたかも英字であるかのように使ってよい。
+以下は拡張アルファベット文字である。
+
+\begin{scheme}
+!\ \$ \% \verb"&" * + - . / :\ < = > ? @ \verb"^" \verb"_" \verb"~" %
+\end{scheme}
+
+識別子の形式的な構文については\ref{extendedalphas}節を見よ。
+
+\vest 識別子には Scheme プログラムの中で二つの用途がある。
+\begin{itemize}
+\item どの識別子も変数\index{variable}として，
+または構文キーワード\index{syntactic keyword}として使ってよい
+(\ref{variablesection}節および\ref{macrosection}節参照)。
+
+\item 識別子がリテラルとして，またはリテラルの中に現れたとき
+(\ref{quote}節参照)，それは{\em シンボル}を表すために使われている
+(\ref{symbolsection}節参照)。
+
+\end{itemize}
+
+%\label{keywordsection}
+%The following identifiers are syntactic keywords, and should not be used
+%as variables:
+%
+%\begin{scheme}
+%=>           do            or
+%and          else          quasiquote
+%begin        if            quote
+%case         lambda        set!
+%cond         let           unquote
+%define       let*          unquote-splicing
+%delay        letrec%
+%\end{scheme}
+%
+%Some implementations allow all identifiers, including syntactic
+%keywords, to be used as variables.  This is a compatible extension to
+%the language, but ambiguities in the language result when the
+%restriction is relaxed, and the ways in which these ambiguities are
+%resolved vary between implementations.
+
+
+\section{空白と注釈}
+
+{\em 空白}文字 (\defining{whitespace} character) は，スペースと改行である。
+(実装は典型的にはタブまたは改ページなどの付加的な空白文字を定める)。
+空白は，可読性を改善するために使われ，そしてトークンどうしを分離するために
+欠かせないものとして使われるが，それ以外の意味はない。
+ここでトークンとは，識別子または数などの，ある分割できない字句単位である。
+空白はどの二つのトークンのあいだに出現してもよいが，
+一つのトークンの途中に出現してはならない。
+空白は文字列の内部に出現してもよく，そこでは空白は無視されない。
+
+セミコロン ({\tt;}) は注釈 (comment) の開始を
+示す。\mainindex{comment}\mainschindex{;}
+注釈はそのセミコロンが現れた行の行末まで続く。
+注釈は Scheme にとって不可視だが，その行末は空白として可視である。
+したがって，注釈が一つの識別子または数の途中に現れることはできない。
+
+\begin{scheme}
+;;; FACT 手続き
+;;; 非負整数の階乗 (factorial) を計算する
+(define fact
+  (lambda (n)
+    (if (= n 0)
+        1        ;再帰の底: 1 を返す
+        (* n (fact (- n 1))))))%
+\end{scheme}
+
+
+\section{その他の記法}
+
+\todo{Rewrite?}
+
+数に対して使われる記法の記述については\ref{numbersection}節を見よ。
+
+\begin{description}{}{}
+
+\item[{\tt.\ + -}]
+これらは数で使われ，そしてまた最初の文字を除き識別子のどこにでも出現できる。
+１個の孤立した正符号または負符号も識別子である。
+１個の孤立した (数や識別子の中に出現するのではない) ピリオドは，
+ペアの表記 (\ref{listsection}節) で，および仮パラメタ並びの
+残余パラメタ (\ref{lambda}節) を示すために使われる。
+３個の連続したピリオドからなる孤立した列も識別子である。
+
+\item[\tt( )]
+丸カッコはグループ化とリストの表記のために使われる(\ref{listsection}節)。
+
+\item[\singlequote]
+単一引用符はリテラル・データを示すために使われる(\ref{quote}節)。
+
+\item[\backquote]
+逆引用符は準定数データを示すために使われる(\ref{quasiquote}節)。
+
+\item[\tt, ,@]
+文字「コンマ」と列「コンマ」「アットマーク」は逆引用符と組み合わせて使われる
+(\ref{quasiquote}節)。
+
+\item[\tt"]
+二重引用符は文字列を区切るために使われる(\ref{stringsection}節)。
+
+\item[\backwhack]
+逆スラッシュは文字定数を表す構文で使われ(\ref{charactersection}節)，
+そして文字列定数の中のエスケープ文字として使われる(\ref{stringsection}節)。
+
+% A box used because \verb is not allowed in command arguments.
+\setbox0\hbox{\tt \verb"[" \verb"]" \verb"{" \verb"}" \verb"|"}
+\item[\copy0]
+左右の角カッコと波カッコと垂直バーは，
+言語にとって将来あり得る拡張のために予約されている。
+
+\item[\sharpsign] シャープ記号は下記のように
+その直後に続く文字によって決まる様々な目的のために使われる。
+
+\item[\schtrue{} \schfalse{}]
+これらはブーリアン定数である(\ref{booleansection}節)。
+
+\item[\sharpsign\backwhack]
+これは文字定数の先頭となる(\ref{charactersection}節)。
+
+\item[\sharpsign\tt(]
+これはベクタ定数の先頭となる(\ref{vectorsection}節)。
+ベクタ定数は {\tt)} を末尾とする。
+
+\item[{\tt\#e \#i \#b \#o \#d \#x}]
+これらは数の表記に使われる(\ref{numbernotations}節)。
+
+\end{description}

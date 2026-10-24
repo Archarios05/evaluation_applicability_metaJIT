@@ -1,0 +1,788 @@
+{
+ "date": "2026-10-22 21:40",
+ "runs": 10,
+ "times": {
+  "CEK-nojit/countdown": {
+   "times": [
+    1.8204475849999824,
+    1.8528527710000162,
+    1.832268125999974,
+    1.8811606699999857,
+    1.8704491960000098,
+    1.8919861470000114,
+    1.9365830509999853,
+    1.9277043539999852,
+    1.9454513099999815,
+    1.8704805879999924
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-nojit/let-loop": {
+   "times": [
+    3.625270018000009,
+    3.407859421000012,
+    3.4369964999999922,
+    3.465393569000014,
+    3.452321339000008,
+    3.381978570000001,
+    3.400542002999998,
+    3.9071166370000014,
+    3.450299798000003,
+    3.7529565739999953
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "CEK-nojit/fib": {
+   "times": [
+    0.7417872930000158,
+    0.7139140730000122,
+    0.6885570589999759,
+    0.7166755270000067,
+    0.7602849329999799,
+    0.713952149999983,
+    0.6752113760000213,
+    0.6939211499999942,
+    0.6935556119999831,
+    0.7741582220000112
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "CEK-nojit/sum": {
+   "times": [
+    0.6664169799999797,
+    0.6545515379999927,
+    0.6973471839999945,
+    0.6717595209999843,
+    0.680598955000022,
+    0.6774265280000122,
+    0.6718473980000113,
+    0.6663673349999897,
+    0.6841092970000204,
+    0.7385391330000175
+   ],
+   "output": "500000500000",
+   "rc": 0
+  },
+  "CEK-nojit/empty": {
+   "times": [
+    0.002729363000014473,
+    0.0029883939999990616,
+    0.0026987290000022313,
+    0.0031192049999901883,
+    0.003043112000000292,
+    0.0029362049999974715,
+    0.002903834000022698,
+    0.003025014000002102,
+    0.002635784999995394,
+    0.0029303910000066935
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-jit/countdown": {
+   "times": [
+    0.013512538999975732,
+    0.012213198000011971,
+    0.012056001000019023,
+    0.011986699999994244,
+    0.011888510999995106,
+    0.011753883000011456,
+    0.01149122599997554,
+    0.012862200999990137,
+    0.013777988000015284,
+    0.013018392999981643
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-jit/let-loop": {
+   "times": [
+    0.03789890999999557,
+    0.038054891999991014,
+    0.038361952000002475,
+    0.03757477599998538,
+    0.038234485000003815,
+    0.03832732100002545,
+    0.03842773200000238,
+    0.038273471999985986,
+    0.03916630899999518,
+    0.039147565999996914
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "CEK-jit/fib": {
+   "times": [
+    0.06861157599999501,
+    0.06874504900000034,
+    0.06945004199999971,
+    0.0708592029999977,
+    0.06835778199999254,
+    0.06989876400001549,
+    0.07039466399999128,
+    0.06618477200001394,
+    0.06768815899999936,
+    0.06625668500001325
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "CEK-jit/sum": {
+   "times": [
+    0.5219845160000034,
+    0.4345670900000016,
+    0.43045165000000907,
+    0.4670574269999861,
+    0.4349110310000128,
+    0.4696671659999936,
+    0.4284354910000161,
+    0.4404789820000019,
+    0.46465407200000186,
+    0.4297298620000163
+   ],
+   "output": "500000500000",
+   "rc": 0
+  },
+  "CEK-jit/empty": {
+   "times": [
+    0.003994780999988734,
+    0.0038773250000190274,
+    0.004095837999983587,
+    0.004042566999999053,
+    0.0038849529999822607,
+    0.0037762569999983953,
+    0.004140370999976994,
+    0.004083250000007865,
+    0.003898399999997082,
+    0.003580891000012798
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-nojit/countdown": {
+   "times": [
+    1.482292166999997,
+    1.439062266999997,
+    1.4915033590000064,
+    1.482280473000003,
+    1.483071644000006,
+    1.4752842400000077,
+    1.477967221,
+    1.4852848810000125,
+    1.4361678329999847,
+    1.4351840379999885
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-nojit/let-loop": {
+   "times": [
+    2.627350717000013,
+    2.6547387049999998,
+    2.6644937089999985,
+    2.68997223599996,
+    2.7105828229999815,
+    2.819091768000021,
+    2.631842208999956,
+    2.6495588349999935,
+    2.637414266999997,
+    2.6701198790000262
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "CPS-nojit/fib": {
+   "times": [
+    0.5836251659999903,
+    0.5788772839999865,
+    0.603388289999998,
+    0.5893166399999927,
+    0.5894771039999682,
+    0.603891209999972,
+    0.6087114709999923,
+    0.6206068770000002,
+    0.6021287389999657,
+    0.6149536620000049
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "CPS-nojit/sum": {
+   "times": [
+    0.6106371129999957,
+    0.5454164570000444,
+    0.554518359000042,
+    0.5952933479999842,
+    0.569221132999985,
+    0.564744313999995,
+    0.5490354660000207,
+    0.5926605610000024,
+    0.5502673409999943,
+    0.5693510000000401
+   ],
+   "output": "error",
+   "rc": 1
+  },
+  "CPS-nojit/empty": {
+   "times": [
+    0.0027218619999871407,
+    0.003005506000022251,
+    0.0028049119999877803,
+    0.003119744000002811,
+    0.0023225979999779156,
+    0.002952393999976266,
+    0.002827163000006294,
+    0.002350380999985191,
+    0.0023538480000411255,
+    0.003073026000038226
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-jit/countdown": {
+   "times": [
+    0.011587058999964484,
+    0.011543705999997655,
+    0.011097522000000026,
+    0.010654523999960475,
+    0.0105052330000035,
+    0.010648107000008622,
+    0.011179118000029575,
+    0.011219565999965653,
+    0.010704269000029853,
+    0.010764253999980156
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-jit/let-loop": {
+   "times": [
+    0.03632812900002591,
+    0.036459350999962226,
+    0.035695046999990154,
+    0.03648947799996449,
+    0.036479650000046604,
+    0.036021912000023804,
+    0.03560725899995987,
+    0.03754530999998451,
+    0.03568816999995761,
+    0.035444876999974895
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "CPS-jit/fib": {
+   "times": [
+    0.08224371800002928,
+    0.07982095400001299,
+    0.07990837899995995,
+    0.09393372800002453,
+    0.0763401170000293,
+    0.07772546699999339,
+    0.09795224900000221,
+    0.08431274999998095,
+    0.07479689799998823,
+    0.07646221699997113
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "CPS-jit/sum": {
+   "times": [
+    0.32537338000003047,
+    0.2946768049999946,
+    0.2910139690000051,
+    0.2958563070000082,
+    0.3080383409999854,
+    0.2906895479999889,
+    0.3303137970000307,
+    0.3076744149999513,
+    0.3104053949999752,
+    0.2984401200000093
+   ],
+   "output": "error",
+   "rc": 1
+  },
+  "CPS-jit/empty": {
+   "times": [
+    0.004313234999983706,
+    0.0037393109999470653,
+    0.0038539669999977377,
+    0.00443721699997468,
+    0.004037588000016967,
+    0.004365949999964869,
+    0.004119887000001654,
+    0.00437678399998731,
+    0.004321977000017796,
+    0.004216596999981448
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-nojit/countdown": {
+   "times": [
+    0.7643043449999709,
+    0.8057668970000122,
+    0.7841479930000332,
+    0.891346378000037,
+    0.7747011769999972,
+    0.7542529379999792,
+    0.7576890759999628,
+    0.7589914640000188,
+    0.7619629789999749,
+    0.7960146670000086
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-nojit/let-loop": {
+   "times": [
+    1.304864326000029,
+    1.2806267910000315,
+    1.2949086390000275,
+    1.3099545069999863,
+    1.26056649100002,
+    1.2946253459999753,
+    1.2841822519999937,
+    1.3437993759999927,
+    1.283908036000014,
+    1.3091123450000168
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp-nojit/fib": {
+   "times": [
+    0.30687423299997363,
+    0.30049204900001314,
+    0.2955873299999894,
+    0.2925744469999927,
+    0.30507050299996763,
+    0.2990053980000198,
+    0.2960817150000139,
+    0.300592795,
+    0.3078511639999988,
+    0.29620859999999993
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp-nojit/sum": {
+   "times": [
+    0.591359366000006,
+    0.62162788400002,
+    0.7137640800000327,
+    0.6343013599999949,
+    0.5847361780000142,
+    0.679251134000026,
+    0.599831064,
+    0.639793190999967,
+    0.6049318409999955,
+    0.5904632570000103
+   ],
+   "output": "500000500000",
+   "rc": 0
+  },
+  "3imp-nojit/empty": {
+   "times": [
+    0.002595019000011689,
+    0.002383624999993117,
+    0.0024546260000306575,
+    0.0025339210000083767,
+    0.002575081999964368,
+    0.0024663079999527326,
+    0.0026399699999615223,
+    0.00257502099998419,
+    0.0024456180000242966,
+    0.002682830000026115
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-jit/countdown": {
+   "times": [
+    0.12193444100000761,
+    0.12156903100003547,
+    0.11608818299998802,
+    0.11983557399997835,
+    0.11820722999999589,
+    0.12252693900001077,
+    0.11503805300003478,
+    0.12210217799997736,
+    0.12445018799996888,
+    0.13145981599996048
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-jit/let-loop": {
+   "times": [
+    0.21313166800001682,
+    0.20880766600004108,
+    0.24166078199999674,
+    0.22824517200001537,
+    0.2088046439999971,
+    0.2090888330000098,
+    0.21218741000001273,
+    0.2128448730000514,
+    0.23658227099997475,
+    0.21318657000000485
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp-jit/fib": {
+   "times": [
+    0.07606009100004485,
+    0.07570295499999702,
+    0.07248909499998035,
+    0.07698358400000416,
+    0.07745992600001728,
+    0.07290194600000177,
+    0.07508179899997458,
+    0.07458943000000318,
+    0.0844413110000346,
+    0.07386468799995782
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp-jit/sum": {
+   "times": [
+    0.5670676340000114,
+    0.6454557829999885,
+    0.5062086460000046,
+    0.509973255000034,
+    0.5163688979999961,
+    0.703715701999954,
+    0.49982863900004304,
+    0.5092289530000471,
+    0.6247519109999757,
+    0.5206522120000159
+   ],
+   "output": "500000500000",
+   "rc": 0
+  },
+  "3imp-jit/empty": {
+   "times": [
+    0.004084640999963085,
+    0.004069289999961256,
+    0.004654910999988715,
+    0.00442524999999705,
+    0.004322444000024461,
+    0.0040748769999936485,
+    0.0039224839999860706,
+    0.0038901919999716483,
+    0.0037732330000039838,
+    0.004207800000017414
+   ],
+   "output": "0",
+   "rc": 0
+  }
+ },
+ "logs": {
+  "CEK/countdown": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-countdown.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-countdown.min0.log",
+     "wall": 0.013163584000039918
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-countdown.min1.log",
+     "wall": 0.013116453000009187
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-countdown.min2.log",
+     "wall": 0.013162376000025233
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-countdown.min3.log",
+     "wall": 0.012759818000006362
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-countdown.min4.log",
+     "wall": 0.013485419999994974
+    }
+   ]
+  },
+  "CEK/let-loop": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-let-loop.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-let-loop.min0.log",
+     "wall": 0.03824063999996952
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-let-loop.min1.log",
+     "wall": 0.039596134000021266
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-let-loop.min2.log",
+     "wall": 0.046636531999979525
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-let-loop.min3.log",
+     "wall": 0.04447270299999673
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-let-loop.min4.log",
+     "wall": 0.04314602800002376
+    }
+   ]
+  },
+  "CEK/fib": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-fib.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-fib.min0.log",
+     "wall": 0.07138187599997536
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-fib.min1.log",
+     "wall": 0.06774855000003299
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-fib.min2.log",
+     "wall": 0.06908308200002011
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-fib.min3.log",
+     "wall": 0.07072176999997737
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-fib.min4.log",
+     "wall": 0.06808603399997537
+    }
+   ]
+  },
+  "CEK/sum": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-sum.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-sum.min0.log",
+     "wall": 0.5192684159999885
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-sum.min1.log",
+     "wall": 0.4511890529999505
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-sum.min2.log",
+     "wall": 0.6081217819999551
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-sum.min3.log",
+     "wall": 0.45454955999997537
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CEK-sum.min4.log",
+     "wall": 0.4760965230000238
+    }
+   ]
+  },
+  "CPS/countdown": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-countdown.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-countdown.min0.log",
+     "wall": 0.026882648999958292
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-countdown.min1.log",
+     "wall": 0.010779442000000472
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-countdown.min2.log",
+     "wall": 0.011608577999993486
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-countdown.min3.log",
+     "wall": 0.01090003600000955
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-countdown.min4.log",
+     "wall": 0.011351637999950981
+    }
+   ]
+  },
+  "CPS/let-loop": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-let-loop.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-let-loop.min0.log",
+     "wall": 0.03768458499996541
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-let-loop.min1.log",
+     "wall": 0.036901769999985845
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-let-loop.min2.log",
+     "wall": 0.03672382199999902
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-let-loop.min3.log",
+     "wall": 0.039276159999985794
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-let-loop.min4.log",
+     "wall": 0.037500992999980554
+    }
+   ]
+  },
+  "CPS/fib": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-fib.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-fib.min0.log",
+     "wall": 0.08309044899999662
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-fib.min1.log",
+     "wall": 0.09569700399998737
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-fib.min2.log",
+     "wall": 0.0941096050000283
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-fib.min3.log",
+     "wall": 0.08450101300002189
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-fib.min4.log",
+     "wall": 0.08044917699999132
+    }
+   ]
+  },
+  "CPS/sum": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-sum.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-sum.min0.log",
+     "wall": 0.2867213840000318
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-sum.min1.log",
+     "wall": 0.2927726509999502
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-sum.min2.log",
+     "wall": 0.33570262500001036
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-sum.min3.log",
+     "wall": 0.32650052200000346
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/CPS-sum.min4.log",
+     "wall": 0.2933653210000102
+    }
+   ]
+  },
+  "3imp/countdown": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-countdown.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-countdown.min0.log",
+     "wall": 0.1214856629999872
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-countdown.min1.log",
+     "wall": 0.1171488520000139
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-countdown.min2.log",
+     "wall": 0.13222700900001882
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-countdown.min3.log",
+     "wall": 0.12037642100000312
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-countdown.min4.log",
+     "wall": 0.1203901119999955
+    }
+   ]
+  },
+  "3imp/let-loop": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-let-loop.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-let-loop.min0.log",
+     "wall": 0.21215212900000324
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-let-loop.min1.log",
+     "wall": 0.21836079399997743
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-let-loop.min2.log",
+     "wall": 0.22212826899999527
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-let-loop.min3.log",
+     "wall": 0.2392178700000045
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-let-loop.min4.log",
+     "wall": 0.2323890939999842
+    }
+   ]
+  },
+  "3imp/fib": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-fib.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-fib.min0.log",
+     "wall": 0.08314375800000562
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-fib.min1.log",
+     "wall": 0.07881162400002495
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-fib.min2.log",
+     "wall": 0.07427249700003813
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-fib.min3.log",
+     "wall": 0.07672388200001024
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-fib.min4.log",
+     "wall": 0.07469386200000372
+    }
+   ]
+  },
+  "3imp/sum": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-sum.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-sum.min0.log",
+     "wall": 0.5011075640000513
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-sum.min1.log",
+     "wall": 0.5043634330000373
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-sum.min2.log",
+     "wall": 0.5134093570000005
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-sum.min3.log",
+     "wall": 0.48625721799999155
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/logs/3imp-sum.min4.log",
+     "wall": 0.509156307000012
+    }
+   ]
+  }
+ }
+}

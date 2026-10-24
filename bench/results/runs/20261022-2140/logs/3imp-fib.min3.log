@@ -1,0 +1,261 @@
+[a36925570e] {gc-hardware
+L2cache = 524288
+[a3692dfa9e] gc-hardware}
+[a3692e6e52] {gc-hardware
+memtotal = 7981957120.000000
+[a3692fbd2a] gc-hardware}
+[a3693b244e] {jit-tracing
+JIT starting (x86)
+4: frame 18
+6: refer-global 7 ; <
+8: argument
+9: refer 0 0
+12: argument
+13: constant 0 ; 2
+15: argument
+16: apply 2
+18: test 25
+20: refer 0 0
+23: return 2
+73: argument
+74: shift 3 2
+77: apply 2
+50: argument
+51: frame 73
+53: refer-global 22 ; fib
+55: argument
+56: frame 70
+58: refer-global 1 ; -
+60: argument
+61: refer 0 0
+64: argument
+65: constant 2 ; 2
+67: argument
+68: apply 2
+70: argument
+71: apply 1
+4: frame 18
+compiled new loop
+[a3699a167a] jit-tracing}
+[a369a7efde] {jit-tracing
+18: test 25
+25: refer-global 0 ; +
+27: argument
+28: frame 50
+30: refer-global 22 ; fib
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 18
+compiled new bridge
+[a369c3747a] jit-tracing}
+[a369d13f7e] {jit-tracing
+18: test 25
+25: refer-global 0 ; +
+27: argument
+28: frame 50
+30: refer-global 22 ; fib
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 18
+compiled new bridge
+[a369eb2db2] jit-tracing}
+[a369f80172] {jit-tracing
+18: test 25
+20: refer 0 0
+23: return 2
+50: argument
+51: frame 73
+53: refer-global 22 ; fib
+55: argument
+56: frame 70
+58: refer-global 1 ; -
+60: argument
+61: refer 0 0
+64: argument
+65: constant 2 ; 2
+67: argument
+68: apply 2
+70: argument
+71: apply 1
+4: frame 18
+compiled new bridge
+[a36a16867e] jit-tracing}
+[a36a1ac04a] {jit-tracing
+73: argument
+74: shift 3 2
+77: apply 2
+50: argument
+51: frame 73
+53: refer-global 22 ; fib
+55: argument
+56: frame 70
+58: refer-global 1 ; -
+60: argument
+61: refer 0 0
+64: argument
+65: constant 2 ; 2
+67: argument
+68: apply 2
+70: argument
+71: apply 1
+4: frame 18
+compiled new bridge
+[a36a2e7f36] jit-tracing}
+[a36a3492d6] {jit-tracing
+73: argument
+74: shift 3 2
+77: apply 2
+50: argument
+51: frame 73
+53: refer-global 22 ; fib
+55: argument
+56: frame 70
+58: refer-global 1 ; -
+60: argument
+61: refer 0 0
+64: argument
+65: constant 2 ; 2
+67: argument
+68: apply 2
+70: argument
+71: apply 1
+4: frame 18
+compiled new bridge
+[a36a4885de] jit-tracing}
+[a36a524e8e] {jit-tracing
+50: argument
+51: frame 73
+53: refer-global 22 ; fib
+55: argument
+56: frame 70
+58: refer-global 1 ; -
+60: argument
+61: refer 0 0
+64: argument
+65: constant 2 ; 2
+67: argument
+68: apply 2
+70: argument
+71: apply 1
+4: frame 18
+compiled new entry bridge
+[a36a5f738e] jit-tracing}
+[a36a69dc2a] {jit-tracing
+73: argument
+74: shift 3 2
+77: apply 2
+50: argument
+51: frame 73
+53: refer-global 22 ; fib
+55: argument
+56: frame 70
+58: refer-global 1 ; -
+60: argument
+61: refer 0 0
+64: argument
+65: constant 2 ; 2
+67: argument
+68: apply 2
+70: argument
+71: apply 1
+4: frame 18
+compiled new bridge
+[a36a7d1b82] jit-tracing}
+[a36a97a60a] {jit-tracing
+73: argument
+74: shift 3 2
+77: apply 2
+50: argument
+51: frame 73
+53: refer-global 22 ; fib
+55: argument
+56: frame 70
+58: refer-global 1 ; -
+60: argument
+61: refer 0 0
+64: argument
+65: constant 2 ; 2
+67: argument
+68: apply 2
+70: argument
+71: apply 1
+4: frame 18
+compiled new bridge
+[a36aacc8fa] jit-tracing}
+[a36ae7aace] {jit-tracing
+73: argument
+74: shift 3 2
+77: apply 2
+73: argument
+compiled new loop
+[a36af85702] jit-tracing}
+[a36b2f1bf2] {jit-tracing
+73: argument
+compiled new bridge
+[a36b34e83e] jit-tracing}
+[a36b6c4a72] {jit-tracing
+50: argument
+51: frame 73
+53: refer-global 22 ; fib
+55: argument
+56: frame 70
+58: refer-global 1 ; -
+60: argument
+61: refer 0 0
+64: argument
+65: constant 2 ; 2
+67: argument
+68: apply 2
+70: argument
+71: apply 1
+4: frame 18
+compiled new bridge
+[a36b810dae] jit-tracing}
+[a371bff9d2] {jit-summary
+Tracing:      	12	0.005468
+Backend:      	12	0.004712
+TOTAL:      		0.071040
+ops:             	2758
+heapcached ops:  	719
+recorded ops:    	1887
+  calls:         	0
+guards:          	1064
+opt ops:         	2955
+opt guards:      	958
+opt guards shared:	730
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	25
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	3
+Total # of bridges:	9
+Freed # of loops:	0
+Freed # of bridges:	0
+[a371c06606] jit-summary}
