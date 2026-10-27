@@ -1,0 +1,50 @@
+{
+ "id": "20261027-0948-vable",
+ "date": "2026-10-27 09:52",
+ "note": "3imp_vable (スタックを virtualizable にした PyPy 型フレーム版) を追加",
+ "runs": 10,
+ "warm_runs": 5,
+ "impls": [
+  "CEK",
+  "CPS",
+  "3imp",
+  "3imp_vable"
+ ],
+ "examples": [
+  "countdown",
+  "let-loop",
+  "fib",
+  "sum"
+ ],
+ "log_kinds": [
+  "full",
+  "min0",
+  "min1",
+  "min2",
+  "min3",
+  "min4"
+ ],
+ "pypylog": {
+  "full": "gc-hardware,jit-tracing,jit-log-opt,jit-abort,jit-summary,jit-backend-counts",
+  "min": "gc-hardware,jit-tracing,jit-summary"
+ },
+ "cpu": "AMD Ryzen 7 7730U with Radeon Graphics (taskset -c 2)",
+ "host": "Linux KAGAJOTAISHIHP 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64",
+ "binaries": {
+  "3imp-jit": "aabbc3f85c68a033ce8eba1956143e69df924add3b8ca6b45fc1b04700e5b149",
+  "3imp-nojit": "8a9a4e5de8e3f48d10c3274b8e9b2f7ae162fe51c46d5edf1a32ec8a835a806a",
+  "3imp_vable-jit": "0fffe385d7df2d8894876098aecf166aeb6b5db80955c042444c464e237030f0",
+  "3imp_vable-nojit": "defcbfc477f2a74da98099095257181030c44951aaa958b6251667cb4bfca042",
+  "CEK-jit": "c9e9912fa902e49489bff2ce6ce4e542b0396319088f7b4ec6a46382c712c443",
+  "CEK-nojit": "7c52c669b3e4af13fcde3845b519539fb455cfaf903a6e7c4f18ef347fa452eb",
+  "CPS-jit": "d8fc7eabc9f752747ae83078ff265e58cfb945030cd442693164ded167a1df12",
+  "CPS-nojit": "10c6ed68f1c62db0d49df52adb6e52b807d67026a5af437d68d2881d7a98f954"
+ },
+ "examples_sha256": {
+  "countdown.scm": "497f78bc46aa2aaf8f93a7114a2e98a061642729feb744125063ad556678ccdc",
+  "empty.scm": "bba35ec72ab37294b160ba9ca5709d922a6de4a6cb9a00b26a011361b9253b32",
+  "fib.scm": "5bc01228a95cc4eb869173c4f36de9e8a5df28c39f2d27eaf96cc9a6e67dc2ae",
+  "let-loop.scm": "627b6f5d05277154ab9e0a476e1d405a7328789ba86c60a2d83cdfe65907b6c1",
+  "sum.scm": "f75b09b959537fec54e1d4981dc1b5ebd60740f2a66bd1362343c35199677961"
+ }
+}

@@ -8,7 +8,7 @@ import statistics
 import sys
 
 TSC_HZ = 1996.198e6
-IMPLS = ["CEK", "CPS", "3imp"]
+IMPLS = ["CEK", "CPS", "3imp", "3imp_vable"]
 EXAMPLES = ["countdown", "let-loop", "fib", "sum"]
 LABELS = {
     "countdown": "`countdown`（末尾再帰 10^7 回）",
@@ -119,7 +119,8 @@ def analyze(rdir):
     raw = json.load(open(os.path.join(rdir, "raw.json")))
     local = lambda p: os.path.join(rdir, "logs", os.path.basename(p))
     out = {"date": raw["date"], "runs": raw["runs"], "time": {}, "jit": {},
-           "warm_runs": len(next(iter(raw["logs"].values()))["min"])}
+           "warm_runs": len(next(iter(raw["logs"].values()))["min"]),
+           "impls": [im for im in IMPLS if any(k.startswith(im + "/") for k in raw["logs"])]}
     for k, v in raw["times"].items():
         out["time"][k] = {"min": min(v["times"]), "median": statistics.median(v["times"]),
                           "output": v["output"], "rc": v["rc"]}
@@ -150,7 +151,9 @@ def analyze(rdir):
             raise SystemExit("jit-summary differs between runs: %s" % k)
         aborts = sum(int(v2[0]) for k2, v2 in s.items() if k2.startswith("abort"))
         if aborts:
-            raise SystemExit("aborts present, first trace may not be a loop: %s" % k)
+            # 最初のトレースがループとは限らないので first_loop は出さない
+            for w in warm:
+                w["first_loop"] = None
         out["jit"][k] = {
             "loops": int(s["Total # of loops"][0]), "bridges": int(s["Total # of bridges"][0]),
             "aborts": aborts, "full_traces": len(kinds), "min_traces": int(s["Tracing"][0]),
@@ -171,6 +174,8 @@ def ok(r):
 
 def tables(d):
     T, J = d["time"], d["jit"]
+    impls = d.get("impls", IMPLS[:3])
+    head = "| 例題 | " + " | ".join(impls) + " |\n| --- |" + " ---: |" * len(impls)
     L = []
     L.append("# 計測結果\n")
     L.append("- 計測日時: %s / WSL2 Ubuntu (AMD Ryzen 7 7730U), `taskset -c 2` で 1 コアに固定" % d["date"])
@@ -180,31 +185,29 @@ def tables(d):
 
     L.append("## 1. 実行時間と JIT による速度向上比\n")
     L.append("### 1-a. 実行時間 (秒, 最小値)\n")
-    L.append("| 例題 | CEK-nojit | CEK-jit | CPS-nojit | CPS-jit | 3imp-nojit | 3imp-jit |")
-    L.append("| --- | ---: | ---: | ---: | ---: | ---: | ---: |")
+    L.append("| 例題 | " + " | ".join("%s-%s" % (im, mo) for im in impls for mo in ("nojit", "jit")) + " |")
+    L.append("| --- |" + " ---: |" * (2 * len(impls)))
     for ex in EXAMPLES + ["empty"]:
         row = [LABELS.get(ex, "`(display 0)`（起動コスト）")]
-        for im in IMPLS:
+        for im in impls:
             for mo in ("nojit", "jit"):
                 r = T["%s-%s/%s" % (im, mo, ex)]
                 row.append(f(r["min"]) if ok(r) else "error")
         L.append("| " + " | ".join(row) + " |")
     L.append("\n### 1-b. 速度向上比 (nojit ÷ jit)\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         row = [LABELS[ex]]
-        for im in IMPLS:
+        for im in impls:
             a, b = T["%s-nojit/%s" % (im, ex)], T["%s-jit/%s" % (im, ex)]
             row.append("%.1f 倍" % (a["min"] / b["min"]) if ok(a) and ok(b) else "error")
         L.append("| " + " | ".join(row) + " |")
     L.append("\n### 1-c. 速度向上比 (起動コストを差し引いた場合)\n")
     L.append("`(display 0)` の時間を各バイナリの起動コストとみなして差し引いた比。\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         row = [LABELS[ex]]
-        for im in IMPLS:
+        for im in impls:
             a, b = T["%s-nojit/%s" % (im, ex)], T["%s-jit/%s" % (im, ex)]
             a0, b0 = T["%s-nojit/empty" % im], T["%s-jit/empty" % im]
             if ok(a) and ok(b):
@@ -215,7 +218,7 @@ def tables(d):
 
     def jrow(ex, fn):
         row = [LABELS[ex]]
-        for im in IMPLS:
+        for im in impls:
             j = J["%s/%s" % (im, ex)]
             row.append(fn(j) if ok(T["%s-jit/%s" % (im, ex)]) else "error")
         return "| " + " | ".join(row) + " |"
@@ -225,29 +228,25 @@ def tables(d):
     L.append("\n## 2. ガード数\n")
     L.append("### 2-a. 生成された全トレース (ループ + ブリッジ) の合計\n")
     L.append("`jit-summary` の `guards` (トレース記録時) と `opt guards` (最適化後) を「記録 → 最適化後」で示す。\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         L.append(jrow(ex, lambda j: "%d → %d" % (sv(j, "guards"), sv(j, "opt guards"))))
     L.append("\n### 2-b. 最も多く回ったループ 1 周あたりのガード数 (最適化後)\n")
     L.append("`jit-log-opt` と `jit-backend-counts` を有効にした別の実行から取った値。\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         L.append(jrow(ex, lambda j: str(j["hot"]["guards"]) if j["hot"] else "—"))
 
     L.append("\n## 3. 命令数\n")
     L.append("### 3-a. 生成された全トレースの IR 命令数の合計\n")
     L.append("`jit-summary` の `recorded ops` (トレース記録時) と `opt ops` (最適化後) を「記録 → 最適化後」で示す。\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         L.append(jrow(ex, lambda j: "%d → %d" % (sv(j, "recorded ops"), sv(j, "opt ops"))))
     L.append("\n### 3-b. 最も多く回ったループ 1 周あたりの IR 命令数 (最適化後)\n")
     L.append("`label` / `jump` / `debug_merge_point` を除いた命令数。括弧内はその 1 周に含まれる"
              "インタプリタのステップ数 (`debug_merge_point` の数 = 合流点を通過した回数)。\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         L.append(jrow(ex, lambda j: "%d (%d)" % (j["hot"]["ops"], j["hot"]["steps"]) if j["hot"] else "—"))
 
@@ -255,28 +254,26 @@ def tables(d):
     L.append("JIT ありバイナリを最小限のログ (`gc-hardware,jit-tracing,jit-summary`) で %d 回走らせた中央値 (秒)。"
              "時刻は TSC (1996.198 MHz) から換算し、起点は GC 初期化 (`gc-hardware`)。\n" % d["warm_runs"])
     L.append("### 4-a. 起動から最初のループのコンパイル完了まで\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         L.append(jrow(ex, lambda j: f(j["warm"]["first_loop"], "%.4f")))
+    if any(j["aborts"] for j in J.values()):
+        L.append("\n— は abort があったもの。最初のトレースがループとは限らないので出していない。")
     L.append("\n### 4-b. 起動から最後のトレースのコンパイル完了まで (JIT が安定するまで)\n")
     L.append("括弧内は実行全体に占める割合。\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         L.append(jrow(ex, lambda j: "%s (%.0f%%)" % (f(j["warm"]["last_compile"], "%.4f"),
                                                      100 * j["warm"]["last_compile"] / j["warm"]["total"])
                       if j["warm"]["last_compile"] is not None else "—"))
     L.append("\n### 4-c. JIT コンパイルに費やした時間の合計 (トレース記録 + 最適化 + 機械語生成)\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         L.append(jrow(ex, lambda j: f(j["warm"]["compile"], "%.4f")))
 
     L.append("\n## 参考: 生成されたトレースの数\n")
     L.append("「ループ / ブリッジ / abort」。\n")
-    L.append("| 例題 | CEK | CPS | 3imp |")
-    L.append("| --- | ---: | ---: | ---: |")
+    L.append(head)
     for ex in EXAMPLES:
         L.append(jrow(ex, lambda j: "%d / %d / %d" % (j["loops"], j["bridges"], j["aborts"])))
     L.append("\n2-a, 3-a と上の表は、4 と同じ最小ログの実行の `jit-summary` から取った (%d 回とも同じ値)。" % d["warm_runs"])

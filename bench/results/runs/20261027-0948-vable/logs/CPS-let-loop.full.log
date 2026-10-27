@@ -1,0 +1,102 @@
+[2600c019e4f] {gc-hardware
+L2cache = 524288
+[2600c098cc7] gc-hardware}
+[2600c09e6db] {gc-hardware
+memtotal = 7981953024.000000
+[2600c0ab327] gc-hardware}
+[2600c393a8f] {jit-tracing
+JIT starting (x86)
+if
+app/2
+if
+compiled new loop
+[2600c5d2c47] {jit-log-opt-loop
+# Loop 1 (if) : loop with 49 ops
+[p0, p1]
++280: label(p0, p1, descr=TargetToken(137771903016992))
+debug_merge_point(0, 0, 'if')
++301: p2 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
++312: p4 = getarrayitem_gc_r(p2, 0, descr=<ArrayP 8>)
++316: guard_class(p4, ConstClass(IntVal), descr=<Guard0x7d4d8556a0b0>) [p4, p0, p1]
++328: i6 = getfield_gc_i(p4, descr=<FieldS classes.IntVal.inst_value 8 pure>)
++332: i7 = int_is_zero(i6)
++335: guard_false(i7, descr=<Guard0x7d4d855681a0>) [p4, p0, p1]
++341: i9 = int_sub_ovf(i6, 1)
++345: guard_no_overflow(descr=<Guard0x7d4d855681d0>) [p4, p0, p1]
+debug_merge_point(0, 0, 'app/2')
++351: p10 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_parent 8 pure>)
++355: p11 = getfield_gc_r(p10, descr=<FieldP env.Frame.inst_vals 16>)
++359: p13 = getarrayitem_gc_r(p11, 0, descr=<ArrayP 8>)
++363: p15 = getarrayitem_gc_r(p2, 1, descr=<ArrayP 8>)
++367: guard_class(p15, ConstClass(IntVal), descr=<Guard0x7d4d85568200>) [p4, p0, p1]
++379: i17 = getfield_gc_i(p15, descr=<FieldS classes.IntVal.inst_value 8 pure>)
++383: i19 = int_add_ovf(i17, 1)
++387: guard_no_overflow(descr=<Guard0x7d4d85568230>) [p4, p0, p1]
++393: guard_class(p13, 103621841959248, descr=<Guard0x7d4d85568260>) [p4, p0, p1]
++405: p21 = getfield_gc_r(p13, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++409: i22 = getfield_gc_i(p21, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++413: i24 = int_ne(2, i22)
++417: guard_false(i24, descr=<Guard0x7d4d85568290>) [p4, p0, p1]
++423: p25 = getfield_gc_r(p21, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++427: p26 = getfield_gc_r(p13, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++438: guard_value(p25, ConstPtr(ptr27), descr=<Guard0x7d4d855682c0>) [p4, p0, p1]
+debug_merge_point(0, 0, 'if')
++447: label(p26, i9, i19, p1, descr=TargetToken(137771903017056))
+debug_merge_point(0, 0, 'if')
++461: i28 = int_is_zero(i9)
++464: guard_false(i28, descr=<Guard0x7d4d8556a0f8>) [i9, i19, p26, p1]
++470: i30 = int_sub_ovf(i9, 1)
++477: guard_no_overflow(descr=<Guard0x7d4d855682f0>) [i9, i19, p26, p1]
+debug_merge_point(0, 0, 'app/2')
++483: p31 = getfield_gc_r(p26, descr=<FieldP env.Frame.inst_vals 16>)
++487: p33 = getarrayitem_gc_r(p31, 0, descr=<ArrayP 8>)
++491: i35 = int_add_ovf(i19, 1)
++498: guard_no_overflow(descr=<Guard0x7d4d85568320>) [i9, i19, p26, p1]
++504: guard_class(p33, 103621841959248, descr=<Guard0x7d4d85568350>) [i9, i19, p26, p1]
++516: p37 = getfield_gc_r(p33, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++520: i38 = getfield_gc_i(p37, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++524: i40 = int_ne(2, i38)
++528: guard_false(i40, descr=<Guard0x7d4d85568380>) [i9, i19, p26, p1]
++534: p41 = getfield_gc_r(p37, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++538: p42 = getfield_gc_r(p33, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++549: guard_value(p41, ConstPtr(ptr43), descr=<Guard0x7d4d855683b0>) [i9, i19, p26, p1]
+debug_merge_point(0, 0, 'if')
++558: jump(p42, i30, i35, p1, descr=TargetToken(137771903017056))
++576: --end of the loop--
+[2600c5f7b0f] jit-log-opt-loop}
+[2600c6049db] jit-tracing}
+[260101c69fc] {jit-summary
+Tracing:      	1	0.000858
+Backend:      	1	0.000212
+TOTAL:      		0.032337
+ops:             	350
+heapcached ops:  	127
+recorded ops:    	193
+  calls:         	31
+guards:          	11
+opt ops:         	47
+opt guards:      	14
+opt guards shared:	12
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	6
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[260101d57f4] jit-summary}
+[260101e5fdc] {jit-backend-counts
+entry 1:1
+TargetToken(137771903016992):1
+TargetToken(137771903017056):9998960
+[260101e9d94] jit-backend-counts}

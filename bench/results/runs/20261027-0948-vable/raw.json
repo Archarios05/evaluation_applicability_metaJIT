@@ -1,0 +1,1048 @@
+{
+ "date": "2026-10-27 09:52",
+ "runs": 10,
+ "times": {
+  "CEK-nojit/countdown": {
+   "times": [
+    2.1716783839999607,
+    1.8627343589998873,
+    1.788608942999872,
+    1.78669984499993,
+    1.7819015630000195,
+    1.7998783150001145,
+    1.7740281730000333,
+    1.744129599999951,
+    1.784892113999831,
+    1.8076815639999495
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-nojit/let-loop": {
+   "times": [
+    3.172401730000047,
+    3.1736065620000318,
+    3.207271171000002,
+    3.161869515000035,
+    3.1896716179999203,
+    3.166715576999877,
+    3.2170010079998974,
+    3.171157684000036,
+    3.1782001170001877,
+    3.221060150000085
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "CEK-nojit/fib": {
+   "times": [
+    0.6784741899998608,
+    0.6653245380000499,
+    0.6560590400001729,
+    0.6986125170001287,
+    0.6765940880000016,
+    0.6753206260000297,
+    0.6798391290001291,
+    0.6635215010001048,
+    0.6660586729999523,
+    0.6609744699999283
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "CEK-nojit/sum": {
+   "times": [
+    0.6117420049999964,
+    0.6316340450000553,
+    0.6431072319999203,
+    0.6120470230000592,
+    0.6227002220000486,
+    0.6135375040000781,
+    0.6445318030000635,
+    0.6294195200000559,
+    0.6142870789999506,
+    0.6405070670000441
+   ],
+   "output": "500000500000",
+   "rc": 0
+  },
+  "CEK-nojit/empty": {
+   "times": [
+    0.0022601489999942714,
+    0.0023975449998943077,
+    0.0025252589998672192,
+    0.002202544999818201,
+    0.002340717999913977,
+    0.0024680450001142162,
+    0.002239520999864908,
+    0.0022526949999246426,
+    0.0032304329999988113,
+    0.002187125000091328
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-jit/countdown": {
+   "times": [
+    0.011385468000071342,
+    0.01086403799990876,
+    0.010835496000026978,
+    0.010987841000087428,
+    0.011730198999885033,
+    0.010554745000035837,
+    0.010875196999904801,
+    0.011249259999885908,
+    0.011232822000010856,
+    0.01110459999995328
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-jit/let-loop": {
+   "times": [
+    0.037220738000087294,
+    0.03680138499998975,
+    0.03831216899993706,
+    0.03701467800010505,
+    0.03645891900009701,
+    0.03781601200012119,
+    0.038148731000092084,
+    0.037546880999798304,
+    0.037823696999794265,
+    0.03781842700004745
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "CEK-jit/fib": {
+   "times": [
+    0.06050714799994239,
+    0.061154848000114725,
+    0.06583540600013293,
+    0.06587455599992609,
+    0.0644746060002035,
+    0.06456124199985425,
+    0.0622959009999704,
+    0.06386185599990313,
+    0.06226076300004024,
+    0.06688518400005705
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "CEK-jit/sum": {
+   "times": [
+    0.4558775920002063,
+    0.41879777999997714,
+    0.4370536710000579,
+    0.4167563060000248,
+    0.42188115799990555,
+    0.4620166730001074,
+    0.45536408599991773,
+    0.46920380799997474,
+    0.4436587000000145,
+    0.42508412200004386
+   ],
+   "output": "500000500000",
+   "rc": 0
+  },
+  "CEK-jit/empty": {
+   "times": [
+    0.0034882949998973345,
+    0.0038119619998724374,
+    0.003770646000020861,
+    0.003881652000018221,
+    0.003951778999862654,
+    0.004307183000037185,
+    0.0037653189999673486,
+    0.004022096999960922,
+    0.004195438999886392,
+    0.003911890999916068
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-nojit/countdown": {
+   "times": [
+    1.4497152029998688,
+    1.4119865829998162,
+    1.4259493839999777,
+    1.3840698340000017,
+    1.407460674000049,
+    1.4202892660000543,
+    1.3848179269998582,
+    1.378231587999835,
+    1.4035806639999464,
+    1.38180023599989
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-nojit/let-loop": {
+   "times": [
+    2.5718532490000143,
+    2.578434641000058,
+    2.5421638650000205,
+    2.5020036060000166,
+    2.499361026000088,
+    2.561874663000026,
+    2.58024290000003,
+    2.5337804739999683,
+    2.588401261999934,
+    2.6183655560000716
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "CPS-nojit/fib": {
+   "times": [
+    0.5621439310000369,
+    0.5806643130001703,
+    0.5629806599999938,
+    0.582844514000044,
+    0.5602690690000145,
+    0.5593624360001286,
+    0.5829471859999558,
+    0.6505400019998433,
+    0.5600851660001354,
+    0.5583604239998294
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "CPS-nojit/sum": {
+   "times": [
+    0.543984288000047,
+    0.522313596999993,
+    0.5282382279999638,
+    0.5305813289999151,
+    0.5589034579998042,
+    0.5404997489999914,
+    0.5234627649999766,
+    0.536901442000044,
+    0.546148581000125,
+    0.5455164449999756
+   ],
+   "output": "error",
+   "rc": 1
+  },
+  "CPS-nojit/empty": {
+   "times": [
+    0.0021319140000741754,
+    0.0025412410000171803,
+    0.002401508000048125,
+    0.002270619999990231,
+    0.0029445909999594733,
+    0.0024054310001702106,
+    0.0022428079998917383,
+    0.0023490190001211886,
+    0.0026200330000847316,
+    0.002440739000121539
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-jit/countdown": {
+   "times": [
+    0.0110966049999206,
+    0.010290783999835185,
+    0.0103925270000218,
+    0.010126435000074707,
+    0.00970806200007246,
+    0.010312777000081041,
+    0.009947848999900089,
+    0.009866082999906212,
+    0.009848084999930506,
+    0.009887676000062129
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-jit/let-loop": {
+   "times": [
+    0.036188137000181086,
+    0.03627374600000621,
+    0.035338196000111566,
+    0.03501056300001437,
+    0.03573987700019643,
+    0.03565598599993791,
+    0.03583606100005454,
+    0.0364550510000754,
+    0.035763445999918986,
+    0.03613737599994238
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "CPS-jit/fib": {
+   "times": [
+    0.07107603899999049,
+    0.07031414799985214,
+    0.07414398799983246,
+    0.0775634680001076,
+    0.07869239199999356,
+    0.07634344400003101,
+    0.0830115639998894,
+    0.08170499500010919,
+    0.07514821499989921,
+    0.07466353500012701
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "CPS-jit/sum": {
+   "times": [
+    0.2900903509998898,
+    0.30701759399994444,
+    0.28696948900005737,
+    0.2892213909999555,
+    0.2913432479999756,
+    0.3111716579999211,
+    0.29050036700004966,
+    0.2922265419999803,
+    0.2904880080000112,
+    0.2898933129999932
+   ],
+   "output": "error",
+   "rc": 1
+  },
+  "CPS-jit/empty": {
+   "times": [
+    0.003763324000146895,
+    0.0038135399997827335,
+    0.003366569000036179,
+    0.0036513180000383727,
+    0.0032410199999048928,
+    0.004216552999878331,
+    0.0035678010001447547,
+    0.004123153999898932,
+    0.0035192710001865635,
+    0.003489065000167102
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-nojit/countdown": {
+   "times": [
+    0.7232329849998678,
+    0.7150916699999925,
+    0.6998418989999209,
+    0.7123020640001414,
+    0.699573429000111,
+    0.7111539750001157,
+    0.7133577600000081,
+    0.7092555710000852,
+    0.703716550000081,
+    0.7179025519999414
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-nojit/let-loop": {
+   "times": [
+    1.2640966889998708,
+    1.2455722659999537,
+    1.2606572629999846,
+    1.2558044520001204,
+    1.2805229409998446,
+    1.2773254060000454,
+    1.217425859000059,
+    1.249650967999969,
+    1.217495615999951,
+    1.2709009010000045
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp-nojit/fib": {
+   "times": [
+    0.279472351999857,
+    0.2820835799998349,
+    0.28604614000005313,
+    0.29729979100011406,
+    0.27113095999993675,
+    0.27476167300005727,
+    0.27093047199991815,
+    0.2838003199999548,
+    0.26407583500008514,
+    0.2938090000000102
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp-nojit/sum": {
+   "times": [
+    0.5537321310000607,
+    0.5682730910000373,
+    0.5497461279999243,
+    0.5831843430000845,
+    0.5528666990001057,
+    0.5549461499999779,
+    0.5542053679998844,
+    0.5713930879999225,
+    0.5592789249999441,
+    0.5526020400000107
+   ],
+   "output": "500000500000",
+   "rc": 0
+  },
+  "3imp-nojit/empty": {
+   "times": [
+    0.0022388310001133505,
+    0.002274811999996018,
+    0.0028157019999071053,
+    0.0024095599999327533,
+    0.00244836399997439,
+    0.002379499000198848,
+    0.0020921750001434702,
+    0.0022971369999140734,
+    0.002112007000050653,
+    0.0023911359999146953
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-jit/countdown": {
+   "times": [
+    0.11877578400003586,
+    0.11742865699989125,
+    0.11639924100018106,
+    0.11743692999993982,
+    0.12811035500021717,
+    0.11568907800005945,
+    0.1115107519999583,
+    0.11085250099995392,
+    0.11474356100006844,
+    0.11649187500006519
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-jit/let-loop": {
+   "times": [
+    0.21119796000016322,
+    0.20090039699994122,
+    0.2073654109999552,
+    0.2046476600000915,
+    0.2023811729998215,
+    0.21076368300009563,
+    0.2212333560000843,
+    0.20625841199989736,
+    0.19898439899998266,
+    0.20132123000007596
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp-jit/fib": {
+   "times": [
+    0.07487277399991399,
+    0.07265870500009441,
+    0.07455168699993919,
+    0.07169229700002688,
+    0.06822960099998454,
+    0.07005157000003237,
+    0.07384773200010386,
+    0.06887321200019869,
+    0.06909818999997697,
+    0.07291708399998242
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp-jit/sum": {
+   "times": [
+    0.5097717890000695,
+    0.4787418030000481,
+    0.4901536889999534,
+    0.49717798899996524,
+    0.5094112009999208,
+    0.5006770930001494,
+    0.48886923700001716,
+    0.4938866649999909,
+    0.5042260330001227,
+    0.5267646160000368
+   ],
+   "output": "500000500000",
+   "rc": 0
+  },
+  "3imp-jit/empty": {
+   "times": [
+    0.0038457890000245243,
+    0.003788536000001841,
+    0.003751540999928693,
+    0.003530871000066327,
+    0.003614868999875398,
+    0.004157504999966477,
+    0.0038709640000433865,
+    0.003446124999982203,
+    0.003797565000013492,
+    0.004387235999956829
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp_vable-nojit/countdown": {
+   "times": [
+    0.4654656780001005,
+    0.466549064000219,
+    0.46899181300000237,
+    0.4578554270001405,
+    0.49307718999989447,
+    0.4891389760000493,
+    0.45686705399998573,
+    0.5314242330000525,
+    0.45464416300001176,
+    0.45691893200000777
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp_vable-nojit/let-loop": {
+   "times": [
+    0.7907580860000962,
+    0.78654552099988,
+    0.7817640150001353,
+    0.7672193000000789,
+    0.7687978050000766,
+    0.8161516810000649,
+    0.7647450970000591,
+    0.782197836000023,
+    0.7827590150000105,
+    0.7796940690000156
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp_vable-nojit/fib": {
+   "times": [
+    0.2110794860000169,
+    0.21237388500003362,
+    0.20168619299988677,
+    0.2083215980001114,
+    0.21472114700009115,
+    0.20862703200009491,
+    0.21041550299992196,
+    0.2105898619997788,
+    0.2054675159999988,
+    0.20698859499998434
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp_vable-nojit/sum": {
+   "times": [
+    0.004822777000072165,
+    0.004240306000156124,
+    0.004465344999971421,
+    0.004375665999987177,
+    0.005021781000095871,
+    0.004342338000014934,
+    0.0044744219999302,
+    0.004866659000072104,
+    0.004932380000127523,
+    0.00497836899990034
+   ],
+   "output": "error",
+   "rc": 1
+  },
+  "3imp_vable-nojit/empty": {
+   "times": [
+    0.0025083739999445243,
+    0.0023888730001999647,
+    0.002131039999994755,
+    0.0030617830000210233,
+    0.002356496999937008,
+    0.0022854520000237244,
+    0.0024798719998671004,
+    0.002250997999908577,
+    0.002318628000011813,
+    0.002830980999988242
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp_vable-jit/countdown": {
+   "times": [
+    0.04671847700001308,
+    0.04325135700014471,
+    0.04197092000003977,
+    0.042778429000009055,
+    0.04373974299983274,
+    0.044476877000079185,
+    0.04364717700013898,
+    0.04656113800001549,
+    0.04497248400002718,
+    0.045880498000087755
+   ],
+   "output": "0",
+   "rc": 0
+  },
+  "3imp_vable-jit/let-loop": {
+   "times": [
+    0.045217575999913606,
+    0.045163207999848964,
+    0.04548976099999891,
+    0.049115660000097705,
+    0.04400800300004448,
+    0.04329538199999661,
+    0.05608162900011848,
+    0.05204350200006047,
+    0.04300873099987257,
+    0.04385541499982537
+   ],
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp_vable-jit/fib": {
+   "times": [
+    0.02755624200017337,
+    0.029496547000007922,
+    0.03033720900020853,
+    0.03045658100018045,
+    0.027623081999990973,
+    0.029624753999996756,
+    0.029474559999925987,
+    0.02825392699992335,
+    0.027202429999988453,
+    0.028658673000109047
+   ],
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp_vable-jit/sum": {
+   "times": [
+    0.008206781000126284,
+    0.007373247000032279,
+    0.0074511569998776395,
+    0.007746103999807019,
+    0.007695240999964881,
+    0.008027603000073213,
+    0.007664598000019396,
+    0.008368971999971109,
+    0.008328872999982195,
+    0.007669860000078188
+   ],
+   "output": "error",
+   "rc": 1
+  },
+  "3imp_vable-jit/empty": {
+   "times": [
+    0.0035242450001078396,
+    0.0036237649999293353,
+    0.004064734999928987,
+    0.0034036259999083995,
+    0.0035560570001962333,
+    0.00352567300001283,
+    0.003348198000139746,
+    0.003407049999850642,
+    0.0035267800001292926,
+    0.003527149999854373
+   ],
+   "output": "0",
+   "rc": 0
+  }
+ },
+ "logs": {
+  "CEK/countdown": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-countdown.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-countdown.min0.log",
+     "wall": 0.011126215999865963
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-countdown.min1.log",
+     "wall": 0.010951116999876831
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-countdown.min2.log",
+     "wall": 0.010646034000046711
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-countdown.min3.log",
+     "wall": 0.010901452000098288
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-countdown.min4.log",
+     "wall": 0.010818715999903361
+    }
+   ]
+  },
+  "CEK/let-loop": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-let-loop.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-let-loop.min0.log",
+     "wall": 0.036634133999996266
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-let-loop.min1.log",
+     "wall": 0.037024190000011004
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-let-loop.min2.log",
+     "wall": 0.03837377800005015
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-let-loop.min3.log",
+     "wall": 0.03762645799997699
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-let-loop.min4.log",
+     "wall": 0.03760796599999594
+    }
+   ]
+  },
+  "CEK/fib": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-fib.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-fib.min0.log",
+     "wall": 0.06139575499992134
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-fib.min1.log",
+     "wall": 0.06440147700004673
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-fib.min2.log",
+     "wall": 0.06400040300013643
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-fib.min3.log",
+     "wall": 0.0667204550002225
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-fib.min4.log",
+     "wall": 0.06416468499992334
+    }
+   ]
+  },
+  "CEK/sum": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-sum.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-sum.min0.log",
+     "wall": 0.4322630940000636
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-sum.min1.log",
+     "wall": 0.4642173689999254
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-sum.min2.log",
+     "wall": 0.44127787599995827
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-sum.min3.log",
+     "wall": 0.4442638870000337
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CEK-sum.min4.log",
+     "wall": 0.44682142099986777
+    }
+   ]
+  },
+  "CPS/countdown": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-countdown.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-countdown.min0.log",
+     "wall": 0.011030461000018477
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-countdown.min1.log",
+     "wall": 0.01010047099998701
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-countdown.min2.log",
+     "wall": 0.010569085000042833
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-countdown.min3.log",
+     "wall": 0.010745404000090275
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-countdown.min4.log",
+     "wall": 0.01057656400007545
+    }
+   ]
+  },
+  "CPS/let-loop": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-let-loop.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-let-loop.min0.log",
+     "wall": 0.03735320300006606
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-let-loop.min1.log",
+     "wall": 0.037038789000007455
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-let-loop.min2.log",
+     "wall": 0.036270413000011104
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-let-loop.min3.log",
+     "wall": 0.03631524399997943
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-let-loop.min4.log",
+     "wall": 0.03641966100008176
+    }
+   ]
+  },
+  "CPS/fib": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-fib.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-fib.min0.log",
+     "wall": 0.08225338200008991
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-fib.min1.log",
+     "wall": 0.09185686399996484
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-fib.min2.log",
+     "wall": 0.08273400499979289
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-fib.min3.log",
+     "wall": 0.07630490899987308
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-fib.min4.log",
+     "wall": 0.0715686899998218
+    }
+   ]
+  },
+  "CPS/sum": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-sum.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-sum.min0.log",
+     "wall": 0.2855186120000326
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-sum.min1.log",
+     "wall": 0.28952729399998134
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-sum.min2.log",
+     "wall": 0.3000002389999281
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-sum.min3.log",
+     "wall": 0.2843545359999098
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/CPS-sum.min4.log",
+     "wall": 0.28632035700002234
+    }
+   ]
+  },
+  "3imp/countdown": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-countdown.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-countdown.min0.log",
+     "wall": 0.13274477100003423
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-countdown.min1.log",
+     "wall": 0.11971401999994669
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-countdown.min2.log",
+     "wall": 0.11953586900017399
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-countdown.min3.log",
+     "wall": 0.11458432099993843
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-countdown.min4.log",
+     "wall": 0.11548571200000879
+    }
+   ]
+  },
+  "3imp/let-loop": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-let-loop.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-let-loop.min0.log",
+     "wall": 0.2002775930000098
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-let-loop.min1.log",
+     "wall": 0.20432563800000025
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-let-loop.min2.log",
+     "wall": 0.20175087200004782
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-let-loop.min3.log",
+     "wall": 0.2111091970000416
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-let-loop.min4.log",
+     "wall": 0.2011549220001143
+    }
+   ]
+  },
+  "3imp/fib": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-fib.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-fib.min0.log",
+     "wall": 0.07102934899990032
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-fib.min1.log",
+     "wall": 0.07646570800011432
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-fib.min2.log",
+     "wall": 0.07468966800001908
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-fib.min3.log",
+     "wall": 0.0812611910000669
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-fib.min4.log",
+     "wall": 0.09355524700004025
+    }
+   ]
+  },
+  "3imp/sum": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-sum.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-sum.min0.log",
+     "wall": 0.4842543960000967
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-sum.min1.log",
+     "wall": 0.4889906789999259
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-sum.min2.log",
+     "wall": 0.4859051029998227
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-sum.min3.log",
+     "wall": 0.5123157150001134
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp-sum.min4.log",
+     "wall": 0.4885441549999996
+    }
+   ]
+  },
+  "3imp_vable/countdown": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-countdown.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-countdown.min0.log",
+     "wall": 0.04364634000012302
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-countdown.min1.log",
+     "wall": 0.04407624999998916
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-countdown.min2.log",
+     "wall": 0.04525843500005067
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-countdown.min3.log",
+     "wall": 0.04766762100007327
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-countdown.min4.log",
+     "wall": 0.04688903900000696
+    }
+   ]
+  },
+  "3imp_vable/let-loop": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-let-loop.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-let-loop.min0.log",
+     "wall": 0.04996783799992954
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-let-loop.min1.log",
+     "wall": 0.046046807999800876
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-let-loop.min2.log",
+     "wall": 0.043877308999981324
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-let-loop.min3.log",
+     "wall": 0.04446375399993485
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-let-loop.min4.log",
+     "wall": 0.044152491000204463
+    }
+   ]
+  },
+  "3imp_vable/fib": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-fib.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-fib.min0.log",
+     "wall": 0.02921966999997494
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-fib.min1.log",
+     "wall": 0.02926252299994303
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-fib.min2.log",
+     "wall": 0.028574304999892775
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-fib.min3.log",
+     "wall": 0.02765410000006341
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-fib.min4.log",
+     "wall": 0.028383057999917582
+    }
+   ]
+  },
+  "3imp_vable/sum": {
+   "full": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-sum.full.log",
+   "min": [
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-sum.min0.log",
+     "wall": 0.008322390000103042
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-sum.min1.log",
+     "wall": 0.008583995999970284
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-sum.min2.log",
+     "wall": 0.007998349999979837
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-sum.min3.log",
+     "wall": 0.008575872999927014
+    },
+    {
+     "path": "/mnt/c/B4/research/eval_applicability_metaJIT/bench/results/runs/20261027-0948-vable/logs/3imp_vable-sum.min4.log",
+     "wall": 0.008243097000104171
+    }
+   ]
+  }
+ }
+}

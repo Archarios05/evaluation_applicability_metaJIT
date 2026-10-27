@@ -1,0 +1,86 @@
+[2604e8aa910] {gc-hardware
+L2cache = 524288
+[2604e947e18] gc-hardware}
+[2604e951fe4] {gc-hardware
+memtotal = 7981953024.000000
+[2604e964bbc] gc-hardware}
+[2604ebe2bf0] {jit-tracing
+JIT starting (x86)
+if
+if
+compiled new loop
+[2604f003158] jit-tracing}
+[2604f1af1a0] {jit-tracing
+if
+compiled new bridge
+[2604f24bd20] jit-tracing}
+[2604f375c00] {jit-tracing
+if
+compiled new bridge
+[2604f48599c] jit-tracing}
+[2604f636138] {jit-tracing
+if
+compiled new bridge
+[2604f70dcf0] jit-tracing}
+[2604f72821c] {jit-tracing
+if
+compiled new bridge
+[2604f78bec0] jit-tracing}
+[2604f820d04] {jit-tracing
+if
+compiled new bridge
+[2604f999d70] jit-tracing}
+[2604faaea1c] {jit-tracing
+if
+compiled new bridge
+[2604fbcee60] jit-tracing}
+[2604fcb354c] {jit-tracing
+if
+compiled new bridge
+[2604fd4ea24] jit-tracing}
+[260500314bc] {jit-tracing
+if
+compiled new bridge
+[26050105500] jit-tracing}
+[26050a47b18] {jit-tracing
+if
+compiled new bridge
+[26050b6a978] jit-tracing}
+[26051a42310] {jit-tracing
+if
+compiled new bridge
+[26051b135dc] jit-tracing}
+[26054ac7d78] {jit-tracing
+if
+compiled new bridge
+[26054bbcb48] jit-tracing}
+[260570508ec] {jit-summary
+Tracing:      	12	0.003890
+Backend:      	12	0.003280
+TOTAL:      		0.069167
+ops:             	2399
+heapcached ops:  	719
+recorded ops:    	1859
+  calls:         	184
+guards:          	589
+opt ops:         	1744
+opt guards:      	650
+opt guards shared:	595
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	17
+nvholes:         	4
+nvreused:        	1
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	11
+Freed # of loops:	0
+Freed # of bridges:	0
+[26057055798] jit-summary}

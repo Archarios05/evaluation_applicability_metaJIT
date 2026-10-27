@@ -12,6 +12,7 @@ EOPL LETREC 言語で書いていた旧版はタグ `eopl-letrec`。
 ```sh
 python smoke_test.py               # テスト一式 (CPython3)
 python demo_trace.py               # 状態遷移を1ステップずつ表示 (CPython3)
+python show_ast.py examples/fib.scm # convert 後の構文木を表示 (CPython3)
 python target.py examples/fib.scm  # 1 本実行 (CPython3)
 ```
 
@@ -28,7 +29,7 @@ RPython翻訳は WSL 上で python2 + rpython ツールチェインを使う（R
 
 ## 最重要の制約: 全ファイルが RPython (Python2 サブセット)
 
-`smoke_test.py` と `demo_trace.py` **以外**のすべての .py は RPython で翻訳される。
+`smoke_test.py` / `demo_trace.py` / `show_ast.py` **以外**のすべての .py は RPython で翻訳される。
 したがって使ってはいけないもの:
 
 - `@dataclass` / `abc.ABC` / 引数注釈 / f-string / `from __future__ import annotations`

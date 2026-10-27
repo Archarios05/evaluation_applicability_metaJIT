@@ -21,6 +21,7 @@ IMPLS = [
     ("CEK", "RPythonCEK", "target-c-nojit", "target-c"),
     ("CPS", "continuation_passing_interpreter", "target-c-nojit", "target-c"),
     ("3imp", "RPython_3imp", "3imp-c-nojit", "3imp-c"),
+    ("3imp_vable", "RPython_3imp_vable", "3imp-c-nojit", "3imp-c"),
 ]
 EXAMPLES = ["countdown", "let-loop", "fib", "sum"]
 EMPTY = "empty"

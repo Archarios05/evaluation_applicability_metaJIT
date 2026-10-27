@@ -33,6 +33,7 @@ CPSインタプリタとの関係は Danvy らの *functional correspondence* �
 | `rpy.py` | RPython の import と CPython 用ダミー |
 | `smoke_test.py` | CPython3で動くテスト一式 (例は RPython3imp と同じ) |
 | `demo_trace.py` | 状態遷移を1ステップずつ表示するデモ (CPython専用) |
+| `show_ast.py` | convert 後の構文木を木の形で表示する (CPython専用) |
 | `examples/` | ベンチマーク用の例題 (RPython3imp と同じ) |
 
 
@@ -46,6 +47,9 @@ python smoke_test.py
 
 # 状態遷移を目で追う
 python demo_trace.py
+
+# convert 後の構文木を見る
+python show_ast.py examples/fib.scm
 
 # CPython3 で直接実行
 python target.py examples/fib.scm

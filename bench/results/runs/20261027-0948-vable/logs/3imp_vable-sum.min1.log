@@ -1,0 +1,233 @@
+[26405b980df] {gc-hardware
+L2cache = 524288
+[26405c1990f] gc-hardware}
+[26405c1f797] {gc-hardware
+memtotal = 7981953024.000000
+[26405c30c9f] gc-hardware}
+[26405e1e0bb] {jit-tracing
+JIT starting (x86)
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+recursive function (not inlined): 4: frame 15
+compiled new entry bridge
+[264062b2a9b] jit-tracing}
+[264062d9db7] {jit-summary
+Tracing:      	1	0.001967
+Backend:      	1	0.000366
+TOTAL:      		0.002416
+ops:             	1741
+heapcached ops:  	725
+recorded ops:    	454
+  calls:         	0
+guards:          	207
+opt ops:         	325
+opt guards:      	53
+opt guards shared:	46
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	80
+nvholes:         	20
+nvreused:        	31
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	2
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[264062e22ff] jit-summary}

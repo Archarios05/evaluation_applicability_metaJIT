@@ -1,0 +1,83 @@
+[26004553f69] {gc-hardware
+L2cache = 524288
+[260045ea3dd] gc-hardware}
+[260045f46ad] {gc-hardware
+memtotal = 7981953024.000000
+[26004605b01] gc-hardware}
+[260047e63e7] {jit-tracing
+JIT starting (x86)
+if
+if
+compiled new loop
+[2600498009f] {jit-log-opt-loop
+# Loop 1 (if) : loop with 31 ops
+[p0, p1]
++248: label(p0, p1, descr=TargetToken(125255752646688))
+debug_merge_point(0, 0, 'if')
++269: p2 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
++280: p4 = getarrayitem_gc_r(p2, 0, descr=<ArrayP 8>)
++284: guard_class(p4, ConstClass(IntVal), descr=<Guard0x71eb60a440b0>) [p4, p0, p1]
++296: i6 = getfield_gc_i(p4, descr=<FieldS classes.IntVal.inst_value 8 pure>)
++300: i7 = int_is_zero(i6)
++303: guard_false(i7, descr=<Guard0x71eb60a421d0>) [p4, p0, p1]
++316: p9 = getfield_gc_r(ConstPtr(ptr8), descr=<FieldP env.GlobalCell.inst_value 16>)
++327: i11 = instance_ptr_eq(p9, ConstPtr(ptr10))
++330: guard_false(i11, descr=<Guard0x71eb60a42200>) [p4, p0, p1]
++336: i13 = int_sub_ovf(i6, 1)
++340: guard_no_overflow(descr=<Guard0x71eb60a42230>) [p4, p0, p1]
++346: guard_class(p9, 101712788810064, descr=<Guard0x71eb60a42260>) [p4, p0, p1]
++358: p15 = getfield_gc_r(p9, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++362: i16 = getfield_gc_i(p15, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++366: i18 = int_ne(1, i16)
++370: guard_false(i18, descr=<Guard0x71eb60a42290>) [p4, p0, p1]
++376: p19 = getfield_gc_r(p15, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++380: p20 = getfield_gc_r(p9, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++391: guard_value(p19, ConstPtr(ptr21), descr=<Guard0x71eb60a422c0>) [p4, p0, p1]
+debug_merge_point(0, 0, 'if')
++400: p22 = same_as_r(p20)
++403: label(p20, i13, p1, p9, p15, p22, descr=TargetToken(125255752646752))
+debug_merge_point(0, 0, 'if')
++445: i23 = int_is_zero(i13)
++448: guard_false(i23, descr=<Guard0x71eb60a440f8>) [i13, p20, p1]
++454: i25 = int_sub_ovf(i13, 1)
++461: guard_no_overflow(descr=<Guard0x71eb60a422f0>) [i13, p20, p1]
+debug_merge_point(0, 0, 'if')
++467: jump(p22, i25, p1, p9, p15, p22, descr=TargetToken(125255752646752))
++496: --end of the loop--
+[260049985af] jit-log-opt-loop}
+[2600499d87f] jit-tracing}
+[260052bee27] {jit-summary
+Tracing:      	1	0.000590
+Backend:      	1	0.000173
+TOTAL:      		0.005541
+ops:             	189
+heapcached ops:  	69
+recorded ops:    	107
+  calls:         	17
+guards:          	9
+opt ops:         	28
+opt guards:      	9
+opt guards shared:	7
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	5
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[260052c776b] jit-summary}
+[260052cde9f] {jit-backend-counts
+entry 1:1
+TargetToken(125255752646688):1
+TargetToken(125255752646752):9998960
+[260052ce633] jit-backend-counts}

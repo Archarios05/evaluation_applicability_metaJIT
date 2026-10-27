@@ -1,0 +1,233 @@
+[26406a4848b] {gc-hardware
+L2cache = 524288
+[26406ac8d2f] gc-hardware}
+[26406ad4c6f] {gc-hardware
+memtotal = 7981953024.000000
+[26406ae5d7b] gc-hardware}
+[26406d330bf] {jit-tracing
+JIT starting (x86)
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+recursive function (not inlined): 4: frame 15
+compiled new entry bridge
+[264071d82d7] jit-tracing}
+[2640720704b] {jit-summary
+Tracing:      	1	0.001995
+Backend:      	1	0.000371
+TOTAL:      		0.002464
+ops:             	1741
+heapcached ops:  	725
+recorded ops:    	454
+  calls:         	0
+guards:          	207
+opt ops:         	325
+opt guards:      	53
+opt guards shared:	46
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	80
+nvholes:         	20
+nvreused:        	31
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	2
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[2640720fceb] jit-summary}

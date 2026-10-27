@@ -1,0 +1,239 @@
+[263ae13f26c] {gc-hardware
+L2cache = 524288
+[263ae1cc6f8] gc-hardware}
+[263ae1d69c8] {gc-hardware
+memtotal = 7981953024.000000
+[263ae1ea6a8] gc-hardware}
+[263ae272008] {jit-tracing
+JIT starting (x86)
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 22 ; loop
+23: argument
+24: frame 38
+26: refer-global 1 ; -
+28: argument
+29: refer 0 0
+32: argument
+33: constant 1 ; 1
+35: argument
+36: apply 2
+38: argument
+39: shift 2 2
+42: apply 1
+4: frame 15
+compiled new loop
+[263ae4bd970] {jit-log-opt-loop
+# Loop 1 (4: frame 15) : loop with 168 ops
+[i0, i1, p2, p3, p4, p5]
++600: p6 = getfield_gc_r(p4, descr=<FieldP RPython_3imp_vable.vm.Frame.inst_slots 16>)
++611: p8 = getarrayitem_gc_r(p6, 0, descr=<ArrayP 8>)
++615: p10 = getarrayitem_gc_r(p6, 1, descr=<ArrayP 8>)
++619: p12 = getarrayitem_gc_r(p6, 2, descr=<ArrayP 8>)
++623: p14 = getarrayitem_gc_r(p6, 3, descr=<ArrayP 8>)
++627: p16 = getarrayitem_gc_r(p6, 4, descr=<ArrayP 8>)
++631: p18 = getarrayitem_gc_r(p6, 5, descr=<ArrayP 8>)
++635: p20 = getarrayitem_gc_r(p6, 6, descr=<ArrayP 8>)
++639: label(i0, i1, p2, p3, p4, p5, p8, p10, p12, p14, p16, p18, p20, descr=TargetToken(124125289037856))
+debug_merge_point(0, 0, '4: frame 15')
++701: guard_value(i1, 2, descr=<Guard0x70e42bc30020>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++718: guard_value(i0, 1, descr=<Guard0x70e42bc1f0a0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '6: refer-global 11 ; zero?')
++735: p23 = getfield_gc_r(p5, descr=<FieldP RPython_3imp_vable.vm.VM.inst_globals_w 16>)
++746: p25 = getarrayitem_gc_r(p23, 11, descr=<ArrayP 8>)
++757: i27 = instance_ptr_eq(p25, ConstPtr(ptr26))
++760: guard_false(i27, descr=<Guard0x70e42bc1f0d0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '8: argument')
+debug_merge_point(0, 0, '9: refer 0 0')
+debug_merge_point(0, 0, '12: argument')
+debug_merge_point(0, 0, '13: apply 1')
++766: guard_nonnull_class(p25, ConstClass(W_Primitive), descr=<Guard0x70e42bc30068>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++785: i29 = getfield_gc_i(p25, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_pid 24 pure>)
++789: i31 = int_eq(i29, 21)
++793: guard_false(i31, descr=<Guard0x70e42bc1f100>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++799: i32 = getfield_gc_i(p25, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_arity 8 pure>)
++803: i34 = int_ne(i32, 1)
++807: guard_false(i34, descr=<Guard0x70e42bc1f130>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++813: guard_value(i29, 11, descr=<Guard0x70e42bc1f160>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++823: guard_nonnull_class(p10, ConstClass(W_Int), descr=<Guard0x70e42bc300b0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++841: i37 = getfield_gc_i(p10, descr=<FieldS RPython_3imp_vable.value.W_Int.inst_value 8 pure>)
++845: i38 = int_is_zero(i37)
++848: guard_false(i38, descr=<Guard0x70e42bc1f190>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '15: test 21')
+debug_merge_point(0, 0, '21: refer-global 22 ; loop')
++854: p40 = getarrayitem_gc_r(p23, 22, descr=<ArrayP 8>)
++861: i42 = instance_ptr_eq(p40, ConstPtr(ptr41))
++864: guard_false(i42, descr=<Guard0x70e42bc1f1c0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '23: argument')
+debug_merge_point(0, 0, '24: frame 38')
+debug_merge_point(0, 0, '26: refer-global 1 ; -')
++870: p44 = getarrayitem_gc_r(p23, 1, descr=<ArrayP 8>)
++874: i46 = instance_ptr_eq(p44, ConstPtr(ptr45))
++877: guard_false(i46, descr=<Guard0x70e42bc1f1f0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '28: argument')
+debug_merge_point(0, 0, '29: refer 0 0')
+debug_merge_point(0, 0, '32: argument')
+debug_merge_point(0, 0, '33: constant 1 ; 1')
+debug_merge_point(0, 0, '35: argument')
+debug_merge_point(0, 0, '36: apply 2')
++883: guard_nonnull_class(p44, ConstClass(W_Primitive), descr=<Guard0x70e42bc300f8>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++903: i48 = getfield_gc_i(p44, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_pid 24 pure>)
++908: i50 = int_eq(i48, 21)
++912: guard_false(i50, descr=<Guard0x70e42bc1f220>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++918: i51 = getfield_gc_i(p44, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_arity 8 pure>)
++923: i53 = int_ne(i51, 2)
++927: guard_false(i53, descr=<Guard0x70e42bc1f250>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++933: i55 = int_eq(i48, 11)
++937: guard_false(i55, descr=<Guard0x70e42bc1f280>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++943: i57 = int_eq(i48, 12)
++947: guard_false(i57, descr=<Guard0x70e42bc1f2b0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++953: i59 = int_eq(i48, 13)
++957: guard_false(i59, descr=<Guard0x70e42bc1f2e0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++963: i61 = int_eq(i48, 14)
++967: guard_false(i61, descr=<Guard0x70e42bc1f310>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++973: i63 = int_eq(i48, 15)
++977: guard_false(i63, descr=<Guard0x70e42bc1f340>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++983: i65 = int_eq(i48, 16)
++987: guard_false(i65, descr=<Guard0x70e42bc1f370>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++993: i67 = int_eq(i48, 17)
++997: guard_false(i67, descr=<Guard0x70e42bc1f3a0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1003: i69 = int_eq(i48, 18)
++1007: guard_false(i69, descr=<Guard0x70e42bc1f3d0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1013: i71 = int_eq(i48, 19)
++1017: guard_false(i71, descr=<Guard0x70e42bc1f400>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1023: i73 = int_eq(i48, 20)
++1027: guard_false(i73, descr=<Guard0x70e42bc1f430>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1033: i75 = int_le(i48, 5)
++1037: guard_true(i75, descr=<Guard0x70e42bc1f460>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1043: guard_value(i48, 1, descr=<Guard0x70e42bc1f490>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1053: i78 = int_sub_ovf(i37, 1)
++1057: guard_no_overflow(descr=<Guard0x70e42bc1f4c0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '38: argument')
+debug_merge_point(0, 0, '39: shift 2 2')
+debug_merge_point(0, 0, '42: apply 1')
++1063: guard_nonnull_class(p40, ConstClass(W_Closure), descr=<Guard0x70e42bc30140>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1081: i80 = getfield_gc_i(p40, descr=<FieldS RPython_3imp_vable.value.W_Closure.inst_nparams 24 pure>)
++1085: i82 = int_ne(i80, 1)
++1089: guard_false(i82, descr=<Guard0x70e42bc1f4f0>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1095: i83 = getfield_gc_i(p40, descr=<FieldS RPython_3imp_vable.value.W_Closure.inst_body 8 pure>)
++1099: i85 = int_lt(i83, 42)
++1103: guard_true(i85, descr=<Guard0x70e42bc1f520>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
++1109: guard_value(i83, 4, descr=<Guard0x70e42bc1f550>) [p4, p8, p10, p12, p14, p16, p18, p20, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '4: frame 15')
++1119: p87 = same_as_r(p40)
++1122: p88 = same_as_r(p44)
++1125: label(i78, p40, p4, p5, p44, p10, p23, p25, p87, p88, descr=TargetToken(124125289037920))
+debug_merge_point(0, 0, '4: frame 15')
+debug_merge_point(0, 0, '6: refer-global 11 ; zero?')
+debug_merge_point(0, 0, '8: argument')
+debug_merge_point(0, 0, '9: refer 0 0')
+debug_merge_point(0, 0, '12: argument')
+debug_merge_point(0, 0, '13: apply 1')
++1181: i89 = int_is_zero(i78)
++1184: guard_false(i89, descr=<Guard0x70e42bc30188>) [p4, p40, p25, p10, p5, i78]
+debug_merge_point(0, 0, '15: test 21')
+debug_merge_point(0, 0, '21: refer-global 22 ; loop')
++1197: i91 = instance_ptr_eq(p87, ConstPtr(ptr90))
++1200: guard_false(i91, descr=<Guard0x70e42bc1f580>) [p4, p40, p25, p10, p5, i78]
+debug_merge_point(0, 0, '23: argument')
+debug_merge_point(0, 0, '24: frame 38')
+debug_merge_point(0, 0, '26: refer-global 1 ; -')
++1206: i93 = instance_ptr_eq(p88, ConstPtr(ptr92))
++1209: guard_false(i93, descr=<Guard0x70e42bc1f5b0>) [p4, p40, p25, p10, p5, i78]
+debug_merge_point(0, 0, '28: argument')
+debug_merge_point(0, 0, '29: refer 0 0')
+debug_merge_point(0, 0, '32: argument')
+debug_merge_point(0, 0, '33: constant 1 ; 1')
+debug_merge_point(0, 0, '35: argument')
+debug_merge_point(0, 0, '36: apply 2')
++1215: guard_nonnull_class(p88, ConstClass(W_Primitive), descr=<Guard0x70e42bc301d0>) [p4, p40, p25, p10, p5, i78]
++1235: i95 = getfield_gc_i(p88, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_pid 24 pure>)
++1239: i97 = int_eq(i95, 21)
++1243: guard_false(i97, descr=<Guard0x70e42bc1f5e0>) [p4, p40, p25, p10, p5, i78]
++1249: i98 = getfield_gc_i(p88, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_arity 8 pure>)
++1253: i100 = int_ne(i98, 2)
++1257: guard_false(i100, descr=<Guard0x70e42bc1f610>) [p4, p40, p25, p10, p5, i78]
++1263: i102 = int_eq(i95, 11)
++1267: guard_false(i102, descr=<Guard0x70e42bc1f640>) [p4, p40, p25, p10, p5, i78]
++1273: i104 = int_eq(i95, 12)
++1277: guard_false(i104, descr=<Guard0x70e42bc1f670>) [p4, p40, p25, p10, p5, i78]
++1283: i106 = int_eq(i95, 13)
++1287: guard_false(i106, descr=<Guard0x70e42bc1f6a0>) [p4, p40, p25, p10, p5, i78]
++1293: i108 = int_eq(i95, 14)
++1297: guard_false(i108, descr=<Guard0x70e42bc1f6d0>) [p4, p40, p25, p10, p5, i78]
++1303: i110 = int_eq(i95, 15)
++1307: guard_false(i110, descr=<Guard0x70e42bc1f700>) [p4, p40, p25, p10, p5, i78]
++1313: i112 = int_eq(i95, 16)
++1317: guard_false(i112, descr=<Guard0x70e42bc1f730>) [p4, p40, p25, p10, p5, i78]
++1323: i114 = int_eq(i95, 17)
++1327: guard_false(i114, descr=<Guard0x70e42bc1f760>) [p4, p40, p25, p10, p5, i78]
++1333: i116 = int_eq(i95, 18)
++1337: guard_false(i116, descr=<Guard0x70e42bc1f790>) [p4, p40, p25, p10, p5, i78]
++1343: i118 = int_eq(i95, 19)
++1347: guard_false(i118, descr=<Guard0x70e42bc1f7c0>) [p4, p40, p25, p10, p5, i78]
++1353: i120 = int_eq(i95, 20)
++1357: guard_false(i120, descr=<Guard0x70e42bc1f7f0>) [p4, p40, p25, p10, p5, i78]
++1363: i122 = int_le(i95, 5)
++1367: guard_true(i122, descr=<Guard0x70e42bc1f820>) [p4, p40, p25, p10, p5, i78]
++1373: guard_value(i95, 1, descr=<Guard0x70e42bc1f850>) [p4, p40, p25, p10, p5, i78]
++1383: i125 = int_sub_ovf(i78, 1)
++1390: guard_no_overflow(descr=<Guard0x70e42bc1f880>) [p4, p40, p25, p10, p5, i78]
+debug_merge_point(0, 0, '38: argument')
+debug_merge_point(0, 0, '39: shift 2 2')
+debug_merge_point(0, 0, '42: apply 1')
++1396: guard_nonnull_class(p87, ConstClass(W_Closure), descr=<Guard0x70e42bc30218>) [p4, p40, p25, p10, p5, i78]
++1414: i127 = getfield_gc_i(p87, descr=<FieldS RPython_3imp_vable.value.W_Closure.inst_nparams 24 pure>)
++1418: i129 = int_ne(i127, 1)
++1422: guard_false(i129, descr=<Guard0x70e42bc1f8b0>) [p4, p40, p25, p10, p5, i78]
++1428: i130 = getfield_gc_i(p87, descr=<FieldS RPython_3imp_vable.value.W_Closure.inst_body 8 pure>)
++1432: i132 = int_lt(i130, 42)
++1436: guard_true(i132, descr=<Guard0x70e42bc1f8e0>) [p4, p40, p25, p10, p5, i78]
++1442: guard_value(i130, 4, descr=<Guard0x70e42bc1f910>) [p4, p40, p25, p10, p5, i78]
+debug_merge_point(0, 0, '4: frame 15')
++1452: p134 = new_with_vtable(descr=<SizeDescr 16>)
++1489: i135 = arraylen_gc(p23, descr=<ArrayP 8>)
++1489: setfield_gc(p134, i78, descr=<FieldS RPython_3imp_vable.value.W_Int.inst_value 8 pure>)
++1493: jump(i125, p87, p4, p5, p88, p134, p23, p25, p87, p88, descr=TargetToken(124125289037920))
++1536: --end of the loop--
+[263ae53ddb4] jit-log-opt-loop}
+[263ae540d48] jit-tracing}
+[263b2f5a76c] {jit-summary
+Tracing:      	1	0.000890
+Backend:      	1	0.000486
+TOTAL:      		0.040788
+ops:             	187
+heapcached ops:  	20
+recorded ops:    	43
+  calls:         	0
+guards:          	36
+opt ops:         	162
+opt guards:      	60
+opt guards shared:	52
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	2
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[263b2f62f98] jit-summary}
+[263b2f76944] {jit-backend-counts
+entry 1:1
+TargetToken(124125289037856):1
+TargetToken(124125289037920):9998959
+[263b2f774d4] jit-backend-counts}

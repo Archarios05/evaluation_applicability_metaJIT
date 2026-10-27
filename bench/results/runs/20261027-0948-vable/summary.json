@@ -1,0 +1,1973 @@
+{
+ "date": "2026-10-27 09:52",
+ "runs": 10,
+ "time": {
+  "CEK-nojit/countdown": {
+   "min": 1.744129599999951,
+   "median": 1.787654393999901,
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-nojit/let-loop": {
+   "min": 3.161869515000035,
+   "median": 3.1759033395001097,
+   "output": "10000000",
+   "rc": 0
+  },
+  "CEK-nojit/fib": {
+   "min": 0.6560590400001729,
+   "median": 0.670689649499991,
+   "output": "832040",
+   "rc": 0
+  },
+  "CEK-nojit/sum": {
+   "min": 0.6117420049999964,
+   "median": 0.6260598710000522,
+   "output": "500000500000",
+   "rc": 0
+  },
+  "CEK-nojit/empty": {
+   "min": 0.002187125000091328,
+   "median": 0.0023004334999541243,
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-jit/countdown": {
+   "min": 0.010554745000035837,
+   "median": 0.011046220500020354,
+   "output": "0",
+   "rc": 0
+  },
+  "CEK-jit/let-loop": {
+   "min": 0.03645891900009701,
+   "median": 0.03768144649995975,
+   "output": "10000000",
+   "rc": 0
+  },
+  "CEK-jit/fib": {
+   "min": 0.06050714799994239,
+   "median": 0.06416823100005331,
+   "output": "832040",
+   "rc": 0
+  },
+  "CEK-jit/sum": {
+   "min": 0.4167563060000248,
+   "median": 0.4403561855000362,
+   "output": "500000500000",
+   "rc": 0
+  },
+  "CEK-jit/empty": {
+   "min": 0.0034882949998973345,
+   "median": 0.0038967714999671443,
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-nojit/countdown": {
+   "min": 1.378231587999835,
+   "median": 1.4055206689999977,
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-nojit/let-loop": {
+   "min": 2.499361026000088,
+   "median": 2.56686395600002,
+   "output": "10000000",
+   "rc": 0
+  },
+  "CPS-nojit/fib": {
+   "min": 0.5583604239998294,
+   "median": 0.5625622955000154,
+   "output": "832040",
+   "rc": 0
+  },
+  "CPS-nojit/sum": {
+   "min": 0.522313596999993,
+   "median": 0.5387005955000177,
+   "output": "error",
+   "rc": 1
+  },
+  "CPS-nojit/empty": {
+   "min": 0.0021319140000741754,
+   "median": 0.0024034695001091677,
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-jit/countdown": {
+   "min": 0.00970806200007246,
+   "median": 0.010037141999987398,
+   "output": "0",
+   "rc": 0
+  },
+  "CPS-jit/let-loop": {
+   "min": 0.03501056300001437,
+   "median": 0.035799753499986764,
+   "output": "10000000",
+   "rc": 0
+  },
+  "CPS-jit/fib": {
+   "min": 0.07031414799985214,
+   "median": 0.07574582949996511,
+   "output": "832040",
+   "rc": 0
+  },
+  "CPS-jit/sum": {
+   "min": 0.28696948900005737,
+   "median": 0.2904941875000304,
+   "output": "error",
+   "rc": 1
+  },
+  "CPS-jit/empty": {
+   "min": 0.0032410199999048928,
+   "median": 0.0036095595000915637,
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-nojit/countdown": {
+   "min": 0.699573429000111,
+   "median": 0.7117280195001285,
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-nojit/let-loop": {
+   "min": 1.217425859000059,
+   "median": 1.2582308575000525,
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp-nojit/fib": {
+   "min": 0.26407583500008514,
+   "median": 0.28077796599984595,
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp-nojit/sum": {
+   "min": 0.5497461279999243,
+   "median": 0.5545757589999312,
+   "output": "500000500000",
+   "rc": 0
+  },
+  "3imp-nojit/empty": {
+   "min": 0.0020921750001434702,
+   "median": 0.0023383180000564607,
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-jit/countdown": {
+   "min": 0.11085250099995392,
+   "median": 0.11644555800012313,
+   "output": "0",
+   "rc": 0
+  },
+  "3imp-jit/let-loop": {
+   "min": 0.19898439899998266,
+   "median": 0.20545303599999443,
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp-jit/fib": {
+   "min": 0.06822960099998454,
+   "median": 0.07217550100006065,
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp-jit/sum": {
+   "min": 0.4787418030000481,
+   "median": 0.4989275410000573,
+   "output": "500000500000",
+   "rc": 0
+  },
+  "3imp-jit/empty": {
+   "min": 0.003446124999982203,
+   "median": 0.0037930505000076664,
+   "output": "0",
+   "rc": 0
+  },
+  "3imp_vable-nojit/countdown": {
+   "min": 0.45464416300001176,
+   "median": 0.46600737100015976,
+   "output": "0",
+   "rc": 0
+  },
+  "3imp_vable-nojit/let-loop": {
+   "min": 0.7647450970000591,
+   "median": 0.7819809255000791,
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp_vable-nojit/fib": {
+   "min": 0.20168619299988677,
+   "median": 0.20952126750000843,
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp_vable-nojit/sum": {
+   "min": 0.004240306000156124,
+   "median": 0.004648599500001183,
+   "output": "error",
+   "rc": 1
+  },
+  "3imp_vable-nojit/empty": {
+   "min": 0.002131039999994755,
+   "median": 0.0023726850000684863,
+   "output": "0",
+   "rc": 0
+  },
+  "3imp_vable-jit/countdown": {
+   "min": 0.04197092000003977,
+   "median": 0.044108309999955964,
+   "output": "0",
+   "rc": 0
+  },
+  "3imp_vable-jit/let-loop": {
+   "min": 0.04300873099987257,
+   "median": 0.045190391999881285,
+   "output": "10000000",
+   "rc": 0
+  },
+  "3imp_vable-jit/fib": {
+   "min": 0.027202429999988453,
+   "median": 0.029066616500017517,
+   "output": "832040",
+   "rc": 0
+  },
+  "3imp_vable-jit/sum": {
+   "min": 0.007373247000032279,
+   "median": 0.00772067249988595,
+   "output": "error",
+   "rc": 1
+  },
+  "3imp_vable-jit/empty": {
+   "min": 0.003348198000139746,
+   "median": 0.0035262265000710613,
+   "output": "0",
+   "rc": 0
+  }
+ },
+ "jit": {
+  "CEK/countdown": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.000690"
+    ],
+    "Backend": [
+     "1",
+     "0.000159"
+    ],
+    "TOTAL": [
+     "0.005538"
+    ],
+    "ops": [
+     "333"
+    ],
+    "heapcached ops": [
+     "70"
+    ],
+    "recorded ops": [
+     "276"
+    ],
+    "calls": [
+     "17"
+    ],
+    "guards": [
+     "70"
+    ],
+    "opt ops": [
+     "46"
+    ],
+    "opt guards": [
+     "9"
+    ],
+    "opt guards shared": [
+     "7"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "5"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 9998960,
+    "ops": 4,
+    "guards": 2,
+    "steps": 11
+   },
+   "warm": {
+    "first_loop": 0.0025533439067667637,
+    "last_compile": 0.0025533439067667637,
+    "compile": 0.0008886292842693962,
+    "total": 0.007099876865922118,
+    "wall": 0.010901452000098288
+   }
+  },
+  "CEK/let-loop": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.000975"
+    ],
+    "Backend": [
+     "1",
+     "0.000252"
+    ],
+    "TOTAL": [
+     "0.030123"
+    ],
+    "ops": [
+     "604"
+    ],
+    "heapcached ops": [
+     "123"
+    ],
+    "recorded ops": [
+     "498"
+    ],
+    "calls": [
+     "31"
+    ],
+    "guards": [
+     "123"
+    ],
+    "opt ops": [
+     "77"
+    ],
+    "opt guards": [
+     "14"
+    ],
+    "opt guards shared": [
+     "12"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "6"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 9998960,
+    "ops": 16,
+    "guards": 6,
+    "steps": 18
+   },
+   "warm": {
+    "first_loop": 0.0039054542685645413,
+    "last_compile": 0.0039054542685645413,
+    "compile": 0.001278620657870612,
+    "total": 0.0331550477457647,
+    "wall": 0.03760796599999594
+   }
+  },
+  "CEK/fib": {
+   "loops": 2,
+   "bridges": 11,
+   "aborts": 0,
+   "full_traces": 13,
+   "min_traces": 13,
+   "summary": {
+    "Tracing": [
+     "13",
+     "0.004065"
+    ],
+    "Backend": [
+     "13",
+     "0.002392"
+    ],
+    "TOTAL": [
+     "0.054484"
+    ],
+    "ops": [
+     "3848"
+    ],
+    "heapcached ops": [
+     "751"
+    ],
+    "recorded ops": [
+     "3274"
+    ],
+    "calls": [
+     "199"
+    ],
+    "guards": [
+     "947"
+    ],
+    "opt ops": [
+     "1201"
+    ],
+    "opt guards": [
+     "365"
+    ],
+    "opt guards shared": [
+     "307"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "19"
+    ],
+    "nvholes": [
+     "4"
+    ],
+    "nvreused": [
+     "1"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "2"
+    ],
+    "Total # of bridges": [
+     "11"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 1347731,
+    "ops": 102,
+    "guards": 33,
+    "steps": 13
+   },
+   "warm": {
+    "first_loop": 0.003968934945331074,
+    "last_compile": 0.04224934500485423,
+    "compile": 0.006703153194222216,
+    "total": 0.05920632121663282,
+    "wall": 0.06416468499992334
+   }
+  },
+  "CEK/sum": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.001060"
+    ],
+    "Backend": [
+     "1",
+     "0.000244"
+    ],
+    "TOTAL": [
+     "0.404750"
+    ],
+    "ops": [
+     "418"
+    ],
+    "heapcached ops": [
+     "89"
+    ],
+    "recorded ops": [
+     "346"
+    ],
+    "calls": [
+     "21"
+    ],
+    "guards": [
+     "83"
+    ],
+    "opt ops": [
+     "67"
+    ],
+    "opt guards": [
+     "9"
+    ],
+    "opt guards shared": [
+     "7"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "7"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 998960,
+    "ops": 19,
+    "guards": 2,
+    "steps": 14
+   },
+   "warm": {
+    "first_loop": 0.0036434962864405236,
+    "last_compile": 0.0036434962864405236,
+    "compile": 0.0013540640758081112,
+    "total": 0.4187841281275705,
+    "wall": 0.4442638870000337
+   }
+  },
+  "CPS/countdown": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.000400"
+    ],
+    "Backend": [
+     "1",
+     "0.000140"
+    ],
+    "TOTAL": [
+     "0.005170"
+    ],
+    "ops": [
+     "189"
+    ],
+    "heapcached ops": [
+     "69"
+    ],
+    "recorded ops": [
+     "107"
+    ],
+    "calls": [
+     "17"
+    ],
+    "guards": [
+     "9"
+    ],
+    "opt ops": [
+     "28"
+    ],
+    "opt guards": [
+     "9"
+    ],
+    "opt guards shared": [
+     "7"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "5"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 9998960,
+    "ops": 4,
+    "guards": 2,
+    "steps": 2
+   },
+   "warm": {
+    "first_loop": 0.002024568705108411,
+    "last_compile": 0.002024568705108411,
+    "compile": 0.0007092583000283539,
+    "total": 0.0065533479143852465,
+    "wall": 0.01057656400007545
+   }
+  },
+  "CPS/let-loop": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.000571"
+    ],
+    "Backend": [
+     "1",
+     "0.000179"
+    ],
+    "TOTAL": [
+     "0.030769"
+    ],
+    "ops": [
+     "350"
+    ],
+    "heapcached ops": [
+     "127"
+    ],
+    "recorded ops": [
+     "193"
+    ],
+    "calls": [
+     "31"
+    ],
+    "guards": [
+     "11"
+    ],
+    "opt ops": [
+     "47"
+    ],
+    "opt guards": [
+     "14"
+    ],
+    "opt guards shared": [
+     "12"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "6"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 9998960,
+    "ops": 16,
+    "guards": 6,
+    "steps": 3
+   },
+   "warm": {
+    "first_loop": 0.002810091984863225,
+    "last_compile": 0.002810091984863225,
+    "compile": 0.0008632610592736792,
+    "total": 0.03237448289197765,
+    "wall": 0.03641966100008176
+   }
+  },
+  "CPS/fib": {
+   "loops": 1,
+   "bridges": 11,
+   "aborts": 0,
+   "full_traces": 12,
+   "min_traces": 12,
+   "summary": {
+    "Tracing": [
+     "12",
+     "0.003998"
+    ],
+    "Backend": [
+     "12",
+     "0.003507"
+    ],
+    "TOTAL": [
+     "0.075212"
+    ],
+    "ops": [
+     "2399"
+    ],
+    "heapcached ops": [
+     "719"
+    ],
+    "recorded ops": [
+     "1859"
+    ],
+    "calls": [
+     "184"
+    ],
+    "guards": [
+     "589"
+    ],
+    "opt ops": [
+     "1744"
+    ],
+    "opt guards": [
+     "650"
+    ],
+    "opt guards shared": [
+     "595"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "17"
+    ],
+    "nvholes": [
+     "4"
+    ],
+    "nvreused": [
+     "1"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "11"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 1347674,
+    "ops": 166,
+    "guards": 61,
+    "steps": 2
+   },
+   "warm": {
+    "first_loop": 0.0038830717193384626,
+    "last_compile": 0.053186036154730144,
+    "compile": 0.007668206761052761,
+    "total": 0.0773253249427161,
+    "wall": 0.08225338200008991
+   }
+  },
+  "CPS/sum": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.000586"
+    ],
+    "Backend": [
+     "1",
+     "0.000215"
+    ],
+    "TOTAL": [
+     "0.260577"
+    ],
+    "ops": [
+     "233"
+    ],
+    "heapcached ops": [
+     "86"
+    ],
+    "recorded ops": [
+     "134"
+    ],
+    "calls": [
+     "21"
+    ],
+    "guards": [
+     "9"
+    ],
+    "opt ops": [
+     "43"
+    ],
+    "opt guards": [
+     "9"
+    ],
+    "opt guards shared": [
+     "7"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "7"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 998960,
+    "ops": 19,
+    "guards": 2,
+    "steps": 2
+   },
+   "warm": {
+    "first_loop": 0.002332494071229407,
+    "last_compile": 0.002332494071229407,
+    "compile": 0.0008858039132390675,
+    "total": 0.2642819199297865,
+    "wall": 0.28632035700002234
+   }
+  },
+  "3imp/countdown": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.001440"
+    ],
+    "Backend": [
+     "1",
+     "0.000997"
+    ],
+    "TOTAL": [
+     "0.126029"
+    ],
+    "ops": [
+     "245"
+    ],
+    "heapcached ops": [
+     "71"
+    ],
+    "recorded ops": [
+     "150"
+    ],
+    "calls": [
+     "0"
+    ],
+    "guards": [
+     "75"
+    ],
+    "opt ops": [
+     "377"
+    ],
+    "opt guards": [
+     "107"
+    ],
+    "opt guards shared": [
+     "74"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "4"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 9998959,
+    "ops": 155,
+    "guards": 44,
+    "steps": 21
+   },
+   "warm": {
+    "first_loop": 0.002893951401614469,
+    "last_compile": 0.002893951401614469,
+    "compile": 0.002214369516450773,
+    "total": 0.11508135866281802,
+    "wall": 0.11953586900017399
+   }
+  },
+  "3imp/let-loop": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.001567"
+    ],
+    "Backend": [
+     "1",
+     "0.001312"
+    ],
+    "TOTAL": [
+     "0.194256"
+    ],
+    "ops": [
+     "423"
+    ],
+    "heapcached ops": [
+     "120"
+    ],
+    "recorded ops": [
+     "260"
+    ],
+    "calls": [
+     "0"
+    ],
+    "guards": [
+     "128"
+    ],
+    "opt ops": [
+     "645"
+    ],
+    "opt guards": [
+     "179"
+    ],
+    "opt guards shared": [
+     "124"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "6"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 9998959,
+    "ops": 269,
+    "guards": 75,
+    "steps": 36
+   },
+   "warm": {
+    "first_loop": 0.0038484258575552125,
+    "last_compile": 0.0038484258575552125,
+    "compile": 0.003114711065735964,
+    "total": 0.19691973341321853,
+    "wall": 0.20175087200004782
+   }
+  },
+  "3imp/fib": {
+   "loops": 3,
+   "bridges": 9,
+   "aborts": 0,
+   "full_traces": 8,
+   "min_traces": 12,
+   "summary": {
+    "Tracing": [
+     "12",
+     "0.005332"
+    ],
+    "Backend": [
+     "12",
+     "0.004375"
+    ],
+    "TOTAL": [
+     "0.065464"
+    ],
+    "ops": [
+     "2758"
+    ],
+    "heapcached ops": [
+     "719"
+    ],
+    "recorded ops": [
+     "1887"
+    ],
+    "calls": [
+     "0"
+    ],
+    "guards": [
+     "1064"
+    ],
+    "opt ops": [
+     "2955"
+    ],
+    "opt guards": [
+     "958"
+    ],
+    "opt guards shared": [
+     "730"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "25"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "3"
+    ],
+    "Total # of bridges": [
+     "9"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 2689703,
+    "ops": 276,
+    "guards": 85,
+    "steps": 29
+   },
+   "warm": {
+    "first_loop": 0.0038982205172032034,
+    "last_compile": 0.01989298556556013,
+    "compile": 0.01038289187745905,
+    "total": 0.07137742849156246,
+    "wall": 0.07646570800011432
+   }
+  },
+  "3imp/sum": {
+   "loops": 2,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 2,
+   "min_traces": 2,
+   "summary": {
+    "Tracing": [
+     "2",
+     "0.001569"
+    ],
+    "Backend": [
+     "2",
+     "0.001093"
+    ],
+    "TOTAL": [
+     "0.447747"
+    ],
+    "ops": [
+     "355"
+    ],
+    "heapcached ops": [
+     "102"
+    ],
+    "recorded ops": [
+     "226"
+    ],
+    "calls": [
+     "0"
+    ],
+    "guards": [
+     "115"
+    ],
+    "opt ops": [
+     "575"
+    ],
+    "opt guards": [
+     "168"
+    ],
+    "opt guards shared": [
+     "118"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "7"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "2"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 998957,
+    "ops": 80,
+    "guards": 24,
+    "steps": 4
+   },
+   "warm": {
+    "first_loop": 0.002948915889105189,
+    "last_compile": 0.4158472045358226,
+    "compile": 0.002774564447013773,
+    "total": 0.45167206760050854,
+    "wall": 0.4885441549999996
+   }
+  },
+  "3imp_vable/countdown": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.000635"
+    ],
+    "Backend": [
+     "1",
+     "0.000371"
+    ],
+    "TOTAL": [
+     "0.038351"
+    ],
+    "ops": [
+     "187"
+    ],
+    "heapcached ops": [
+     "20"
+    ],
+    "recorded ops": [
+     "43"
+    ],
+    "calls": [
+     "0"
+    ],
+    "guards": [
+     "36"
+    ],
+    "opt ops": [
+     "162"
+    ],
+    "opt guards": [
+     "60"
+    ],
+    "opt guards shared": [
+     "52"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "2"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 9998959,
+    "ops": 49,
+    "guards": 23,
+    "steps": 21
+   },
+   "warm": {
+    "first_loop": 0.0017876883956401118,
+    "last_compile": 0.0017876883956401118,
+    "compile": 0.0011423215532727715,
+    "total": 0.03999672377189036,
+    "wall": 0.04525843500005067
+   }
+  },
+  "3imp_vable/let-loop": {
+   "loops": 1,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.000837"
+    ],
+    "Backend": [
+     "1",
+     "0.000457"
+    ],
+    "TOTAL": [
+     "0.044192"
+    ],
+    "ops": [
+     "319"
+    ],
+    "heapcached ops": [
+     "32"
+    ],
+    "recorded ops": [
+     "76"
+    ],
+    "calls": [
+     "0"
+    ],
+    "guards": [
+     "59"
+    ],
+    "opt ops": [
+     "234"
+    ],
+    "opt guards": [
+     "79"
+    ],
+    "opt guards shared": [
+     "69"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "3"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "0"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": {
+    "iters": 9998959,
+    "ops": 52,
+    "guards": 23,
+    "steps": 36
+   },
+   "warm": {
+    "first_loop": 0.0022799441738745353,
+    "last_compile": 0.0022799441738745353,
+    "compile": 0.001580384310574402,
+    "total": 0.03959885742797057,
+    "wall": 0.04446375399993485
+   }
+  },
+  "3imp_vable/fib": {
+   "loops": 1,
+   "bridges": 3,
+   "aborts": 1,
+   "full_traces": 5,
+   "min_traces": 5,
+   "summary": {
+    "Tracing": [
+     "5",
+     "0.005926"
+    ],
+    "Backend": [
+     "4",
+     "0.001279"
+    ],
+    "TOTAL": [
+     "0.023191"
+    ],
+    "ops": [
+     "17371"
+    ],
+    "heapcached ops": [
+     "6958"
+    ],
+    "recorded ops": [
+     "5109"
+    ],
+    "calls": [
+     "0"
+    ],
+    "guards": [
+     "2966"
+    ],
+    "opt ops": [
+     "1233"
+    ],
+    "opt guards": [
+     "251"
+    ],
+    "opt guards shared": [
+     "220"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "1"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "12"
+    ],
+    "nvholes": [
+     "0"
+    ],
+    "nvreused": [
+     "2"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "1"
+    ],
+    "Total # of bridges": [
+     "3"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": null,
+   "warm": {
+    "first_loop": null,
+    "last_compile": 0.0094765749690161,
+    "compile": 0.007079417973567753,
+    "total": 0.023738987815837907,
+    "wall": 0.028574304999892775
+   }
+  },
+  "3imp_vable/sum": {
+   "loops": 2,
+   "bridges": 0,
+   "aborts": 0,
+   "full_traces": 1,
+   "min_traces": 1,
+   "summary": {
+    "Tracing": [
+     "1",
+     "0.002511"
+    ],
+    "Backend": [
+     "1",
+     "0.000400"
+    ],
+    "TOTAL": [
+     "0.003017"
+    ],
+    "ops": [
+     "1741"
+    ],
+    "heapcached ops": [
+     "725"
+    ],
+    "recorded ops": [
+     "454"
+    ],
+    "calls": [
+     "0"
+    ],
+    "guards": [
+     "207"
+    ],
+    "opt ops": [
+     "325"
+    ],
+    "opt guards": [
+     "53"
+    ],
+    "opt guards shared": [
+     "46"
+    ],
+    "forcings": [
+     "0"
+    ],
+    "abort: trace too long": [
+     "0"
+    ],
+    "abort: compiling": [
+     "0"
+    ],
+    "abort: vable escape": [
+     "0"
+    ],
+    "abort: bad loop": [
+     "0"
+    ],
+    "abort: force quasi-immut": [
+     "0"
+    ],
+    "abort: segmenting trace": [
+     "0"
+    ],
+    "virtualizables forced": [
+     "0"
+    ],
+    "nvirtuals": [
+     "80"
+    ],
+    "nvholes": [
+     "20"
+    ],
+    "nvreused": [
+     "31"
+    ],
+    "vecopt tried": [
+     "0"
+    ],
+    "vecopt success": [
+     "0"
+    ],
+    "Total # of loops": [
+     "2"
+    ],
+    "Total # of bridges": [
+     "0"
+    ],
+    "Freed # of loops": [
+     "0"
+    ],
+    "Freed # of bridges": [
+     "0"
+    ]
+   },
+   "hot": null,
+   "warm": {
+    "first_loop": 0.003972261268671745,
+    "last_compile": 0.003972261268671745,
+    "compile": 0.0024443266649901464,
+    "total": 0.004061230398988477,
+    "wall": 0.008322390000103042
+   }
+  }
+ },
+ "warm_runs": 5,
+ "impls": [
+  "CEK",
+  "CPS",
+  "3imp",
+  "3imp_vable"
+ ]
+}

@@ -1,0 +1,575 @@
+[26403a27528] {gc-hardware
+L2cache = 524288
+[26403aada9c] gc-hardware}
+[26403ab6afc] {gc-hardware
+memtotal = 7981953024.000000
+[26403ac6038] gc-hardware}
+[26403cbecf0] {jit-tracing
+JIT starting (x86)
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 0 ; +
+23: argument
+24: refer 0 0
+27: argument
+28: frame 50
+30: refer-global 22 ; sum
+32: argument
+33: frame 47
+35: refer-global 1 ; -
+37: argument
+38: refer 0 0
+41: argument
+42: constant 1 ; 1
+44: argument
+45: apply 2
+47: argument
+48: apply 1
+recursive function (not inlined): 4: frame 15
+compiled new entry bridge
+[264041a1e70] {jit-log-opt-loop
+# Loop 1 (4: frame 15) : entry bridge with 333 ops
+[i0, i1, p2, p3, p4, p5]
++584: p6 = getfield_gc_r(p4, descr=<FieldP RPython_3imp_vable.vm.Frame.inst_slots 16>)
++595: p8 = getarrayitem_gc_r(p6, 0, descr=<ArrayP 8>)
++599: p10 = getarrayitem_gc_r(p6, 1, descr=<ArrayP 8>)
++603: p12 = getarrayitem_gc_r(p6, 2, descr=<ArrayP 8>)
++607: p14 = getarrayitem_gc_r(p6, 3, descr=<ArrayP 8>)
++611: p16 = getarrayitem_gc_r(p6, 4, descr=<ArrayP 8>)
++615: p18 = getarrayitem_gc_r(p6, 5, descr=<ArrayP 8>)
++619: p20 = getarrayitem_gc_r(p6, 6, descr=<ArrayP 8>)
++623: p22 = getarrayitem_gc_r(p6, 7, descr=<ArrayP 8>)
++627: p24 = getarrayitem_gc_r(p6, 8, descr=<ArrayP 8>)
++631: p26 = getarrayitem_gc_r(p6, 9, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4: frame 15')
++635: guard_value(i1, 2, descr=<Guard0x7a37942b8020>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++652: guard_value(i0, 1, descr=<Guard0x7a37942a8cb0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '6: refer-global 11 ; zero?')
++669: p29 = getfield_gc_r(p5, descr=<FieldP RPython_3imp_vable.vm.VM.inst_globals_w 16>)
++694: p31 = getarrayitem_gc_r(p29, 11, descr=<ArrayP 8>)
++719: i33 = instance_ptr_eq(p31, ConstPtr(ptr32))
++722: guard_false(i33, descr=<Guard0x7a37942a8ce0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '8: argument')
+debug_merge_point(0, 0, '9: refer 0 0')
+debug_merge_point(0, 0, '12: argument')
+debug_merge_point(0, 0, '13: apply 1')
++728: guard_nonnull_class(p31, ConstClass(W_Primitive), descr=<Guard0x7a37942b8068>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++746: i35 = getfield_gc_i(p31, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_pid 24 pure>)
++757: i37 = int_eq(i35, 21)
++761: guard_false(i37, descr=<Guard0x7a37942a8d10>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++767: i38 = getfield_gc_i(p31, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_arity 8 pure>)
++778: i40 = int_ne(i38, 1)
++782: guard_false(i40, descr=<Guard0x7a37942a8d40>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++788: guard_value(i35, 11, descr=<Guard0x7a37942a8d70>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++798: guard_nonnull_class(p10, ConstClass(W_Int), descr=<Guard0x7a37942b80b0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++816: i43 = getfield_gc_i(p10, descr=<FieldS RPython_3imp_vable.value.W_Int.inst_value 8 pure>)
++820: i44 = int_is_zero(i43)
++823: guard_false(i44, descr=<Guard0x7a37942a8da0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '15: test 21')
+debug_merge_point(0, 0, '21: refer-global 0 ; +')
++829: p46 = getarrayitem_gc_r(p29, 0, descr=<ArrayP 8>)
++833: i48 = instance_ptr_eq(p46, ConstPtr(ptr47))
++836: guard_false(i48, descr=<Guard0x7a37942a8dd0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '23: argument')
+debug_merge_point(0, 0, '24: refer 0 0')
+debug_merge_point(0, 0, '27: argument')
+debug_merge_point(0, 0, '28: frame 50')
+debug_merge_point(0, 0, '30: refer-global 22 ; sum')
++842: p50 = getarrayitem_gc_r(p29, 22, descr=<ArrayP 8>)
++849: i52 = instance_ptr_eq(p50, ConstPtr(ptr51))
++852: guard_false(i52, descr=<Guard0x7a37942a8e00>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '32: argument')
+debug_merge_point(0, 0, '33: frame 47')
+debug_merge_point(0, 0, '35: refer-global 1 ; -')
++858: p54 = getarrayitem_gc_r(p29, 1, descr=<ArrayP 8>)
++869: i56 = instance_ptr_eq(p54, ConstPtr(ptr55))
++872: guard_false(i56, descr=<Guard0x7a37942a8e30>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '37: argument')
+debug_merge_point(0, 0, '38: refer 0 0')
+debug_merge_point(0, 0, '41: argument')
+debug_merge_point(0, 0, '42: constant 1 ; 1')
+debug_merge_point(0, 0, '44: argument')
+debug_merge_point(0, 0, '45: apply 2')
++878: guard_nonnull_class(p54, ConstClass(W_Primitive), descr=<Guard0x7a37942b80f8>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++896: i58 = getfield_gc_i(p54, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_pid 24 pure>)
++900: i60 = int_eq(i58, 21)
++904: guard_false(i60, descr=<Guard0x7a37942a8e60>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++910: i61 = getfield_gc_i(p54, descr=<FieldS RPython_3imp_vable.value.W_Primitive.inst_arity 8 pure>)
++921: i63 = int_ne(i61, 2)
++925: guard_false(i63, descr=<Guard0x7a37942a8e90>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++931: i65 = int_eq(i58, 11)
++935: guard_false(i65, descr=<Guard0x7a37942a8ec0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++941: i67 = int_eq(i58, 12)
++945: guard_false(i67, descr=<Guard0x7a37942a8ef0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++951: i69 = int_eq(i58, 13)
++955: guard_false(i69, descr=<Guard0x7a37942a8f20>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++961: i71 = int_eq(i58, 14)
++965: guard_false(i71, descr=<Guard0x7a37942a8f50>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++971: i73 = int_eq(i58, 15)
++975: guard_false(i73, descr=<Guard0x7a37942a8f80>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++981: i75 = int_eq(i58, 16)
++985: guard_false(i75, descr=<Guard0x7a37942a8fb0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++991: i77 = int_eq(i58, 17)
++995: guard_false(i77, descr=<Guard0x7a37942a8fe0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1001: i79 = int_eq(i58, 18)
++1005: guard_false(i79, descr=<Guard0x7a37942a9010>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1011: i81 = int_eq(i58, 19)
++1015: guard_false(i81, descr=<Guard0x7a37942a9040>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1021: i83 = int_eq(i58, 20)
++1025: guard_false(i83, descr=<Guard0x7a37942a9070>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1031: i85 = int_le(i58, 5)
++1035: guard_true(i85, descr=<Guard0x7a37942a90a0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1041: guard_value(i58, 1, descr=<Guard0x7a37942a90d0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1051: i88 = int_sub_ovf(i43, 1)
++1055: guard_no_overflow(descr=<Guard0x7a37942a9100>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(0, 0, '47: argument')
+debug_merge_point(0, 0, '48: apply 1')
++1061: guard_nonnull_class(p50, ConstClass(W_Closure), descr=<Guard0x7a37942b8140>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1079: i90 = getfield_gc_i(p50, descr=<FieldS RPython_3imp_vable.value.W_Closure.inst_nparams 24 pure>)
++1083: i92 = int_ne(i90, 1)
++1087: guard_false(i92, descr=<Guard0x7a37942a9130>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1093: i93 = getfield_gc_i(p50, descr=<FieldS RPython_3imp_vable.value.W_Closure.inst_body 8 pure>)
++1097: p94 = getfield_gc_r(p5, descr=<FieldP RPython_3imp_vable.vm.VM.inst_code 8>)
++1101: guard_value(i93, 4, descr=<Guard0x7a37942a9160>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1118: guard_value(p94, ConstPtr(ptr96), descr=<Guard0x7a37942a9190>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
++1127: enter_portal_frame(0, 0)
+debug_merge_point(1, 1, '4: frame 15')
+debug_merge_point(1, 1, '6: refer-global 11 ; zero?')
+debug_merge_point(1, 1, '8: argument')
+debug_merge_point(1, 1, '9: refer 0 0')
+debug_merge_point(1, 1, '12: argument')
+debug_merge_point(1, 1, '13: apply 1')
++1127: i99 = int_is_zero(i88)
++1130: guard_false(i99, descr=<Guard0x7a37942a91c0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(1, 1, '15: test 21')
+debug_merge_point(1, 1, '21: refer-global 0 ; +')
+debug_merge_point(1, 1, '23: argument')
+debug_merge_point(1, 1, '24: refer 0 0')
+debug_merge_point(1, 1, '27: argument')
+debug_merge_point(1, 1, '28: frame 50')
+debug_merge_point(1, 1, '30: refer-global 22 ; sum')
+debug_merge_point(1, 1, '32: argument')
+debug_merge_point(1, 1, '33: frame 47')
+debug_merge_point(1, 1, '35: refer-global 1 ; -')
+debug_merge_point(1, 1, '37: argument')
+debug_merge_point(1, 1, '38: refer 0 0')
+debug_merge_point(1, 1, '41: argument')
+debug_merge_point(1, 1, '42: constant 1 ; 1')
+debug_merge_point(1, 1, '44: argument')
+debug_merge_point(1, 1, '45: apply 2')
++1136: i101 = int_sub_ovf(i88, 1)
++1143: guard_no_overflow(descr=<Guard0x7a37942a91f0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(1, 1, '47: argument')
+debug_merge_point(1, 1, '48: apply 1')
++1149: enter_portal_frame(0, 0)
+debug_merge_point(2, 2, '4: frame 15')
+debug_merge_point(2, 2, '6: refer-global 11 ; zero?')
+debug_merge_point(2, 2, '8: argument')
+debug_merge_point(2, 2, '9: refer 0 0')
+debug_merge_point(2, 2, '12: argument')
+debug_merge_point(2, 2, '13: apply 1')
++1149: i104 = int_is_zero(i101)
++1152: guard_false(i104, descr=<Guard0x7a37942a9220>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(2, 2, '15: test 21')
+debug_merge_point(2, 2, '21: refer-global 0 ; +')
+debug_merge_point(2, 2, '23: argument')
+debug_merge_point(2, 2, '24: refer 0 0')
+debug_merge_point(2, 2, '27: argument')
+debug_merge_point(2, 2, '28: frame 50')
+debug_merge_point(2, 2, '30: refer-global 22 ; sum')
+debug_merge_point(2, 2, '32: argument')
+debug_merge_point(2, 2, '33: frame 47')
+debug_merge_point(2, 2, '35: refer-global 1 ; -')
+debug_merge_point(2, 2, '37: argument')
+debug_merge_point(2, 2, '38: refer 0 0')
+debug_merge_point(2, 2, '41: argument')
+debug_merge_point(2, 2, '42: constant 1 ; 1')
+debug_merge_point(2, 2, '44: argument')
+debug_merge_point(2, 2, '45: apply 2')
++1158: i106 = int_sub_ovf(i101, 1)
++1165: guard_no_overflow(descr=<Guard0x7a37942a9250>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(2, 2, '47: argument')
+debug_merge_point(2, 2, '48: apply 1')
++1171: enter_portal_frame(0, 0)
+debug_merge_point(3, 3, '4: frame 15')
+debug_merge_point(3, 3, '6: refer-global 11 ; zero?')
+debug_merge_point(3, 3, '8: argument')
+debug_merge_point(3, 3, '9: refer 0 0')
+debug_merge_point(3, 3, '12: argument')
+debug_merge_point(3, 3, '13: apply 1')
++1171: i109 = int_is_zero(i106)
++1174: guard_false(i109, descr=<Guard0x7a37942a9280>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(3, 3, '15: test 21')
+debug_merge_point(3, 3, '21: refer-global 0 ; +')
+debug_merge_point(3, 3, '23: argument')
+debug_merge_point(3, 3, '24: refer 0 0')
+debug_merge_point(3, 3, '27: argument')
+debug_merge_point(3, 3, '28: frame 50')
+debug_merge_point(3, 3, '30: refer-global 22 ; sum')
+debug_merge_point(3, 3, '32: argument')
+debug_merge_point(3, 3, '33: frame 47')
+debug_merge_point(3, 3, '35: refer-global 1 ; -')
+debug_merge_point(3, 3, '37: argument')
+debug_merge_point(3, 3, '38: refer 0 0')
+debug_merge_point(3, 3, '41: argument')
+debug_merge_point(3, 3, '42: constant 1 ; 1')
+debug_merge_point(3, 3, '44: argument')
+debug_merge_point(3, 3, '45: apply 2')
++1180: i111 = int_sub_ovf(i106, 1)
++1191: guard_no_overflow(descr=<Guard0x7a37942a92b0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(3, 3, '47: argument')
+debug_merge_point(3, 3, '48: apply 1')
++1197: enter_portal_frame(0, 0)
+debug_merge_point(4, 4, '4: frame 15')
+debug_merge_point(4, 4, '6: refer-global 11 ; zero?')
+debug_merge_point(4, 4, '8: argument')
+debug_merge_point(4, 4, '9: refer 0 0')
+debug_merge_point(4, 4, '12: argument')
+debug_merge_point(4, 4, '13: apply 1')
++1197: i114 = int_is_zero(i111)
++1200: guard_false(i114, descr=<Guard0x7a37942a92e0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(4, 4, '15: test 21')
+debug_merge_point(4, 4, '21: refer-global 0 ; +')
++1206: i116 = instance_ptr_eq(p46, ConstPtr(ptr115))
++1209: guard_false(i116, descr=<Guard0x7a37942a9310>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(4, 4, '23: argument')
+debug_merge_point(4, 4, '24: refer 0 0')
+debug_merge_point(4, 4, '27: argument')
+debug_merge_point(4, 4, '28: frame 50')
+debug_merge_point(4, 4, '30: refer-global 22 ; sum')
+debug_merge_point(4, 4, '32: argument')
+debug_merge_point(4, 4, '33: frame 47')
+debug_merge_point(4, 4, '35: refer-global 1 ; -')
+debug_merge_point(4, 4, '37: argument')
+debug_merge_point(4, 4, '38: refer 0 0')
+debug_merge_point(4, 4, '41: argument')
+debug_merge_point(4, 4, '42: constant 1 ; 1')
+debug_merge_point(4, 4, '44: argument')
+debug_merge_point(4, 4, '45: apply 2')
++1215: i118 = int_sub_ovf(i111, 1)
++1222: guard_no_overflow(descr=<Guard0x7a37942a9340>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(4, 4, '47: argument')
+debug_merge_point(4, 4, '48: apply 1')
++1228: enter_portal_frame(0, 0)
+debug_merge_point(5, 5, '4: frame 15')
+debug_merge_point(5, 5, '6: refer-global 11 ; zero?')
+debug_merge_point(5, 5, '8: argument')
+debug_merge_point(5, 5, '9: refer 0 0')
+debug_merge_point(5, 5, '12: argument')
+debug_merge_point(5, 5, '13: apply 1')
++1228: i121 = int_is_zero(i118)
++1231: guard_false(i121, descr=<Guard0x7a37942a9370>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(5, 5, '15: test 21')
+debug_merge_point(5, 5, '21: refer-global 0 ; +')
+debug_merge_point(5, 5, '23: argument')
+debug_merge_point(5, 5, '24: refer 0 0')
+debug_merge_point(5, 5, '27: argument')
+debug_merge_point(5, 5, '28: frame 50')
+debug_merge_point(5, 5, '30: refer-global 22 ; sum')
+debug_merge_point(5, 5, '32: argument')
+debug_merge_point(5, 5, '33: frame 47')
+debug_merge_point(5, 5, '35: refer-global 1 ; -')
+debug_merge_point(5, 5, '37: argument')
+debug_merge_point(5, 5, '38: refer 0 0')
+debug_merge_point(5, 5, '41: argument')
+debug_merge_point(5, 5, '42: constant 1 ; 1')
+debug_merge_point(5, 5, '44: argument')
+debug_merge_point(5, 5, '45: apply 2')
++1237: i123 = int_sub_ovf(i118, 1)
++1248: guard_no_overflow(descr=<Guard0x7a37942a93a0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(5, 5, '47: argument')
+debug_merge_point(5, 5, '48: apply 1')
++1254: enter_portal_frame(0, 0)
+debug_merge_point(6, 6, '4: frame 15')
+debug_merge_point(6, 6, '6: refer-global 11 ; zero?')
+debug_merge_point(6, 6, '8: argument')
+debug_merge_point(6, 6, '9: refer 0 0')
+debug_merge_point(6, 6, '12: argument')
+debug_merge_point(6, 6, '13: apply 1')
++1254: i126 = int_is_zero(i123)
++1257: guard_false(i126, descr=<Guard0x7a37942a93d0>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(6, 6, '15: test 21')
+debug_merge_point(6, 6, '21: refer-global 0 ; +')
+debug_merge_point(6, 6, '23: argument')
+debug_merge_point(6, 6, '24: refer 0 0')
+debug_merge_point(6, 6, '27: argument')
+debug_merge_point(6, 6, '28: frame 50')
+debug_merge_point(6, 6, '30: refer-global 22 ; sum')
+debug_merge_point(6, 6, '32: argument')
+debug_merge_point(6, 6, '33: frame 47')
+debug_merge_point(6, 6, '35: refer-global 1 ; -')
+debug_merge_point(6, 6, '37: argument')
+debug_merge_point(6, 6, '38: refer 0 0')
+debug_merge_point(6, 6, '41: argument')
+debug_merge_point(6, 6, '42: constant 1 ; 1')
+debug_merge_point(6, 6, '44: argument')
+debug_merge_point(6, 6, '45: apply 2')
++1263: i128 = int_sub_ovf(i123, 1)
++1274: guard_no_overflow(descr=<Guard0x7a37942a9400>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(6, 6, '47: argument')
+debug_merge_point(6, 6, '48: apply 1')
++1280: enter_portal_frame(0, 0)
+debug_merge_point(7, 7, '4: frame 15')
+debug_merge_point(7, 7, '6: refer-global 11 ; zero?')
+debug_merge_point(7, 7, '8: argument')
+debug_merge_point(7, 7, '9: refer 0 0')
+debug_merge_point(7, 7, '12: argument')
+debug_merge_point(7, 7, '13: apply 1')
++1280: i131 = int_is_zero(i128)
++1283: guard_false(i131, descr=<Guard0x7a37942a9430>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(7, 7, '15: test 21')
+debug_merge_point(7, 7, '21: refer-global 0 ; +')
+debug_merge_point(7, 7, '23: argument')
+debug_merge_point(7, 7, '24: refer 0 0')
+debug_merge_point(7, 7, '27: argument')
+debug_merge_point(7, 7, '28: frame 50')
+debug_merge_point(7, 7, '30: refer-global 22 ; sum')
+debug_merge_point(7, 7, '32: argument')
+debug_merge_point(7, 7, '33: frame 47')
+debug_merge_point(7, 7, '35: refer-global 1 ; -')
+debug_merge_point(7, 7, '37: argument')
+debug_merge_point(7, 7, '38: refer 0 0')
+debug_merge_point(7, 7, '41: argument')
+debug_merge_point(7, 7, '42: constant 1 ; 1')
+debug_merge_point(7, 7, '44: argument')
+debug_merge_point(7, 7, '45: apply 2')
++1289: i133 = int_sub_ovf(i128, 1)
++1300: guard_no_overflow(descr=<Guard0x7a37942a9460>) [p4, p8, p10, p12, p14, p16, p18, p20, p22, p24, p26, i0, i1, p2, p3, p5]
+debug_merge_point(7, 7, '47: argument')
+debug_merge_point(7, 7, '48: apply 1')
++1306: p134 = force_token()
++1309: p135 = new_with_vtable(descr=<SizeDescr 32>)
++1352: p137 = new_array_clear(10, descr=<ArrayP 8>)
++1395: setarrayitem_gc(p137, 0, p50, descr=<ArrayP 8>)
++1399: p139 = new_with_vtable(descr=<SizeDescr 16>)
++1411: setfield_gc(p139, i133, descr=<FieldS RPython_3imp_vable.value.W_Int.inst_value 8 pure>)
++1415: setarrayitem_gc(p137, 1, p139, descr=<ArrayP 8>)
++1429: setfield_gc(p4, p134, descr=<FieldP RPython_3imp_vable.vm.Frame.vable_token 8>)
++1433: setfield_gc(p135, p137, descr=<FieldP RPython_3imp_vable.vm.Frame.inst_slots 16>)
++1437: setfield_gc(p135, 1, descr=<FieldU RPython_3imp_vable.vm.Frame.inst_live 24>)
++1621: p145 = call_assembler_r(1, 2, ConstPtr(ptr144), p50, p135, p5, descr=<Loop-1>)
++1842: guard_not_forced(descr=<Guard0x7a37942b8188>) [p4, p8, p10, p46, p50, p54, p5, p135, p145, p139, i128, i123, i118, i111, i106, i101, i88, p3]
++1853: keepalive(p135)
++1853: p147 = guard_exception(108337586102000, descr=<Guard0x7a37942b81d0>) [p4, p8, p10, p46, p50, p54, p5, p135, p145, p139, i128, i123, i118, i111, i106, i101, i88, p3]
++1911: leave_portal_frame(0)
++1911: leave_portal_frame(0)
++1911: leave_portal_frame(0)
++1911: leave_portal_frame(0)
++1911: leave_portal_frame(0)
++1911: leave_portal_frame(0)
++1911: leave_portal_frame(0)
++1911: leave_portal_frame(0)
++1911: p156 = force_token()
++1931: setfield_gc(p4, p156, descr=<FieldP RPython_3imp_vable.vm.Frame.vable_token 8>)
++1935: guard_not_forced_2(descr=<Guard0x7a37942b8218>) [p4, p8, p10, p46, p50, p54, None, None, None, None, None, None, None, i88, p3]
++1953: finish(p147, descr=<ExitFrameWithExceptionDescrRef object at 0x62884f58d130>)
++2080: --end of the loop--
+[26404282768] jit-log-opt-loop}
+[26404285800] jit-tracing}
+[264042a9638] {jit-summary
+Tracing:      	1	0.002553
+Backend:      	1	0.000397
+TOTAL:      		0.003027
+ops:             	1741
+heapcached ops:  	725
+recorded ops:    	454
+  calls:         	0
+guards:          	207
+opt ops:         	325
+opt guards:      	53
+opt guards shared:	46
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	80
+nvholes:         	20
+nvreused:        	31
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	2
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[264042b05dc] jit-summary}
+[264042b229c] {jit-backend-counts
+entry -1:0
+entry 1:0
+[264042b274c] jit-backend-counts}

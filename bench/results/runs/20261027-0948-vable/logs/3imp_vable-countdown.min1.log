@@ -1,0 +1,61 @@
+[263b8a74fcf] {gc-hardware
+L2cache = 524288
+[263b8b00ae3] gc-hardware}
+[263b8b09873] {gc-hardware
+memtotal = 7981953024.000000
+[263b8b1df17] gc-hardware}
+[263b8bba367] {jit-tracing
+JIT starting (x86)
+4: frame 15
+6: refer-global 11 ; zero?
+8: argument
+9: refer 0 0
+12: argument
+13: apply 1
+15: test 21
+21: refer-global 22 ; loop
+23: argument
+24: frame 38
+26: refer-global 1 ; -
+28: argument
+29: refer 0 0
+32: argument
+33: constant 1 ; 1
+35: argument
+36: apply 2
+38: argument
+39: shift 2 2
+42: apply 1
+4: frame 15
+compiled new loop
+[263b8ddc393] jit-tracing}
+[263bd4a8cdb] {jit-summary
+Tracing:      	1	0.000645
+Backend:      	1	0.000383
+TOTAL:      		0.038635
+ops:             	187
+heapcached ops:  	20
+recorded ops:    	43
+  calls:         	0
+guards:          	36
+opt ops:         	162
+opt guards:      	60
+opt guards shared:	52
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	2
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[263bd4ae5ff] jit-summary}

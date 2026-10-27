@@ -1,0 +1,134 @@
+[25ec69115a5] {gc-hardware
+L2cache = 524288
+[25ec69a31fd] gc-hardware}
+[25ec69acab9] {gc-hardware
+memtotal = 7981953024.000000
+[25ec69bef4d] gc-hardware}
+[25ec6e5905d] {jit-tracing
+JIT starting (x86)
+if
+app/1
+prim(zero?)
+var(n)
+app/2
+prim(+)
+var(n)
+app/1
+global(sum)
+app/2
+prim(-)
+var(n)
+const(1)
+if
+compiled new loop
+[25ec71bdcad] {jit-log-opt-loop
+# Loop 1 (if) : loop with 70 ops
+[p0, p1]
++264: label(p0, p1, descr=TargetToken(131858981642272))
+debug_merge_point(0, 0, 'if')
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'prim(zero?)')
+debug_merge_point(0, 0, 'var(n)')
++285: p2 = getfield_gc_r(p0, descr=<FieldP env.Frame.inst_vals 16>)
++296: p4 = getarrayitem_gc_r(p2, 0, descr=<ArrayP 8>)
++300: guard_class(p4, ConstClass(IntVal), descr=<Guard0x77eccfc2a140>) [p4, p1, p0]
++312: i6 = getfield_gc_i(p4, descr=<FieldS value.IntVal.inst_value 8 pure>)
++316: i7 = int_is_zero(i6)
++319: guard_false(i7, descr=<Guard0x77eccfc28260>) [p4, p1, p0]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(+)')
+debug_merge_point(0, 0, 'var(n)')
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(sum)')
++332: p9 = getfield_gc_r(ConstPtr(ptr8), descr=<FieldP env.GlobalCell.inst_value 16>)
++343: i11 = instance_ptr_eq(p9, ConstPtr(ptr10))
++346: guard_false(i11, descr=<Guard0x77eccfc28290>) [p4, p1, p0]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
+debug_merge_point(0, 0, 'const(1)')
++352: i13 = int_sub_ovf(i6, 1)
++356: guard_no_overflow(descr=<Guard0x77eccfc282c0>) [p4, p1, p0]
++362: guard_class(p9, 109977775909608, descr=<Guard0x77eccfc282f0>) [p4, p1, p0]
++374: p15 = getfield_gc_r(p9, descr=<FieldP proc.ClosureVal.inst_lam 16 pure>)
++378: i16 = getfield_gc_i(p15, descr=<FieldS exp.LambdaExp.inst_nparams 16 pure>)
++382: i18 = int_ne(1, i16)
++386: guard_false(i18, descr=<Guard0x77eccfc28320>) [p4, p1, p0]
++392: p19 = getfield_gc_r(p15, descr=<FieldP exp.LambdaExp.inst_body 8 pure>)
++396: p20 = getfield_gc_r(p9, descr=<FieldP proc.ClosureVal.inst_env 8 pure>)
++407: guard_value(p19, ConstPtr(ptr21), descr=<Guard0x77eccfc28350>) [p4, p1, p0]
+debug_merge_point(0, 0, 'if')
++416: p22 = same_as_r(p20)
++419: label(p20, i13, p0, p1, p4, p9, p15, p22, descr=TargetToken(131858981642336))
+debug_merge_point(0, 0, 'if')
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'prim(zero?)')
+debug_merge_point(0, 0, 'var(n)')
++461: i23 = int_is_zero(i13)
++464: guard_false(i23, descr=<Guard0x77eccfc2a188>) [i13, p4, p1, p0, p20]
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(+)')
+debug_merge_point(0, 0, 'var(n)')
+debug_merge_point(0, 0, 'app/1')
+debug_merge_point(0, 0, 'global(sum)')
+debug_merge_point(0, 0, 'app/2')
+debug_merge_point(0, 0, 'prim(-)')
+debug_merge_point(0, 0, 'var(n)')
+debug_merge_point(0, 0, 'const(1)')
++470: i25 = int_sub_ovf(i13, 1)
++477: guard_no_overflow(descr=<Guard0x77eccfc28380>) [i13, p4, p1, p0, p20]
+debug_merge_point(0, 0, 'if')
++483: p26 = new_with_vtable(descr=<SizeDescr 24>)
++524: p28 = new_array_clear(1, descr=<ArrayP 8>)
++543: p29 = new_with_vtable(descr=<SizeDescr 16>)
++554: setfield_gc(p29, i13, descr=<FieldS value.IntVal.inst_value 8 pure>)
++558: setarrayitem_gc(p28, 0, p29, descr=<ArrayP 8>)
++562: p31 = new_with_vtable(descr=<SizeDescr 40>)
++574: p33 = new_array_clear(2, descr=<ArrayP 8>)
++601: setarrayitem_gc(p33, 0, ConstPtr(ptr35), descr=<ArrayP 8>)
++605: setarrayitem_gc(p33, 1, p4, descr=<ArrayP 8>)
++609: setfield_gc(p26, p28, descr=<FieldP env.Frame.inst_vals 16>)
++613: setfield_gc(p26, p20, descr=<FieldP env.Frame.inst_parent 8 pure>)
++624: setfield_gc(p31, ConstPtr(ptr37), descr=<FieldP cont.AppKont.inst_app 8 pure>)
++629: setfield_gc(p31, p0, descr=<FieldP cont.AppKont.inst_env 16 pure>)
++634: setfield_gc(p31, p1, descr=<FieldP cont.AppKont.inst_kont 24 pure>)
++646: setfield_gc(p31, p33, descr=<FieldP cont.AppKont.inst_vals 32 pure>)
++651: jump(p22, i25, p26, p31, p29, p9, p15, p22, descr=TargetToken(131858981642336))
++688: --end of the loop--
+[25ec71ebabd] jit-log-opt-loop}
+[25ec71f9fe1] jit-tracing}
+[25ef6d7d951] {jit-summary
+Tracing:      	1	0.001424
+Backend:      	1	0.000282
+TOTAL:      		0.401352
+ops:             	418
+heapcached ops:  	89
+recorded ops:    	346
+  calls:         	21
+guards:          	83
+opt ops:         	67
+opt guards:      	9
+opt guards shared:	7
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	7
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[25ef6d89931] jit-summary}
+[25ef6da8fc5] {jit-backend-counts
+entry 1:1
+TargetToken(131858981642272):1
+TargetToken(131858981642336):998960
+[25ef6daa5f5] jit-backend-counts}
